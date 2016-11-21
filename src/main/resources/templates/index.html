@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+
+	<div th:replace="template :: navigation"></div>
+
+	<h1>Welcome to ACE</h1>
+	
+	<h2>List of Current Courses</h2>
+
+	<!--  List all courses, with links to the detail pages -->
+	<div class="course-list">
+		<h3 th:each="course : ${course}"><a th:href="'/course/' + ${course.courseCode} + ${course.uid}" th:text="${course.name}">Course Title</a></h3>
+	<!--	<p th:text="${course.descShort}">Course Short Description</p>  -->
+	</div>
+	
+</body>
+</html>

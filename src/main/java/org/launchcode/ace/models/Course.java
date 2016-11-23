@@ -4,9 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * Class containing info about a course
@@ -27,8 +29,6 @@ public class Course extends AbstractEntity {
 	private int numClasses;
 	private int minStudents;
 	private int maxStudents;
-	private Date created;
-	private Date updated;
 	private boolean sunday;
 	private boolean monday;
 	private boolean tuesday;
@@ -36,6 +36,8 @@ public class Course extends AbstractEntity {
 	private boolean thursday;
 	private boolean friday;
 	private boolean saturday;
+	private Date created;
+	private Date updated;
 //	private Semester semester;
 	
 	//category
@@ -45,27 +47,22 @@ public class Course extends AbstractEntity {
 	//spaces remaining
 	
 	//no-arg constructor for Hibernate
-	public Course(){}
+	public Course(){}	
 
-	public Course(String courseCode, String name, String descShort, float fee,
-			Date startDate, Date endDate,
-			String startTime, String endTime, int numClasses, int minStudents,
-			int maxStudents) {
+	public Course(String courseCode, String name, String descShort) {
 		super();
 		this.courseCode = courseCode;
-		this.name = name;
+		this.name = "test";
 		this.descShort = descShort;
 		this.descLong = "";
-		this.fee = fee;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.numClasses = numClasses;
-		this.minStudents = minStudents;
-		this.maxStudents = maxStudents;
-		this.created = new Date();
-		this.updated = new Date();
+		this.fee = 0;
+		this.startDate = null;
+		this.endDate = null;
+		this.startTime = "";
+		this.endTime = "";
+		this.numClasses = 0;
+		this.minStudents = 0;
+		this.maxStudents = 0;
 		this.sunday = false;
 		this.monday = false;
 		this.tuesday = false;
@@ -73,10 +70,12 @@ public class Course extends AbstractEntity {
 		this.thursday = false;
 		this.friday = false;
 		this.saturday = false;
+		this.created = new Date();
+		this.updated = new Date();
 //		this.semester = semester;
 		
 	}
-	@NotNull
+	@NotEmpty
     @Column(name = "course_code")
 	public String getCourseCode() {
 		return courseCode;
@@ -86,7 +85,7 @@ public class Course extends AbstractEntity {
 		this.courseCode = courseCode;
 	}
 
-	@NotNull
+	@NotEmpty
     @Column(name = "name")
 	public String getName() {
 		return name;
@@ -96,7 +95,7 @@ public class Course extends AbstractEntity {
 		this.name = name;
 	}
 
-	@NotNull
+	@NotEmpty
     @Column(name = "desc_short")
 	public String getDescShort() {
 		return descShort;
@@ -115,7 +114,6 @@ public class Course extends AbstractEntity {
 		this.descLong = descLong;
 	}
 
-	@NotNull
     @Column(name = "fee")
 	public float getFee() {
 		return fee;
@@ -125,7 +123,6 @@ public class Course extends AbstractEntity {
 		this.fee = fee;
 	}
 
-	@NotNull
     @Column(name = "start_date")
 	public Date getStartDate() {
 		return startDate;
@@ -135,7 +132,6 @@ public class Course extends AbstractEntity {
 		this.startDate = startDate;
 	}
 
-	@NotNull
     @Column(name = "end_date")
 	public Date getEndDate() {
 		return endDate;
@@ -145,7 +141,6 @@ public class Course extends AbstractEntity {
 		this.endDate = endDate;
 	}
 
-	@NotNull
     @Column(name = "start_time")
 	public String getStartTime() {
 		return startTime;
@@ -155,7 +150,6 @@ public class Course extends AbstractEntity {
 		this.startTime = startTime;
 	}
 
-	@NotNull
     @Column(name = "end_time")
 	public String getEndTime() {
 		return endTime;
@@ -165,7 +159,6 @@ public class Course extends AbstractEntity {
 		this.endTime = endTime;
 	}
 
-	@NotNull
     @Column(name = "num_classes")
 	public int getNumClasses() {
 		return numClasses;
@@ -175,7 +168,6 @@ public class Course extends AbstractEntity {
 		this.numClasses = numClasses;
 	}
 
-	@NotNull
     @Column(name = "min_students")
 	public int getMinStudents() {
 		return minStudents;
@@ -185,7 +177,6 @@ public class Course extends AbstractEntity {
 		this.minStudents = minStudents;
 	}
 
-	@NotNull
     @Column(name = "max_students")
 	public int getMaxStudents() {
 		return maxStudents;
@@ -195,7 +186,69 @@ public class Course extends AbstractEntity {
 		this.maxStudents = maxStudents;
 	}
 
-	@NotNull
+    @Column(name = "sunday")
+	public boolean isSunday() {
+		return sunday;
+	}
+
+	public void setSunday(boolean sunday) {
+		this.sunday = sunday;
+	}
+    @Column(name = "monday")
+	public boolean isMonday() {
+		return monday;
+	}
+
+	public void setMonday(boolean monday) {
+		this.monday = monday;
+	}
+
+    @Column(name = "tuesday")
+	public boolean isTuesday() {
+		return tuesday;
+	}
+
+	public void setTuesday(boolean tuesday) {
+		this.tuesday = tuesday;
+	}
+
+    @Column(name = "wednesday")
+	public boolean isWednesday() {
+		return wednesday;
+	}
+
+	public void setWednesday(boolean wednesday) {
+		this.wednesday = wednesday;
+	}
+
+    @Column(name = "thursday")
+	public boolean isThursday() {
+		return thursday;
+	}
+
+	public void setThursday(boolean thursday) {
+		this.thursday = thursday;
+	}
+
+    @Column(name = "friday")
+	public boolean isFriday() {
+		return friday;
+	}
+
+	public void setFriday(boolean friday) {
+		this.friday = friday;
+	}
+
+    @Column(name = "saturday")
+	public boolean isSaturday() {
+		return saturday;
+	}
+
+	public void setSaturday(boolean saturday) {
+		this.saturday = saturday;
+	}
+
+//	@NotNull
     @Column(name = "created")
 	public Date getCreated() {
 		return created;
@@ -205,7 +258,7 @@ public class Course extends AbstractEntity {
 		this.created = created;
 	}
 
-	@NotNull
+//	@NotNull
     @Column(name = "updated")
 	public Date getUpdated() {
 		return updated;
@@ -213,6 +266,16 @@ public class Course extends AbstractEntity {
 	
 	public void setUpdated(Date updated) {
 		this.updated = updated;
+	}
+
+	@Override
+	public String toString() {
+		return "Course [courseCode=" + courseCode + ", name=" + name + ", descShort=" + descShort + ", descLong="
+				+ descLong + ", fee=" + fee + ", startDate=" + startDate + ", endDate=" + endDate + ", startTime="
+				+ startTime + ", endTime=" + endTime + ", numClasses=" + numClasses + ", minStudents=" + minStudents
+				+ ", maxStudents=" + maxStudents + ", sunday=" + sunday + ", monday=" + monday + ", tuesday=" + tuesday
+				+ ", wednesday=" + wednesday + ", thursday=" + thursday + ", friday=" + friday + ", saturday="
+				+ saturday + ", created=" + created + ", updated=" + updated + "]";
 	}
 
 	//@ManyToOne
@@ -226,7 +289,6 @@ public class Course extends AbstractEntity {
 //	}
 
 
-	
 	
 	
 	

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 	@Repository
 	public interface CourseDao extends CrudRepository<Course, Integer> {
 	    
+		Course findByUid(int uid);
 	    List<Course> findAll();
 	    
 	    //method signatures

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+
+	<div th:replace="template :: navigation"></div>
+
+	<h1>Add a New Course</h1>
+
+	<form action="#" th:action="@{/admin/add-course}" th:object="${course}" method="post" >
+	    <label>
+	        <div>Course Code</div>
+	        <input class="short-text" type="text" th:field="*{courseCode}"></input>
+	       	<span class="error" th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}">Course Code Error</span>
+	    </label>
+
+	   	<label>
+	        <div>Name</div>
+	        <input type="text" th:field="*{name}"></input>
+			<span class="error" th:if="${#fields.hasErrors('name')}"  th:errors="*{name}">Name Error</span>
+	    </label>
+	
+	    <label>
+	        <div>Short Description</div>
+	        <textarea class="short" th:field="*{descShort}"></textarea>
+        	<span class="error" th:if="${#fields.hasErrors('descShort')}"  th:errors="*{descShort}">Short Description Error</span>
+	    </label>
+	    
+	    <label>
+	        <div>Long Description</div>
+	        <textarea th:field="*{descLong}"></textarea>
+	    	<span class="error" th:if="${#fields.hasErrors('descLong')}"  th:errors="*{descLong}">Long Description Error</span>
+	    </label>
+	    
+	    <label>
+	        <div>Fee</div>
+	        <input class="short-text" type="text" th:field="*{fee}"></input>
+			<span class="error" th:if="${#fields.hasErrors('fee')}"  th:errors="*{fee}">Name Error</span>
+	    </label>   
+	    
+		<label>
+	        <div>Start Date</div>
+	        <input class="short-text" type="text" th:field="*{startDate}"></input>
+			<span class="error" th:if="${#fields.hasErrors('startDate')}"  th:errors="*{startDate}">Start Date Error</span>
+	    </label>  
+	    
+	    <label>
+	        <div>End Date</div>
+	        <input class="short-text" type="text" th:field="*{endDate}"></input>
+			<span class="error" th:if="${#fields.hasErrors('endDate')}"  th:errors="*{endDate}">End Date Error</span>
+	    </label>  
+	    
+	    		<label>
+	        <div>Start Time</div>
+	        <input class="short-text" type="text" th:field="*{startTime}"></input>
+			<span class="error" th:if="${#fields.hasErrors('startTime')}"  th:errors="*{startTime}">Start Time Error</span>
+	    </label>  
+	    
+	    <label>
+	        <div>End Time</div>
+	        <input class="short-text" type="text" th:field="*{endTime}"></input>
+			<span class="error" th:if="${#fields.hasErrors('endTime')}"  th:errors="*{endTime}">End Time Error</span>
+	    </label> 
+	    
+	    <label>
+	        <div>Number of Classes</div>
+	        <input class="short-text" type="text" th:field="*{numClasses}"></input>
+			<span class="error" th:if="${#fields.hasErrors('numClasses')}"  th:errors="*{numClasses}">Number of Classes Error</span>
+	    </label> 
+	    
+	   <label>
+	        <div>Minimum Students</div>
+	        <input class="short-text" type="text" th:field="*{minStudents}"></input>
+			<span class="error" th:if="${#fields.hasErrors('minStudents')}"  th:errors="*{minStudents}">Minimum Students Error</span>
+	    </label> 
+	    
+	    <label>
+	        <div>Maximum Students</div>
+	        <input class="short-text" type="text" th:field="*{maxStudents}"></input>
+			<span class="error" th:if="${#fields.hasErrors('maxStudents')}"  th:errors="*{maxStudents}">Number of Classes Error</span>
+	    </label> 
+	    
+	    <div>Class Day(s)</div>
+	    <label>
+	        <input type="checkbox" th:field="*{monday}"></input>
+	        <span>Monday</span>
+	        <span class="error" th:if="${#fields.hasErrors('monday')}"  th:errors="*{monday}">Monday Error</span>
+        </label>
+        <label>
+			<input type="checkbox" th:field="*{tuesday}"></input>
+			<span>Tuesday</span>
+			<span class="error" th:if="${#fields.hasErrors('tuesday')}"  th:errors="*{Tuesday}">Tuesday Error</span>
+	    </label> 
+	    <label>
+			<input type="checkbox" th:field="*{wednesday}"></input>
+			<span>Wednesday</span>
+			<span class="error" th:if="${#fields.hasErrors('wednesday')}"  th:errors="*{wednesday}">Wednesday Error</span>
+	    </label> 
+	    <label>
+			<input type="checkbox" th:field="*{Thursday}"></input>
+			<span>Thursday</span>
+			<span class="error" th:if="${#fields.hasErrors('Thursday')}"  th:errors="*{Thursday}">Thursday Error</span>
+	    </label> 
+	    <label>
+			<input type="checkbox" th:field="*{friday}"></input>
+			<span>Friday</span>
+			<span class="error" th:if="${#fields.hasErrors('Friday')}"  th:errors="*{Friday}">Friday Error</span>
+	    </label> 
+	    <label>
+			<input type="checkbox" th:field="*{saturday}"></input>
+			<span>Saturday</span>
+			<span class="error" th:if="${#fields.hasErrors('saturday')}"  th:errors="*{sunday}">Saturday Error</span>
+	    </label> 
+        <label>
+			<input type="checkbox" th:field="*{sunday}"></input>
+			<span>Sunday</span>
+			<span class="error" th:if="${#fields.hasErrors('sunday')}"  th:errors="*{sunday}">Sunday Error</span>
+	    </label> 
+
+	    <button type="submit">Add Course</button>
+
+	</form>
+
+	<a href="/admin/main">Cancel</a>
+	
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+
+	<div th:replace="template :: navigation"></div>
+
+	<h1>Admin Main Menu</h1>
+	<div class="confirm" th:text="${confirmMessage}"></div>
+
+	<h2>Courses</h2>
+		<ul>
+			<li><a href="/admin/add-course">Add a New Course</a></li>
+			<li><a href="/admin/select-course?update">Update a Course</a></li>
+			<li><a href="/admin/select-course?delete">Delete a Course</a></li>
+			<li><a href="/admin/import-course">Import Courses</a></li>
+		</ul>
+	
+	
+	
+</body>
+</html>

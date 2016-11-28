@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+
+	<div th:replace="template :: navigation"></div>
+
+	<h1>Course Category</h1>
+
+	<form th:action="@{/category}" th:object="${courseCategory}" method="post" >
+		<input type="hidden" th:field="*{uid}"/>
+
+	   	<label>
+	        <div>Name</div>
+	        <input type="text" th:field="*{catName}"></input>
+			<span class="error" th:if="${#fields.hasErrors('catName')}"  th:errors="*{catName}">Name Error</span>
+	    </label>
+	
+	    <label>
+	        <div>Short Description</div>
+	        <textarea class="short" th:field="*{catDesc}"></textarea>
+        	<span class="error" th:if="${#fields.hasErrors('catDesc')}"  th:errors="*{catDesc}">Description Error</span>
+	    </label>
+	    
+	    <button type="submit">Save</button>
+
+	</form>
+	
+	<div th:replace="template :: footer"></div>
+	
+</body>
+</html>

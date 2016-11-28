@@ -2,13 +2,13 @@ package org.launchcode.ace.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import org.launchcode.ace.models.Course;
+import org.launchcode.ace.models.CourseCategory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,22 +22,17 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("course")
 public class CourseController extends AbstractController {
 	
-	@RequestMapping(value = "/admin/main")
+	@ModelAttribute("allCourseCategories")
+	public List<CourseCategory> populateCourseCategories() {
+	    return courseCategoryDao.findAll();
+	}
+	
+	@RequestMapping(value = "/")
 	public String adminMain(HttpServletRequest request, Model model) {
 		String message = request.getParameter("confirmMessage");
 		System.out.println(message);
 		model.addAttribute("confirmMessage",message);
 		return "admin-main";
-	}
-	
-	@RequestMapping(value = "/")
-	public String index(Model model){
-		
-		// fetch courses and pass to template
-		List<Course> courses = courseDao.findAll();
-		model.addAttribute("courses", courses);
-		
-		return "index";
 	}
 	
 	//Create
@@ -51,7 +46,7 @@ public class CourseController extends AbstractController {
 	@RequestMapping(value="/course", method = RequestMethod.POST)
 	public String saveCourse(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult,
 							HttpServletRequest request, Model model) {
-		
+
 		boolean formErrors = false;
 		//validate form input
 		String feeStr = request.getParameter("fee");

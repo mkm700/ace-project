@@ -10,9 +10,6 @@
 
 	<form th:action="@{/course}" th:object="${course}" method="post" >
 		<input type="hidden" th:field="*{uid}"/>
-		<!-- <input type="text" th:value="*{#dates.format(updated.createNow(), 'M/d/yyyy'}"/>   -->
-
-		<!--  <input type="hidden" th:field="*{version}"/> 	 -->
 
 	    <label>
 	        <div>Course Code</div>
@@ -37,6 +34,14 @@
 	        <textarea th:field="*{descLong}"></textarea>
 	    	<span class="error" th:if="${#fields.hasErrors('descLong')}"  th:errors="*{descLong}">Long Description Error</span>
 	    </label>
+	    
+	    <label>
+	    	<div>Category</div>
+	    	<select th:field="*{courseCategory}">
+  				<option th:each="courseCategory : ${allCourseCategories}" th:value="${courseCategory.uid}" 
+          		th:text="${courseCategory.catName}">Course Category Dropdown</option>
+			</select>
+</label>
 	    
 	    <label>
 	        <div>Fee</div>
@@ -86,8 +91,9 @@
 			<span class="error" th:text="${maxError}">Max validation error</span>
 	    </label> 
 	    
-	    <div>Class Day(s)</div>
+
 	    <label>
+	    	<div>Class Day(s)</div>
 	        <input type="checkbox" th:field="*{monday}"></input>
 	        <span>Monday</span>
 	        <span class="error" th:if="${#fields.hasErrors('monday')}"  th:errors="*{monday}">Monday Error</span>

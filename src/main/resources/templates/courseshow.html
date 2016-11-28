@@ -30,6 +30,11 @@
 	    </label>
 	    
 	    <label>
+	    	<div>Category</div>
+	    	<p th:text="${course.courseCategory.CatName}"></p>
+	    </label>
+	    
+	    <label>
 	        <div>Fee</div>
 	        <p th:text="'$' + ${#numbers.formatDecimal(course.fee,1,2)}"></p>
 		</label>   

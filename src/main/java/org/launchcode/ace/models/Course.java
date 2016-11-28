@@ -4,8 +4,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -21,6 +23,7 @@ public class Course extends AbstractEntity {
 	private String name;
 	private String descShort;
 	private String descLong;
+	private CourseCategory courseCategory;
 	private float fee;
 	private Date startDate = new Date();
 	private Date endDate = new Date();
@@ -47,42 +50,16 @@ public class Course extends AbstractEntity {
 	//spaces remaining
 	
 	
-
-//	public Course(String courseCode, String name, String descShort) {
-//		super();
-//		this.courseCode = courseCode;
-//		this.name = "test";
-//		this.descShort = descShort;
-//		this.descLong = "";
-//		this.fee = 0;
-//		this.startDate = null;
-//		this.endDate = null;
-//		this.startTime = "";
-//		this.endTime = "";
-//		this.numClasses = 0;
-//		this.minStudents = 0;
-//		this.maxStudents = 0;
-//		this.sunday = false;
-//		this.monday = false;
-//		this.tuesday = false;
-//		this.wednesday = false;
-//		this.thursday = false;
-//		this.friday = false;
-//		this.saturday = false;
-//		this.created = new Date();
-//		this.updated = new Date();
-////		this.semester = semester;
-//	}
-	
-	public Course(String courseCode, String name, String descShort, String descLong, float fee, Date startDate,
-		Date endDate, String startTime, String endTime, int numClasses, int minStudents, int maxStudents,
-		boolean sunday, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday,
-		boolean saturday) {
+	public Course(String courseCode, String name, String descShort, String descLong, CourseCategory courseCategory, 
+			float fee, Date startDate, Date endDate, String startTime, String endTime, int numClasses, 
+			int minStudents, int maxStudents, boolean sunday, boolean monday, boolean tuesday, 
+			boolean wednesday, boolean thursday, boolean friday, boolean saturday) {
 	super();
 	this.courseCode = courseCode;
 	this.name = name;
 	this.descShort = descShort;
 	this.descLong = descLong;
+	this.courseCategory = courseCategory;
 	this.fee = fee;
 	this.startDate = startDate;
 	this.endDate = endDate;
@@ -103,8 +80,7 @@ public class Course extends AbstractEntity {
 }
 
 	//no-arg constructor for Hibernate
-	public Course(){
-	}	
+	public Course() {}	
 	
 	@NotEmpty
     @Column(name = "course_code")
@@ -152,6 +128,15 @@ public class Course extends AbstractEntity {
 
 	public void setFee(float fee) {
 		this.fee = fee;
+	}
+	
+	@ManyToOne
+	public CourseCategory getCourseCategory() {
+		return courseCategory;
+	}
+	
+	public void setCourseCategory(CourseCategory courseCategory) {
+		this.courseCategory = courseCategory;
 	}
 
     @Column(name = "start_date")

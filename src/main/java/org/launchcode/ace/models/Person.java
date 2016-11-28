@@ -8,6 +8,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 /**
  * Class containing relevant info about a person
  */
@@ -25,7 +28,8 @@ public class Person extends AbstractEntity {
 	private String phone;
 	private String email;
 	private String notes;
-	private boolean mailingList;
+	private boolean mailList;
+	private boolean emailList;
 	private Date created;
 	private Date updated;
 	
@@ -33,7 +37,7 @@ public class Person extends AbstractEntity {
 	public Person() {}
 	
 	public Person(String firstName, String lastName, String address1, String city, State state,
-			String zip, String phone) {
+			String zip) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -45,7 +49,8 @@ public class Person extends AbstractEntity {
 		this.phone = phone;
 		this.email = "";
 		this.notes = "";
-		this.mailingList = true;
+		this.mailList = true;
+		this.emailList = true;
 		this.created = new Date();
 		this.updated = new Date();
 	}
@@ -150,15 +155,15 @@ public class Person extends AbstractEntity {
 	@NotNull
 	@Column(name = "mailing_list")
 	public boolean isMailingList() {
-		return mailingList;
+		return mailList;
 	}
 
 	public void setMailingList(boolean mailingList) {
-		this.mailingList = mailingList;
+		this.mailList = mailingList;
 	}
 
-	@NotNull
-	@Column(name = "created")
+	@CreationTimestamp
+    @Column(name = "created")
 	public Date getCreated() {
 		return created;
 	}
@@ -167,12 +172,12 @@ public class Person extends AbstractEntity {
 		this.created = created;
 	}
 
-	@NotNull
-	@Column(name = "updated")
+	@UpdateTimestamp
+    @Column(name = "updated")
 	public Date getUpdated() {
 		return updated;
 	}
-
+	
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}

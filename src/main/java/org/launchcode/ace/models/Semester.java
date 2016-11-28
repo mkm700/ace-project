@@ -1,7 +1,9 @@
 package org.launchcode.ace.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,7 +23,7 @@ public class Semester extends AbstractEntity {
 		this.semester = semester;
 	}
 
-	//@OneToMany(mappedBy = "course_uid", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "course_uid", cascade = CascadeType.ALL)
 	@Column(name="semester")
 	public String getSemester() {
 		return semester;

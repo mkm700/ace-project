@@ -1,11 +1,8 @@
 package org.launchcode.ace.models;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * A table containing valid semesters (season + year)
@@ -14,29 +11,30 @@ import javax.validation.constraints.NotNull;
 //@Table(name = "states")
 public class State extends AbstractEntity {
 	
-	private String stateCode;
+	private String stateAbbr;
 	private String stateName;
 	
 	//no-arg constructor
 	public State() {}
 	
-	public State(String stateCode, String stateName) {
+	public State(String stateAbbr, String stateName) {
 		super();
-		this.stateCode = stateCode;
+		this.stateAbbr = stateAbbr;
 		this.stateName = stateName;
 	}
 
 //	@OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
-	@Column(name = "state_code")
-	public String getStateCode() {
-		return stateCode;
+	@Column(name = "state_abbr")
+	public String getStateAbbr() {
+		return stateAbbr;
 	}
 
-	public void setStateCode(String stateCode) {
-		this.stateCode = stateCode;
+	public void setStateAbbr(String stateAbbr) {
+		this.stateAbbr = stateAbbr;
 	}
 
 	@NotNull
+	@Size(min = 2, max = 2)
     @Column(name = "state_name")
 	public String getStateName() {
 		return stateName;

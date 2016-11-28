@@ -12,7 +12,7 @@
 	            <tr>
 	                <th>Course Code</th>
 	                <th>Name</th>
-	                <th>Description</th>
+	                <th>Category</th>
 	                <th>Start Date</th>
 	                <th>End Date</th>
 	                <th>View</th>
@@ -22,7 +22,7 @@
 				<tr th:each="course : ${courses}">
 	                <td th:text="${course.courseCode}"><a href="/course/${course.uid}">Course Code</a></td>
 	                <td th:text="${course.name}">Name</td>
-	                <td th:text="${course.descShort}">Description</td>
+	                <td th:text="${course.courseCategory.catName}">Category</td>
 	                <td th:text="${ #dates.format(course.startDate, 'M-d-yyyy') }">Start Date</td>
 	                <td th:text="${ #dates.format(course.endDate, 'M-d-yyyy') }">Start Date</td>
 	                <td><a th:href="${'/course/' + course.uid}">View</a></td>

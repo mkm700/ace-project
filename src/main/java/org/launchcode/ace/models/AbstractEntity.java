@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @MappedSuperclass
-public class AbstractEntity {
+public abstract class AbstractEntity {
 
 	private int uid;
 	

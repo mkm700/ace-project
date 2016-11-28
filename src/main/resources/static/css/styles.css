@@ -66,3 +66,17 @@ nav ul li {
 nav #user-account {
     float: right;
 }
+
+#footer {
+	margin-top: 30px;
+	border-top: 1px solid #ccc;
+	padding-top: 10px;
+	font-size: .8em;
+	color: #ccc;
+	text-align: center;
+}
+
+#footer p {
+	margin: 5px 0;
+}
+

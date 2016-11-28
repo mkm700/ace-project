@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+
+	<div th:replace="template :: navigation"></div>
+
+	<h1>Course Details</h1>
+
+	<form>
+	    <label>
+	        <div>Course Code</div>
+	        <p th:text="${course.courseCode}"></p>
+	    </label>
+
+	   	<label>
+	        <div>Name</div>
+	        <p th:text="${course.name}"></p>
+		</label>
+	
+	    <label>
+	        <div>Short Description</div>
+	        <p th:text="${course.descShort}"></p>
+        </label>
+	    
+	    <label>
+	        <div>Long Description</div>
+	        <p th:text="${course.descLong}"></p>
+	    </label>
+	    
+	    <label>
+	        <div>Fee</div>
+	        <p th:text="'$' + ${#numbers.formatDecimal(course.fee,1,2)}"></p>
+		</label>   
+	    
+		<label>
+	        <div>Start Date</div>
+	        <p th:text="${ #dates.format(course.startDate, 'M/d/yyyy') }"></p>
+		</label>  
+	    
+	    <label>
+	        <div>End Date</div>
+	        <p th:text="${ #dates.format(course.endDate, 'M/d/yyyy') }"></p>
+		</label>  
+	    
+	    <label>
+	        <div>Start Time</div>
+	        <p th:text="${course.startTime}"></p>
+		</label>  
+	    
+	    <label>
+	        <div>End Time</div>
+	        <p th:text="${course.endTime}"></p>
+		</label> 
+	    
+	    <label>
+	        <div>Number of Classes</div>
+	        <p th:text="${course.numClasses}"></p>
+		</label> 
+	    
+	   <label>
+	        <div>Minimum Students</div>
+	        <p th:text="${course.minStudents}"></p>
+		</label> 
+	    
+	    <label>
+	        <div>Maximum Students</div>
+	        <p type="text" th:text="${course.maxStudents}"></p>
+		</label> 
+	    
+
+	    <label>
+	    	<div>Meets on:</div>
+	    	<span th:if="${course.monday}">Monday</span>
+	   	</label>
+	    <label>
+	    	<span th:if="${course.tuesday}">Tuesday</span>
+	   	</label>
+	    <label>
+	    	<span th:if="${course.wednesday}">Wednesday</span>
+	   	</label>        
+	    <label>
+	    	<span th:if="${course.thursday}">Thursday</span>
+	   	</label>
+	    <label>
+	    	<span th:if="${course.friday}">Friday</span>
+	   	</label>
+	    <label>
+	    	<span th:if="${course.saturday}">Saturday</span>
+	   	</label>
+	    <label>
+	    	<span th:if="${course.sunday}">Sunday</span>
+	   	</label>
+	   	<label>
+	   		<span>Created on: </span>
+	        <span th:text="${ #dates.format(course.created, 'M-d-yyyy h:mm a') }"></span>
+	   	</label>
+	   		   	<label>
+	   		<span>Last Updated: </span>
+	        <span th:text="${ #dates.format(course.updated, 'M-d-yyyy h:mm a') }"></span>
+	   	</label>
+	</form>
+
+	<div th:replace="template :: footer"></div>
+</body>
+</html>

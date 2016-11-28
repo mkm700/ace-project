@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+
+	<div th:replace="template :: navigation"></div>
+
+	<h1>Course Details</h1>
+		<!--  <div th:if="${not #lists.isEmpty(courses)}">	-->
+			<table>
+	            <tr>
+	                <th>Course Code</th>
+	                <th>Name</th>
+	                <th>Description</th>
+	                <th>Start Date</th>
+	                <th>End Date</th>
+	                <th>View</th>
+	                <th>Edit</th>
+	                <th>Delete</th>
+            	</tr>
+				<tr th:each="course : ${courses}">
+	                <td th:text="${course.courseCode}"><a href="/course/${course.uid}">Course Code</a></td>
+	                <td th:text="${course.name}">Name</td>
+	                <td th:text="${course.descShort}">Description</td>
+	                <td th:text="${ #dates.format(course.startDate, 'M-d-yyyy') }">Start Date</td>
+	                <td th:text="${ #dates.format(course.endDate, 'M-d-yyyy') }">Start Date</td>
+	                <td><a th:href="${'/course/' + course.uid}">View</a></td>
+	                <td><a th:href="${'/course/edit/' + course.uid}">Edit</a></td>
+	                <td><a th:href="${'/course/delete/' + course.uid}">Delete</a></td>
+	            </tr>
+	            
+			</table>
+		<!-- </div>	-->
+
+	<div th:replace="template :: footer"></div>
+</body>
+</html>

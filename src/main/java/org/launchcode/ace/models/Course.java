@@ -5,9 +5,9 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
+import javax.validation.constraints.Min;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -22,13 +22,13 @@ public class Course extends AbstractEntity {
 	private String descShort;
 	private String descLong;
 	private float fee;
-	private Date startDate;
-	private Date endDate;
+	private Date startDate = new Date();
+	private Date endDate = new Date();
 	private String startTime;
 	private String endTime;
-	private int numClasses;
-	private int minStudents;
-	private int maxStudents;
+	private int numClasses = 1;
+	private int minStudents = 1;
+	private int maxStudents = 1;
 	private boolean sunday;
 	private boolean monday;
 	private boolean tuesday;
@@ -46,35 +46,66 @@ public class Course extends AbstractEntity {
 	//enrolled
 	//spaces remaining
 	
-	//no-arg constructor for Hibernate
-	public Course(){}	
+	
 
-	public Course(String courseCode, String name, String descShort) {
-		super();
-		this.courseCode = courseCode;
-		this.name = "test";
-		this.descShort = descShort;
-		this.descLong = "";
-		this.fee = 0;
-		this.startDate = null;
-		this.endDate = null;
-		this.startTime = "";
-		this.endTime = "";
-		this.numClasses = 0;
-		this.minStudents = 0;
-		this.maxStudents = 0;
-		this.sunday = false;
-		this.monday = false;
-		this.tuesday = false;
-		this.wednesday = false;
-		this.thursday = false;
-		this.friday = false;
-		this.saturday = false;
-		this.created = new Date();
-		this.updated = new Date();
-//		this.semester = semester;
-		
-	}
+//	public Course(String courseCode, String name, String descShort) {
+//		super();
+//		this.courseCode = courseCode;
+//		this.name = "test";
+//		this.descShort = descShort;
+//		this.descLong = "";
+//		this.fee = 0;
+//		this.startDate = null;
+//		this.endDate = null;
+//		this.startTime = "";
+//		this.endTime = "";
+//		this.numClasses = 0;
+//		this.minStudents = 0;
+//		this.maxStudents = 0;
+//		this.sunday = false;
+//		this.monday = false;
+//		this.tuesday = false;
+//		this.wednesday = false;
+//		this.thursday = false;
+//		this.friday = false;
+//		this.saturday = false;
+//		this.created = new Date();
+//		this.updated = new Date();
+////		this.semester = semester;
+//	}
+	
+	public Course(String courseCode, String name, String descShort, String descLong, float fee, Date startDate,
+		Date endDate, String startTime, String endTime, int numClasses, int minStudents, int maxStudents,
+		boolean sunday, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday,
+		boolean saturday) {
+	super();
+	this.courseCode = courseCode;
+	this.name = name;
+	this.descShort = descShort;
+	this.descLong = descLong;
+	this.fee = fee;
+	this.startDate = startDate;
+	this.endDate = endDate;
+	this.startTime = startTime;
+	this.endTime = endTime;
+	this.numClasses = numClasses;
+	this.minStudents = minStudents;
+	this.maxStudents = maxStudents;
+	this.sunday = sunday;
+	this.monday = monday;
+	this.tuesday = tuesday;
+	this.wednesday = wednesday;
+	this.thursday = thursday;
+	this.friday = friday;
+	this.saturday = saturday;
+	this.created = new Date();
+	this.updated = new Date();
+}
+
+	//no-arg constructor for Hibernate
+	public Course(){
+	}	
+	
 	@NotEmpty
     @Column(name = "course_code")
 	public String getCourseCode() {
@@ -167,7 +198,7 @@ public class Course extends AbstractEntity {
 	public void setNumClasses(int numClasses) {
 		this.numClasses = numClasses;
 	}
-
+	
     @Column(name = "min_students")
 	public int getMinStudents() {
 		return minStudents;
@@ -248,7 +279,7 @@ public class Course extends AbstractEntity {
 		this.saturday = saturday;
 	}
 
-//	@NotNull
+	@CreationTimestamp
     @Column(name = "created")
 	public Date getCreated() {
 		return created;
@@ -258,7 +289,7 @@ public class Course extends AbstractEntity {
 		this.created = created;
 	}
 
-//	@NotNull
+	@UpdateTimestamp
     @Column(name = "updated")
 	public Date getUpdated() {
 		return updated;
@@ -277,6 +308,18 @@ public class Course extends AbstractEntity {
 				+ ", wednesday=" + wednesday + ", thursday=" + thursday + ", friday=" + friday + ", saturday="
 				+ saturday + ", created=" + created + ", updated=" + updated + "]";
 	}
+	
+//	public String getFormattedStartDate()
+//	{
+//	    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+//	    return dateFormat.format(startDate);
+//	}
+	
+//	public String getFormattedEndDate()
+//	{
+//	    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+//	    return dateFormat.format(endDate);
+//	}
 
 	//@ManyToOne
 //	@Column(name = "semester")

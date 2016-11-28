@@ -6,9 +6,14 @@
 
 	<div th:replace="template :: navigation"></div>
 
-	<h1>Add a New Course</h1>
+	<h1>Course Details</h1>
 
-	<form action="#" th:action="@{/admin/add-course}" th:object="${course}" method="post" >
+	<form th:action="@{/course}" th:object="${course}" method="post" >
+		<input type="hidden" th:field="*{uid}"/>
+		<!-- <input type="text" th:value="*{#dates.format(updated.createNow(), 'M/d/yyyy'}"/>   -->
+
+		<!--  <input type="hidden" th:field="*{version}"/> 	 -->
+
 	    <label>
 	        <div>Course Code</div>
 	        <input class="short-text" type="text" th:field="*{courseCode}"></input>
@@ -35,23 +40,23 @@
 	    
 	    <label>
 	        <div>Fee</div>
-	        <input class="short-text" type="text" th:field="*{fee}"></input>
-			<span class="error" th:if="${#fields.hasErrors('fee')}"  th:errors="*{fee}">Name Error</span>
+	        <input class="short-text" type="text" name = "fee" id="fee" th:value="*{#numbers.formatDecimal(fee,1,2)}"></input>
+			<span class="error" th:text="${feeError}">Fee error</span>
 	    </label>   
 	    
 		<label>
 	        <div>Start Date</div>
-	        <input class="short-text" type="text" th:field="*{startDate}"></input>
-			<span class="error" th:if="${#fields.hasErrors('startDate')}"  th:errors="*{startDate}">Start Date Error</span>
+	        <input class="short-text" type="text" id="startDate" name="startDate" placeholder="m/d/yyyy" th:value="*{#dates.format(startDate,'M/d/yyyy')}"></input>
+			<span class="error" th:text="${startError}">Start Date parsing error</span>
 	    </label>  
 	    
 	    <label>
 	        <div>End Date</div>
-	        <input class="short-text" type="text" th:field="*{endDate}"></input>
-			<span class="error" th:if="${#fields.hasErrors('endDate')}"  th:errors="*{endDate}">End Date Error</span>
+	        <input class="short-text" type="text" id="endDate" name="endDate" placeholder="m/d/yyyy" th:value="*{#dates.format(endDate,'M/d/yyyy')}"></input>
+			<span class="error" th:text="${endError}">End Date parsing error</span>
 	    </label>  
 	    
-	    		<label>
+	    <label>
 	        <div>Start Time</div>
 	        <input class="short-text" type="text" th:field="*{startTime}"></input>
 			<span class="error" th:if="${#fields.hasErrors('startTime')}"  th:errors="*{startTime}">Start Time Error</span>
@@ -66,19 +71,19 @@
 	    <label>
 	        <div>Number of Classes</div>
 	        <input class="short-text" type="text" th:field="*{numClasses}"></input>
-			<span class="error" th:if="${#fields.hasErrors('numClasses')}"  th:errors="*{numClasses}">Number of Classes Error</span>
-	    </label> 
-	    
+			<span class="error" th:text="${numClassesError}">Number of Classes error</span>
+		</label> 
+	       
 	   <label>
 	        <div>Minimum Students</div>
 	        <input class="short-text" type="text" th:field="*{minStudents}"></input>
-			<span class="error" th:if="${#fields.hasErrors('minStudents')}"  th:errors="*{minStudents}">Minimum Students Error</span>
+			<span class="error" th:text="${minError}">Min validation error</span>
 	    </label> 
 	    
 	    <label>
 	        <div>Maximum Students</div>
 	        <input class="short-text" type="text" th:field="*{maxStudents}"></input>
-			<span class="error" th:if="${#fields.hasErrors('maxStudents')}"  th:errors="*{maxStudents}">Number of Classes Error</span>
+			<span class="error" th:text="${maxError}">Max validation error</span>
 	    </label> 
 	    
 	    <div>Class Day(s)</div>
@@ -118,11 +123,13 @@
 			<span class="error" th:if="${#fields.hasErrors('sunday')}"  th:errors="*{sunday}">Sunday Error</span>
 	    </label> 
 
-	    <button type="submit">Add Course</button>
+	    <button type="submit">Save</button>
 
 	</form>
 
 	<a href="/admin/main">Cancel</a>
+	
+	<div th:replace="template :: footer"></div>
 	
 </body>
 </html>

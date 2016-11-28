@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head th:fragment="dochead">
-	<link th:href="@{/css/normalize.css}" rel="stylesheet" />
-	<link th:href="@{/css/styles.css}" rel="stylesheet" />
-	<title>Adult Continuing Education (ACE)</title>
-</head>
+	<head th:fragment="dochead">
+		<link th:href="@{/css/normalize.css}" rel="stylesheet" />
+		<link th:href="@{/css/styles.css}" rel="stylesheet" />
+		<title>Adult Continuing Education (ACE)</title>
+	</head>
 
-<body>
+	<body>	
 
-<nav th:fragment="navigation">
-	<ul id="user-account">
-	    <li><a href="/login">login</a></li>
-	    <li><a href="/logout">logout</a></li>
-	</ul>
-	<ul>
-        <li><a href="/">home</a></li>
-    </ul>
-</nav>
+	<nav th:fragment="navigation">
+		<ul id="user-account">
+		    <li><a href="/login">login</a></li>
+		    <li><a href="/logout">logout</a></li>
+		</ul>
+		<ul>
+	        <li><a href="/">home</a></li>
+	    </ul>
+	</nav>
+
+
+    <div id="footer" th:fragment="footer">
+        <p>Copyright &copy; 2016 Mary Kay Murdaugh</p>
+        <p>Final project for LaunchCode Summer of Code 2016</p>
+        <p>Created using Java, Spring, Thymeleaf</p>
+    </div>
+    
 
 </body>
 </html>

@@ -10,7 +10,7 @@
 
 	<form th:action="@{/course}" th:object="${course}" method="post" >
 		<input type="hidden" th:field="*{uid}"/>
-
+		
 	    <label>
 	        <div>Course Code</div>
 	        <input class="short-text" type="text" th:field="*{courseCode}"></input>
@@ -89,8 +89,7 @@
 	        <div>Maximum Students</div>
 	        <input class="short-text" type="text" th:field="*{maxStudents}"></input>
 			<span class="error" th:text="${maxError}">Max validation error</span>
-	    </label> 
-	    
+	    </label> 	    
 
 	    <label>
 	    	<div>Class Day(s)</div>
@@ -133,7 +132,7 @@
 
 	</form>
 
-	<a href="/admin/main">Cancel</a>
+	<a href="/courses">Cancel</a>
 	
 	<div th:replace="template :: footer"></div>
 	

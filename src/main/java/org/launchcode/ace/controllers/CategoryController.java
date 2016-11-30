@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("courseCategory")
 public class CategoryController extends AbstractController {
 	
-	//Create
+		//Create
 		@RequestMapping(value = "/category", method = RequestMethod.GET)
 		public String newCategory(Model model) {
 			model.addAttribute("courseCategory", new CourseCategory());

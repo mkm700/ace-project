@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+
+	<div th:replace="template :: navigation"></div>
+
+	<h1>Student List</h1>
+
+			<table>
+	            <tr>
+	                <th>Username</th>
+	                <th>First Name</th>
+	                <th>Last Name</th>
+	                <th>Email</th>
+	                <th>View</th>
+	                <th>Edit</th>
+	                <th>Delete</th>
+            	</tr>
+				<tr th:each="student : ${students}">
+	                <td th:text="${student.username}">Username</td>
+	                <td th:text="${student.firstName}">First Name</td>
+	                <td th:text="${student.lastName}">Last Name</td>
+					<td th:text="${student.email}">Email</td>
+	                <td><a th:href="${'/student/edit/' + student.uid}">Edit</a></td>
+	                <td><a th:href="${'/student/delete/' + student.uid}">Delete</a></td>
+	            </tr>
+	            
+			</table>
+		<!-- </div>	-->
+
+	<div th:replace="template :: footer"></div>
+</body>
+</html>

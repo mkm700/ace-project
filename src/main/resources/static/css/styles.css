@@ -52,6 +52,15 @@ hr {
     margin: 20px auto;
 }
 
+table {
+	border-collapse: collapse;
+}
+td {
+	border: 1px solid #ddd;
+	padding: 10px;
+	margin: 0;
+}
+
 nav ul {
     padding: 0;
     display: inline-block;

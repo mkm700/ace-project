@@ -32,6 +32,7 @@ public class Course extends AbstractEntity {
 	private int numClasses = 1;
 	private int minStudents = 1;
 	private int maxStudents = 1;
+	private int spacesRemain = -1;
 	private boolean sunday;
 	private boolean monday;
 	private boolean tuesday;
@@ -68,6 +69,7 @@ public class Course extends AbstractEntity {
 	this.numClasses = numClasses;
 	this.minStudents = minStudents;
 	this.maxStudents = maxStudents;
+	this.spacesRemain = maxStudents;
 	this.sunday = sunday;
 	this.monday = monday;
 	this.tuesday = tuesday;
@@ -75,8 +77,6 @@ public class Course extends AbstractEntity {
 	this.thursday = thursday;
 	this.friday = friday;
 	this.saturday = saturday;
-	this.created = new Date();
-	this.updated = new Date();
 }
 
 	//no-arg constructor for Hibernate
@@ -200,6 +200,15 @@ public class Course extends AbstractEntity {
 
 	public void setMaxStudents(int maxStudents) {
 		this.maxStudents = maxStudents;
+	}
+	
+	@Column(name = "spaces_remain")
+	public int getSpacesRemain() {
+		return spacesRemain;
+	}
+
+	public void setSpacesRemain(int spacesRemain) {
+		this.spacesRemain = spacesRemain;
 	}
 
     @Column(name = "sunday")

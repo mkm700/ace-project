@@ -48,6 +48,7 @@ public class CourseController extends AbstractController {
 							HttpServletRequest request, Model model) {
 
 		boolean formErrors = false;
+		
 		//validate form input
 		String feeStr = request.getParameter("fee");
 		try {
@@ -133,9 +134,16 @@ public class CourseController extends AbstractController {
 			return "courseform";
 		}
 		
+		//if new course, set the Remaining Spaces equal to max students allowed
+		//TODO: find a better way to do this
+		if (course.getSpacesRemain() == -1) {
+			course.setSpacesRemain(Integer.parseInt(maxStr));
+		}
+		
 		//save the course to the DB
 		courseDao.save(course);
-		//return "redirect:/course/" + course.getUid();
+		
+		
 		return "redirect:/courses";
 	}
 	

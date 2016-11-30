@@ -6,7 +6,7 @@
 
 	<div th:replace="template :: navigation"></div>
 
-	<h1>Course Details</h1>
+	<h1>Course List</h1>
 		<!--  <div th:if="${not #lists.isEmpty(courses)}">	-->
 			<table>
 	            <tr>
@@ -20,7 +20,7 @@
 	                <th>Delete</th>
             	</tr>
 				<tr th:each="course : ${courses}">
-	                <td th:text="${course.courseCode}"><a href="/course/${course.uid}">Course Code</a></td>
+	                <td><a th:href="${'/course/' + course.uid}"><span th:text="${course.courseCode}">Course Code</span></a></td>
 	                <td th:text="${course.name}">Name</td>
 	                <td th:text="${course.courseCategory.catName}">Category</td>
 	                <td th:text="${ #dates.format(course.startDate, 'M-d-yyyy') }">Start Date</td>

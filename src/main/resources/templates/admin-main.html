@@ -6,22 +6,69 @@
 
 	<div th:replace="template :: navigation"></div>
 
-	<h1>Admin Main Menu</h1>
+	<h1>Main Menu</h1>
 	<div class="confirm" th:text="${confirmMessage}"></div>
 
 	<h2>Courses</h2>
+	<ul>
+		<li>&#x2713;<a href="/course">Add a New Course</a></li>
+		<li>&#x2713;<a href="/courses">List Courses</a> (<strike>View</strike>, <strike>Edit</strike>, <strike>Delete</strike>, Roster)</li>
+		<li>Register</li>
+	</ul>
+	
+	<h2>Students</h2>
+	<ul>
+		<li>&#x2713;<a href="/student">Add a New Student</a></li>
+		<li>&#x2713;<a href="/students">List Students</a> (Edit, <strike>Delete</strike>, Course History)</li>
+	</ul>
+	
+	<h2>Other Admin Stuff</h2>
+	<h3>Categories</h3>
+	<ul>
+		<li>&#x2713;<a href="/category">Add a New Category</a></li>
+		<li>&#x2713;<a href="/categories">List Categories</a> (<strike>Edit</strike>, <strike>Delete</strike>)</li>
+	</ul>
+	
+	<h3>Instructors</h3>
+	<ul>
+		<li><a href="/instructor">Add a New Instructor</a></li>
+		<li><a href="/instructors">List Instructors</a> (Edit, Delete, Teaching History)</li>
+	</ul>
+	
+	<h3>Reports</h3>
+	<ul>
+		<li>Low enrollment courses</li>
+		<li>Revenue by Semester</li>
+	</ul>
+	
+
+	<h3>Other To-Do's</h3>
+	<ul>
+		<li>Navigation</li>
+		<li>Add semester to Course (default Course list to current semester)</li>
+		<li>Registration</li>
+		<li>Implement security for student and admin</li>
+	</ul>
+	
+	<h3>Issues</h3>
 		<ul>
-			<li><a href="/course">Add a New Course</a></li>
-			<li><a href="/courses">List Courses</a></li>
-			<li><a href="/course/import">Import Courses</a></li>
+		<li>How to account for change to spaces remaining if max students changes?</li>
+		<li>Differentiating "Add Student" from "Update Student" (ie how to handle password)</li>
 		</ul>
 	
-		<h2>Categories</h2>
-		<ul>
-			<li><a href="/category">Add a New Category</a></li>
-			<li><a href="/categories">List Categories</a></li>
-		</ul>
-	
+	<h3>Future Considerations</h3>
+	<ul>
+		<li>Bootstrap</li>
+		<li>Import Courses</li>
+		<li>Export Students</li>
+		<li>Search for courses by name, category</li>
+		<li>Address verification using USPS API</li>
+		<li>Calendar Listing of Courses</li>
+		<li>Waiting List</li>
+		<li>Senior Pricing based on age</li>
+		<li>Age requirements for course</li>
+	</ul>
+
 	
 </body>
 </html>

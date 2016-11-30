@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.launchcode.ace.models.User;
 import org.launchcode.ace.models.dao.CourseCategoryDao;
 import org.launchcode.ace.models.dao.CourseDao;
+import org.launchcode.ace.models.dao.StudentDao;
 import org.launchcode.ace.models.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,8 +17,12 @@ public abstract class AbstractController {
 	@Autowired
     protected CourseDao courseDao;
 	
+	@Autowired 
+	protected StudentDao studentDao;
+	
 	@Autowired
     protected CourseCategoryDao courseCategoryDao;
+	
 
     public static final String userSessionKey = "user_id";
 

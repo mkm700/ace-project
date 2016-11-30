@@ -12,25 +12,31 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "user")
-public class User extends Person {
+public abstract class User extends AbstractEntity {
 	
 	private String username;
 	private String pwHash;
+	private String firstName;
+	private String lastName;
+	
 	private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
 	//no-arg constructor
 	public User() {}
 	
-	public User(String username, String password) {
+	public User(String username, String password, String firstName, String lastName) {
 		
 		super();
 		
-		if (!isValidUsername(username)) {
-			throw new IllegalArgumentException("Invalid username");
-		}
+//		if (!isValidUsername(username)) {
+//			throw new IllegalArgumentException("Invalid username");
+//		}
 		
 		this.username = username;
-		this.pwHash = hashPassword(password);
+		this.pwHash = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		
 		
 	}
 		
@@ -40,24 +46,41 @@ public class User extends Person {
 		return pwHash;
 	}
 	
-	@SuppressWarnings("unused")
-	private void setPwHash(String pwHash) {
-		this.pwHash = pwHash;
+	//@SuppressWarnings("unused")
+	public void setPwHash(String password) {
+		this.pwHash = hashPassword(password);
 	}
 	
 	@NotNull
     @Column(name = "username", unique = true)
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 	
 	private static String hashPassword(String password) {		
 		return encoder.encode(password);
 	}
 	
-	@SuppressWarnings("unused")
-	private void setUsername(String username) {
+	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	@Column(name="first_name")
+	public String getFirstName() {
+		return this.firstName;
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	@Column(name="last_name")
+	public String getLastName() {
+		return this.lastName;
+	}
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
 	//checks that the given pw is correct for the user

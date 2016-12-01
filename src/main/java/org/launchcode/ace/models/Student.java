@@ -1,9 +1,13 @@
 package org.launchcode.ace.models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -15,7 +19,8 @@ import org.hibernate.validator.constraints.Email;
 @Table(name = "student")
 public class Student extends User {
 	
-	private String address1;
+	private String addressStreet;
+	private String addressApt;
 	private String city;
 	private String state;
 	private String zip;
@@ -26,19 +31,16 @@ public class Student extends User {
 	private boolean emailList;
 	private Date created;
 	private Date updated;
-//	private List<Course> courses;
+	private List<Course> courses;
 
 	//no-arg constructor
 	public Student() {}
 	
-//	protected void addCourse(Course course) {
-//		courses.add(course);
-//	}
-	
-	public Student(String address1, String city, String state,
+	public Student(String addressStreet, String addressApt, String city, String state,
 			String zip, String phone, String email, String notes, boolean mailList, boolean emailList) {
 		super();
-		this.address1 = address1;
+		this.addressStreet = addressStreet;
+		this.addressApt = addressApt;
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
@@ -47,18 +49,25 @@ public class Student extends User {
 		this.notes = notes;
 		this.mailList = mailList;
 		this.emailList = emailList;
-//		this.courses = new ArrayList<Course>();
+		this.courses = new ArrayList<Course>();
 	}
 	
-
-
-	@Column(name = "address1")
-	public String getAddress1() {
-		return address1;
+	@Column(name = "addressStreet")
+	public String getAddressStreet() {
+		return addressStreet;
 	}
 
-	public void setAddress1(String address1) {
-		this.address1 = address1;
+	public void setAddressStreet(String addressStreet) {
+		this.addressStreet = addressStreet;
+	}
+
+	@Column(name = "addressApt")
+	public String getAddressApt() {
+		return addressApt;
+	}
+
+	public void setAddressApt(String addressApt) {
+		this.addressApt = addressApt;
 	}
 
 	@Column(name = "city")
@@ -98,8 +107,8 @@ public class Student extends User {
 		this.phone = phone;
 	}
 
-	@Email(message="Please provide a valid email address")
-	@Pattern(regexp=".+@.+\\..+", message="Please provide a valid email address")
+	@Email(message="Please provide valid email address")
+	@Pattern(regexp=".+@.+\\..+", message="That email is not valid")
 	@Column(name = "email")
 	public String getEmail() {
 		return email;
@@ -156,15 +165,25 @@ public class Student extends User {
 		this.updated = updated;
 	}
 
-	//@OneToMany
-    //@JoinColumn(name = "course_uid")
-//	@Column(name = "course_list")
-//    public List<Course> getCourses() {
-//        return this.courses;
-//    }
+	@ManyToMany(cascade=CascadeType.ALL, mappedBy="students")
+    public List<Course> getCourses() {
+        return this.courses;
+    }
 	
-//	public void setCourses(List<Course> courses) {
-//		this.courses = courses;
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [addressStreet=" + addressStreet + ", addressApt=" + addressApt + ", city=" + city + ", state="
+				+ state + ", zip=" + zip + ", phone=" + phone + ", email=" + email + ", notes=" + notes + ", mailList="
+				+ mailList + ", emailList=" + emailList + ", created=" + created + ", updated=" + updated + ", courses="
+				+ courses + "]";
+	}
+	
+//	protected void addCourse(Course course) {
+//		courses.add(course);
 //	}
 
 }

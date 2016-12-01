@@ -8,27 +8,9 @@
 
 	<h1>Student Info</h1>
 
-	<form th:action="@{/student}" th:object="${student}" method="post" >
-
+	<form th:action="@{/student/edit/{uid}}" th:object="${student}" method="post" >
+		<input type="hidden" th:field="*{uid}"/>
 		
-	    <label>
-	    	<div>Username</div>
-               <input class="short-text" type="text" th:field="*{username}"></input>
-               <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</span>
-           	   <span class="error" th:text="${username_error}"></span>
-           </label>
-	    <label>
-	    	<div>Password</div>
-            	<input type="password" th:field="*{pwHash}"></input>
-            	<span class="error" th:if="${#fields.hasErrors('pwHash')}" th:errors="*{pwHash}">PW error</span>
-        		<span class="error" th:text="${password_error}"></span>
-        </label>
-	    <label>
-	    	<div>Verify Password</div>
-               <input type="password" name = "verify" th:value="${verify}"></input>
-               <span class="error" th:text="${verify_error}"></span>
-        </label>
-
 	    <label>
 	        <div>First Name</div>
 	        <input class="short-text" type="text" th:field="*{firstName}"></input>
@@ -52,7 +34,7 @@
 	        <input type="text" th:field="*{addressApt}"></input>
 			<span class="error" th:if="${#fields.hasErrors('addressApt')}"  th:errors="*{addressApt}">Address Apt Error</span>
 	    </label>
-	    	    
+	    
 	    <label>
 	        <div>City</div>
 	        <input class="short-text" type="text" th:field="*{city}"></input>

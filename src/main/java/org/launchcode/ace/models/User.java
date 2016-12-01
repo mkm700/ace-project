@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 @Entity
 @Table(name = "user")
@@ -65,6 +67,7 @@ public abstract class User extends AbstractEntity {
 		this.username = username;
 	}
 	
+	@NotEmpty
 	@Column(name="first_name")
 	public String getFirstName() {
 		return this.firstName;
@@ -74,6 +77,7 @@ public abstract class User extends AbstractEntity {
 		this.firstName = firstName;
 	}
 	
+	@NotEmpty
 	@Column(name="last_name")
 	public String getLastName() {
 		return this.lastName;
@@ -86,6 +90,7 @@ public abstract class User extends AbstractEntity {
 	//checks that the given pw is correct for the user
 	//user.isMatchingPassword(...)
 	public boolean isMatchingPassword(String password) {
+		System.out.println(pwHash);
 		return encoder.matches(password, pwHash);
 	}
 	

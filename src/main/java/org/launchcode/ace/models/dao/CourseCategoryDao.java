@@ -9,4 +9,9 @@ public interface CourseCategoryDao extends CrudRepository<CourseCategory, Intege
 
 	CourseCategory findByUid(int uid);	
 	List<CourseCategory> findAll();
+	
+	//TODO: OrderBy?
+	//http://docs.spring.io/spring-data/jpa/docs/current/reference/html/ 
+	//(Example 13. Query creation from method names)
+	//List<CourseCategory> findAllOrderByCatNameAsc();
 }

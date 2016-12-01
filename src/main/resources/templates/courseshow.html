@@ -75,11 +75,6 @@
 		</label> 
 	    
 	    <label>
-	        <div>Spaces Remaining</div>
-	        <p th:text="${course.spacesRemain}"></p>
-		</label>
-
-	    <label>
 	    	<div>Meets on:</div>
 	    	<span th:if="${course.monday}">Monday</span>
 	   	</label>
@@ -102,14 +97,22 @@
 	    	<span th:if="${course.sunday}">Sunday</span>
 	   	</label>
 	   	<label>
+	        <div>Spaces Remaining</div>
+	        <p th:text="${course.spacesRemain}"></p>
+	        <p th:if="${course.spacesRemain} == 0" class="full">This class is full</p>
+		</label>
+	   	
+	   	<label class="timestamp">
 	   		<span>Created on: </span>
 	        <span th:text="${ #dates.format(course.created, 'M-d-yyyy h:mm a') }"></span>
-	   	</label>
-	   		   	<label>
+		</label>
+		<label class="timestamp">
 	   		<span>Last Updated: </span>
 	        <span th:text="${ #dates.format(course.updated, 'M-d-yyyy h:mm a') }"></span>
 	   	</label>
 	</form>
+	
+	<p><a th:if="${course.spacesRemain} > 0" th:href="${'/course/register/' + course.uid}">Register for this Course</a></p>
 
 	<div th:replace="template :: footer"></div>
 </body>

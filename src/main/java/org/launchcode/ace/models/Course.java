@@ -1,10 +1,14 @@
 package org.launchcode.ace.models;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -42,6 +46,7 @@ public class Course extends AbstractEntity {
 	private boolean saturday;
 	private Date created;
 	private Date updated;
+	private List<Student> roster;
 //	private Semester semester;
 	
 	//category
@@ -292,6 +297,17 @@ public class Course extends AbstractEntity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
+	
+    @ManyToMany(cascade=CascadeType.ALL)  
+    @JoinTable(name="student_course", joinColumns=@JoinColumn(name="course.uid"), inverseJoinColumns=@JoinColumn(name="student.uid"))  
+    public List<Student> getStudents()  
+    {  
+        return this.roster;  
+    }  
+    public void setStudents(List<Student> roster)  
+    {  
+        this.roster = roster;
+    }  
 
 	@Override
 	public String toString() {
@@ -303,17 +319,6 @@ public class Course extends AbstractEntity {
 				+ saturday + ", created=" + created + ", updated=" + updated + "]";
 	}
 	
-//	public String getFormattedStartDate()
-//	{
-//	    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-//	    return dateFormat.format(startDate);
-//	}
-	
-//	public String getFormattedEndDate()
-//	{
-//	    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-//	    return dateFormat.format(endDate);
-//	}
 
 	//@ManyToOne
 //	@Column(name = "semester")

@@ -36,8 +36,13 @@ public class AuthenticationController extends AbstractController {
 		String first = request.getParameter("firstName");
 		String last = request.getParameter("lastName");
 		String addr = request.getParameter("address1");
+		String email = request.getParameter("email");
 		
 		boolean isValidated = true;
+		
+		if (bindingResult.hasErrors() ) {
+			isValidated = false;
+		}
 	
 		//check if username already exists
 		User checkForUser = userDao.findByUsername(un);
@@ -62,31 +67,19 @@ public class AuthenticationController extends AbstractController {
 			isValidated = false;
 		}
 		
-		//if they validate, 
-		//store them in the session (setUserInSession())
-		//create a new student or admin
-		
+		//if they validate and no field errors...
 		if (isValidated) {
-			HttpSession thisSession = request.getSession();
 			
-			//hash password
-			//save to DB
+			//hash password and save to DB
+			//TODO: should this be changed to user?
 			student.setPwHash(pw);
 			userDao.save(student);
 			
-			//stores user in session
+			//store them in the session
+			HttpSession thisSession = request.getSession();
 			setUserInSession(thisSession, student);
 			
-			//if admin
-//			User newBlogUser = new User(un, pw);
-//			
-//			//saves to DB
-//			userDao.save(newBlogUser);
-//			
-//			//stores user in session
-//			setUserInSession(thisSession, newBlogUser);
-			
-			return "redirect:/";
+			return "redirect:/courses";
 		}
 		
 		else {
@@ -112,19 +105,18 @@ public class AuthenticationController extends AbstractController {
 		
 		//get user by their username
 		//get data out of database
-		//List<HelloLog> logs = helloLogDao.findAll();
-		User blogUser = userDao.findByUsername(un);
-		if (blogUser == null) {
+		User user = userDao.findByUsername(un);
+		if (user == null) {
 			model.addAttribute("username", un);
 			model.addAttribute("error","Couldn't find that user.");
 			return "login";
 		}
 
 		//check password is correct
-		if (blogUser.isMatchingPassword(pw)) {
+		if (user.isMatchingPassword(pw)) {
 			//log them in, if so (ie setting the user in the session)
 			HttpSession thisSession = request.getSession();
-			setUserInSession(thisSession, blogUser);
+			setUserInSession(thisSession, user);
 		}
 		else {
 			//display error message, reset username in form, and return to login page
@@ -133,7 +125,7 @@ public class AuthenticationController extends AbstractController {
 			return "login";
 		}
 		
-		return "redirect:blog/newpost";
+		return "redirect:/student/coursehistory";
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

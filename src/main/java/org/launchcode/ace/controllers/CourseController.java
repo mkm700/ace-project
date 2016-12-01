@@ -2,13 +2,17 @@ package org.launchcode.ace.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.launchcode.ace.models.Course;
 import org.launchcode.ace.models.CourseCategory;
+import org.launchcode.ace.models.Student;
+import org.launchcode.ace.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +31,7 @@ public class CourseController extends AbstractController {
 	    return courseCategoryDao.findAll();
 	}
 	
+	//Main Menu
 	@RequestMapping(value = "/")
 	public String adminMain(HttpServletRequest request, Model model) {
 		String message = request.getParameter("confirmMessage");
@@ -162,98 +167,43 @@ public class CourseController extends AbstractController {
     }
     
     //Update
-    @RequestMapping("course/edit/{uid}")
+    @RequestMapping("/course/edit/{uid}")
     public String edit(@PathVariable Integer uid, Model model){
         model.addAttribute("course", courseDao.findByUid(uid));
         return "courseform";
     }
     
     //Delete
-	@RequestMapping("course/delete/{uid}")
+	@RequestMapping("/course/delete/{uid}")
 	public String delete(@PathVariable Integer uid){
 	    courseDao.delete(uid);
 	    return "redirect:/courses";
 	}
-
-
-
-//	@RequestMapping(value = "/admin/add-course", method = RequestMethod.POST)
-//	public String saveCourse(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult, Model model,
-//								  RedirectAttributes redirectAttributes) {
-//        if (bindingResult.hasErrors()) {
-//        	//System.out.println("BINDING ERROR: " + bindingResult + "END BINDING RESULT");
-//            return "add_course";
-//        }
-//
-//        //save the course to the DB
-//		courseDao.save(course);
-//		String message = " was added";
-//		redirectAttributes.addAttribute("confirmMessage", message);
-//        
-//
-//        return "redirect:/admin/main";
-//    }
-
 	
-//	@RequestMapping(value = "/admin/add-course", method = RequestMethod.POST)
-//	public String addCourse(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
-//		//get request parameters
-//			String courseCode = request.getParameter("courseCode");
-//			String name = request.getParameter("name");
-//			String descShort = request.getParameter("descShort");
-//			float fee = Float.valueOf(request.getParameter("fee"));
-//			
-//			//validate fields
-//			//required parameters
-//			boolean isError = false;
-//			
-//			if (courseCode.isEmpty()) {
-//				model.addAttribute("errorCourseCode", "Course Code is required");
-//				isError = true;
-//			}
-//			
-//			if (name.isEmpty()) {
-//				model.addAttribute("errorName", "Course Name is required");
-//				isError = true;
-//			}
-//			
-//			if (descShort.isEmpty()) {
-//				model.addAttribute("errorDescShort", "Short Description is required");
-//				isError = true;
-//			}
-//			
-////			String sFee = request.getParameter("fee");
-////			float fee = 0;
-////			try {
-////				fee = Float.parseFloat(sFee);
-////			}
-//			
-//			//if valiadtion problem(s), set field values and return to form
-//			if (isError) {
-//				model.addAttribute("courseCode", courseCode);
-//				model.addAttribute("name", name);
-//				model.addAttribute("descShort", descShort);
-//				model.addAttribute("fee", fee);
-//				return "add-course";
-//			}
-//			
-//			//get the user and username
-////			HttpSession thisSession = request.getSession();
-////			User author = getUserFromSession(thisSession);
-//			
-//			//create new Course, save required fields to DB, update optional fields
-//			Course course = new Course(courseCode, name, descShort);
-//
-//				courseDao.save(course);
-//				String message = courseCode + " was added";
-//				redirectAttributes.addAttribute("confirmMessage", message);
-//
-//			
-//			// redirect to admin main menu
-//			return "redirect:/admin/main";
-//	}
+	//Register a student
+	@RequestMapping("/course/register/{uid}")
+	public String register(@PathVariable Integer uid, Model model, HttpServletRequest request) {
+		HttpSession thisSession = request.getSession();
+		User user = getUserFromSession(thisSession);
+		int suid = user.getUid();
+		Student student = studentDao.findByUid(suid);
+		model.addAttribute("student", student);
+		
+		//hardcoded to get over user / student session issue
+//		Student student = studentDao.findByUid(9);
+//		model.addAttribute("student", student);
+		
+		Course course = courseDao.findByUid(uid);
+		model.addAttribute("course", course);
+		
+		return "register";
+	}
 	
 	
+	
+	
+	
+
 	
 
 }

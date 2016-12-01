@@ -17,11 +17,11 @@ public class AceProjectApplicationTests {
 	public void contextLoads() {
 	}
 	
-	@Test
-	public void newCourse() {
-		Course c = new Course("FIN200", "Making (and Following) a Reasonable Budget", "Get your home finances under control",
-				10.00f, "10:00am", "12:00pm", 4, 5, 20);
-		System.out.println(c);
-	}
+//	@Test
+//	public void newCourse() {
+//		Course c = new Course("FIN200", "Making (and Following) a Reasonable Budget", "Get your home finances under control",
+//				10.00f, "10:00am", "12:00pm", 4, 5, 20);
+//		System.out.println(c);
+//	}
 
 }

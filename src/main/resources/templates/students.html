@@ -7,28 +7,30 @@
 	<div th:replace="template :: navigation"></div>
 
 	<h1>Student List</h1>
+	
+	<p><a href="/student">Add a New Student</a></p>
+	
+	<table>
+           <tr>
+               <th>Username</th>
+               <th>First Name</th>
+               <th>Last Name</th>
+               <th>Email</th>
 
-			<table>
-	            <tr>
-	                <th>Username</th>
-	                <th>First Name</th>
-	                <th>Last Name</th>
-	                <th>Email</th>
-	                <th>View</th>
-	                <th>Edit</th>
-	                <th>Delete</th>
-            	</tr>
-				<tr th:each="student : ${students}">
-	                <td th:text="${student.username}">Username</td>
-	                <td th:text="${student.firstName}">First Name</td>
-	                <td th:text="${student.lastName}">Last Name</td>
-					<td th:text="${student.email}">Email</td>
-	                <td><a th:href="${'/student/edit/' + student.uid}">Edit</a></td>
-	                <td><a th:href="${'/student/delete/' + student.uid}">Delete</a></td>
-	            </tr>
-	            
-			</table>
-		<!-- </div>	-->
+          	</tr>
+		<tr th:each="student : ${students}">
+               <td th:text="${student.username}">Username</td>
+               <td th:text="${student.firstName}">First Name</td>
+               <td th:text="${student.lastName}">Last Name</td>
+			<td th:text="${student.email}">Email</td>
+			<td><a th:href="${'/student/history/' + student.uid}">Course History</a></td>
+               <td><a th:href="${'/student/edit/' + student.uid}">Edit</a></td>
+               <td><a th:href="${'/student/delete/' + student.uid}">Delete</a></td>
+
+           </tr>
+           
+	</table>
+
 
 	<div th:replace="template :: footer"></div>
 </body>

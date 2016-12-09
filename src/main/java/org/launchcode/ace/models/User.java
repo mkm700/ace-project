@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
 @Entity
 @Table(name = "user")
 public abstract class User extends AbstractEntity {
@@ -43,14 +42,14 @@ public abstract class User extends AbstractEntity {
 	}
 		
 	@NotNull
-    @Column(name = "pwhash")
+    @Column(name = "pw_hash")
 	public String getPwHash() {
 		return pwHash;
 	}
 	
 	//@SuppressWarnings("unused")
 	public void setPwHash(String password) {
-		this.pwHash = hashPassword(password);
+		this.pwHash = password;
 	}
 	
 	@NotNull
@@ -59,7 +58,7 @@ public abstract class User extends AbstractEntity {
 		return this.username;
 	}
 	
-	private static String hashPassword(String password) {		
+	public static String hashPassword(String password) {
 		return encoder.encode(password);
 	}
 	
@@ -91,6 +90,7 @@ public abstract class User extends AbstractEntity {
 	//user.isMatchingPassword(...)
 	public boolean isMatchingPassword(String password) {
 		System.out.println(pwHash);
+		System.out.println(password);
 		return encoder.matches(password, pwHash);
 	}
 	

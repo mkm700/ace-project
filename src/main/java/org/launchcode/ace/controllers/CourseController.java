@@ -181,24 +181,31 @@ public class CourseController extends AbstractController {
 	}
 	
 	//Register a student
-	@RequestMapping("/course/register/{uid}")
+	@RequestMapping(value = "/course/register/{uid}", method = RequestMethod.GET)
 	public String register(@PathVariable Integer uid, Model model, HttpServletRequest request) {
 		HttpSession thisSession = request.getSession();
 		User user = getUserFromSession(thisSession);
 		int suid = user.getUid();
-		Student student = studentDao.findByUid(suid);
-		model.addAttribute("student", student);
-		
-		//hardcoded to get over user / student session issue
-//		Student student = studentDao.findByUid(9);
-//		model.addAttribute("student", student);
-		
-		Course course = courseDao.findByUid(uid);
-		model.addAttribute("course", course);
-		
-		return "register";
+		model.addAttribute("student", studentDao.findByUid(suid));
+		model.addAttribute("course", courseDao.findByUid(uid));
+		return "registerform";
 	}
-	
+
+		
+	//Save Registration
+	@RequestMapping(value="/course/register/{uid}", method = RequestMethod.POST)
+	public String saveRegistration(HttpServletRequest request, Model model) {
+
+		//get request parameters
+		//validate parameters?
+		//create new Student_Course??
+		//add the student to the course roster
+		//subtract 1 from remaining spaces
+		//add the course to student history
+		//save Student_Course??
+		
+		return "redirect:/coursehistory";
+	}
 	
 	
 	

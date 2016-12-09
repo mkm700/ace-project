@@ -71,8 +71,7 @@ public class AuthenticationController extends AbstractController {
 		if (isValidated) {
 			
 			//hash password and save to DB
-			//TODO: should this be changed to user?
-			student.setPwHash(pw);
+			student.setPwHash(Student.hashPassword(pw));
 			userDao.save(student);
 			
 			//store them in the session

@@ -6,34 +6,40 @@
 
 	<div th:replace="template :: navigation"></div>
 
-	<h1>Main Menu</h1>
+	<h1>Admin Main Menu</h1>
 	<div class="confirm" th:text="${confirmMessage}"></div>
 
 	<h2>Courses</h2>
 	<ul>
-		<li>&#x2713;<a href="/course">Add a New Course</a></li>
-		<li>&#x2713;<a href="/courses">List Courses</a> (<del>View</del>, <del>Edit</del>, <del>Delete</del>, Roster)</li>
-		<li>Register</li>
+		<li><a href="/admin/course">Add a New Course</a></li>
+		<li><a href="/admin/courses">List Courses</a></li>
 	</ul>
 	
 	<h2>Students</h2>
 	<ul>
-		<li>&#x2713;<a href="/student">Add a New Student</a></li>
-		<li>&#x2713;<a href="/students">List Students</a> (Edit, <del>Delete</del>, Course History)</li>
+		<!-- <li><a href="#">Add a New Student</a></li>	 -->
+		<li><a href="/admin/students">List Students</a></li>
 	</ul>
 	
 	<h2>Other Admin Stuff</h2>
 	<h3>Categories</h3>
 	<ul>
-		<li>&#x2713;<a href="/category">Add a New Category</a></li>
-		<li>&#x2713;<a href="/categories">List Categories</a> (<del>Edit</del>, <del>Delete</del>)</li>
+		<li><a href="/admin/category">Add a New Category</a></li>
+		<li><a href="/admin/categories">List Categories</a></li>
 	</ul>
 	
+	<h3>Admin Users</h3>
+	<ul>
+		<li><a href="/admin/new">Add a New Admin User</a></li>
+	</ul>
+	
+<!--	
 	<h3>Instructors</h3>
 	<ul>
 		<li><a href="/instructor">Add a New Instructor</a></li>
 		<li><a href="/instructors">List Instructors</a> (Edit, Delete, Teaching History)</li>
 	</ul>
+-->
 	
 	<h3>Reports</h3>
 	<ul>
@@ -52,6 +58,7 @@
 	
 	<h3>Issues</h3>
 		<ul>
+		<li>Delete</li>
 		<li>How to account for change to spaces remaining if max students changes?</li>
 		<li>Differentiating "Add Student" from "Update Student" (ie how to handle password)</li>
 		</ul>

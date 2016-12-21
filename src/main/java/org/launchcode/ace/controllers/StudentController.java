@@ -3,11 +3,12 @@ package org.launchcode.ace.controllers;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.launchcode.ace.models.Course;
-import org.launchcode.ace.models.CourseCategory;
 import org.launchcode.ace.models.Student;
+import org.launchcode.ace.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,47 +23,125 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("student")
 public class StudentController extends AbstractController {
 	
+	//ADMIN
 	//Student List
-    @RequestMapping(value = "/students", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/students", method = RequestMethod.GET)
     public String list(Model model){
         model.addAttribute("students", studentDao.findAll());
         return "students";
     }
     
     //Update Profile
-    @RequestMapping("/student/edit/{uid}")
+    @RequestMapping("/admin/student/edit/{uid}")
     public String edit(@PathVariable Integer uid, Model model){
         model.addAttribute("student", studentDao.findByUid(uid));
         return "studentprofile";
     }
     
     //Save Profile		
-  	@RequestMapping(value = "/student/edit/{uid}", method = RequestMethod.POST)
+  	@RequestMapping(value = "/admin/student/edit/{uid}", method = RequestMethod.POST)
   	public String saveStudent(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult,
 			HttpServletRequest request, Model model) {
 		
   		//update the DB
 		studentDao.save(student);
 		
-		return "redirect:/students";
+		return "redirect:/admin/students";
   	}
     
     //Delete
-	@RequestMapping("/student/delete/{uid}")
+	@RequestMapping("/admin/student/delete/{uid}")
 	public String delete(@PathVariable Integer uid){
 	    studentDao.delete(uid);
-	    return "redirect:/students";
+	    return "redirect:/admin/students";
 	}
+	
+	//STUDENT
+	//Register a student
+	@RequestMapping(value = "/student/register/{cuid}", method = RequestMethod.GET)
+	public String register(@PathVariable Integer cuid, Model model, HttpServletRequest request) {
+		HttpSession thisSession = request.getSession();
+		//check if user is logged in
+		User user = getUserFromSession(thisSession);
+		if (user == null) {
+			return "redirect:/login";
+		} 
+		
+		//check if user is already enrolled in the course
+		Course course = courseDao.findByUid(cuid);
+		List<Student> students = course.getStudents();
+		if (students.contains(user)) {
+			model.addAttribute("course", course);
+			model.addAttribute("alreadyEnrolledError", "You are already enrolled in this class.");
+			return "courseshow";
+		}
+
+		//go to confirmation page
+		model.addAttribute("student", studentDao.findByUid(user.getUid()));
+		model.addAttribute("course", courseDao.findByUid(cuid));
+	
+		return "registerform";
+
+	}
+	
+	//Save Registration
+	@RequestMapping(value="/student/register/{uid}", method = RequestMethod.POST)
+	public String saveRegistration(@PathVariable Integer uid, Model model, HttpServletRequest request) {
+
+		//get student and course
+		HttpSession thisSession = request.getSession();
+		Student student = getStudentFromSession(thisSession);
+		int sUid = student.getUid();
+		Course course = courseDao.findByUid(uid);
+		
+		//TODO: validate parameters?
+		//TODO: check to see if they have already registered
+		
+
+		//add the student to the course roster, subtract 1 from remaining spaces
+		course.addStudent(student);
+		
+		//add the course to student history
+		student.addCourse(course);
+		
+		//save
+		studentDao.save(student);
+		courseDao.save(course);
+		
+		//save Student_Course??
+		
+		return "redirect:/student/history/" + sUid;
+	}
+	
 
 		
-	//Course History
-	@RequestMapping("/student/history/{uid}")
+	//Course History (Admin view)
+	@RequestMapping("/admin/student/history/{uid}")
 	public String courseHistory(@PathVariable Integer uid, Model model) {
 		Student student = studentDao.findByUid(uid);
 		model.addAttribute("student", student);
 		model.addAttribute("courses", student.getCourses());
 		
 		return "coursehistory";
+	}
+	
+	//Course History (Student View)
+	@RequestMapping("/student/history/{uid}")
+	public String courseHistoryAdmin(@PathVariable Integer uid, Model model, HttpServletRequest request) {
+		//Check to see if history belongs to this user by comparing uid with user in session
+		if (uid == request.getSession().getAttribute(AbstractController.userSessionKey)) {
+		
+			Student student = studentDao.findByUid(uid);
+			
+			model.addAttribute("student", student);
+			model.addAttribute("courses", student.getCourses());
+			return "coursehistory";
+		}
+		else {
+			model.addAttribute("message", "You are not authorized to view this history");
+			return "error";
+		}
+		
 	}
 		
 }

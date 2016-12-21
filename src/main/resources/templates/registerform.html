@@ -6,24 +6,29 @@
 
 	<div th:replace="template :: navigation"></div>
 
-	<h1>Course Registration</h1>
-	<div class="student">
-		<p th:text="${student.firstName} + ' ' + ${student.lastName}">Last Name, First Name</p>
-		<p th:text="'Username: ' + ${student.username}">Username</p>
-	</div>
-
-	<table>
-		<tr>
-		    <td th:text="${course.courseCode}">Course Code</td>
-		    <td th:text="${course.name}">Name</td>
-		    <td th:text="${course.courseCategory.catName}">Category</td>
-		    <td th:text="${ #dates.format(course.startDate, 'M-d-yyyy') }">Start Date</td>
-		    <td th:text="${ #dates.format(course.endDate, 'M-d-yyyy') }">Start Date</td>
-		    <td th:text="'$' + ${#numbers.formatDecimal(course.fee,1,2)}">Fee</td>
-	    </tr>
-          
-	</table>	
+	<h1>Confirm Course Registration</h1>
+	<form method="post">
+		<div class="student">
+			<p th:text="${student.firstName} + ' ' + ${student.lastName}">Last Name, First Name</p>
+			<p th:text="'Username: ' + ${student.username}">Username</p>
+		</div>
 	
+		<table>
+			<tr>
+			    <td th:text="${course.courseCode}">Course Code</td>
+			    <td th:text="${course.name}">Name</td>
+			    <td th:text="${course.courseCategory.catName}">Category</td>
+			    <td th:text="${ #dates.format(course.startDate, 'M-d-yyyy') }">Start Date</td>
+			    <td th:text="${ #dates.format(course.endDate, 'M-d-yyyy') }">Start Date</td>
+			    <td th:text="'$' + ${#numbers.formatDecimal(course.fee,1,2)}">Fee</td>
+		    </tr>
+	          
+		</table>
+	
+		<div class="error" th:text="${error}"></div>
+	    <button type="submit">Register</button>
+	    	
+	</form>
 
 	<div th:replace="template :: footer"></div>
 </body>

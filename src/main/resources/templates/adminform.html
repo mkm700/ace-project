@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+
+	<div th:replace="template :: navigation"></div>
+
+	<h1>Admin Info</h1>
+
+	<form th:action="@{/admin/new}" th:object="${admin}" method="post" >
+
+		
+	    <label>
+	    	<div>Username</div>
+               <input class="short-text" type="text" th:field="*{username}"></input>
+               <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</span>
+           	   <span class="error" th:text="${username_error}"></span>
+           </label>
+	    <label>
+	    	<div>Password</div>
+            	<input type="password" th:field="*{pwHash}"></input>
+            	<span class="error" th:if="${#fields.hasErrors('pwHash')}" th:errors="*{pwHash}">PW error</span>
+        		<span class="error" th:text="${password_error}"></span>
+        </label>
+	    <label>
+	    	<div>Verify Password</div>
+               <input type="password" name = "verify" th:value="${verify}"></input>
+               <span class="error" th:text="${verify_error}"></span>
+        </label>
+
+	    <label>
+	        <div>First Name</div>
+	        <input class="short-text" type="text" th:field="*{firstName}"></input>
+	       	<span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
+	    </label>
+	    
+	    <label>
+	        <div>Last Name</div>
+	        <input class="short-text" type="text" th:field="*{lastName}"></input>
+	       	<span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span>
+	    </label>  	    	    
+	    
+	    <button type="submit">Save</button>
+
+	</form>
+	
+	<div th:replace="template :: footer"></div>
+	
+</body>
+</html>

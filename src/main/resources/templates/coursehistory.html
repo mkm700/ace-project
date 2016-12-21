@@ -7,6 +7,7 @@
 	<div th:replace="template :: navigation"></div>
 
 	<h1>Course History</h1>
+	    
 	<div class="student">
 		<p th:text="${student.firstName} + ' ' + ${student.lastName}">Last Name, First Name</p>
 		<p th:text="'Username: ' + ${student.username}">Username</p>
@@ -31,8 +32,11 @@
               <td th:text="${ #dates.format(course.endDate, 'M-d-yyyy') }">Start Date</td>
           </tr>
           
-</table>	
+	</table>	
+			
 	</div>
+	
+	<p><a href="/courses/all">Register for a Class</a></p>
 
 	<div th:replace="template :: footer"></div>
 </body>

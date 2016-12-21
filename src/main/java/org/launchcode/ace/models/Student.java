@@ -173,6 +173,10 @@ public class Student extends User {
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
+	
+	public void addCourse(Course course) {
+		courses.add(course);
+	}
 
 	@Override
 	public String toString() {
@@ -181,9 +185,6 @@ public class Student extends User {
 				+ mailList + ", emailList=" + emailList + ", created=" + created + ", updated=" + updated + ", courses="
 				+ courses + "]";
 	}
-	
-//	protected void addCourse(Course course) {
-//		courses.add(course);
-//	}
+
 
 }

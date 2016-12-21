@@ -23,9 +23,9 @@
                <td th:text="${student.firstName}">First Name</td>
                <td th:text="${student.lastName}">Last Name</td>
 			<td th:text="${student.email}">Email</td>
-			<td><a th:href="${'/student/history/' + student.uid}">Course History</a></td>
-               <td><a th:href="${'/student/edit/' + student.uid}">Edit</a></td>
-               <td><a th:href="${'/student/delete/' + student.uid}">Delete</a></td>
+			<td><a th:href="${'/admin/student/history/' + student.uid}">Course History</a></td>
+               <td><a th:href="${'/admin/student/edit/' + student.uid}">Edit</a></td>
+               <td><a th:href="${'/admin/student/delete/' + student.uid}">Delete</a></td>
 
            </tr>
            

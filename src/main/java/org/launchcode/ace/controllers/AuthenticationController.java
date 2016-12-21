@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.launchcode.ace.models.Admin;
 import org.launchcode.ace.models.Student;
 import org.launchcode.ace.models.User;
 import org.springframework.stereotype.Controller;
@@ -16,15 +17,73 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class AuthenticationController extends AbstractController {
 	
-	//Create New Student User
-	@RequestMapping(value = "/student", method = RequestMethod.GET)
+	//Create New Admin
+	@RequestMapping(value = "/admin/new", method = RequestMethod.GET)
+	public String newAdmin(Model model) {
+		model.addAttribute("admin", new Student());
+		return "adminform";
+	}
+	
+	//Create New Student
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newStudent(Model model) {
 		model.addAttribute("student", new Student());
 		return "studentform";
 	}
 
-	//Save Student User		
-	@RequestMapping(value = "/student", method = RequestMethod.POST)
+	//Save Admin		
+		@RequestMapping(value = "/admin/new", method = RequestMethod.POST)
+		public String saveAdmin(@Valid @ModelAttribute("admin") Admin admin, BindingResult bindingResult,
+								HttpServletRequest request, Model model) {
+			
+			//get parameters from request
+			String un = request.getParameter("username");
+			String pw = request.getParameter("pwHash");
+			String verify = request.getParameter("verify");
+			
+			String first = request.getParameter("firstName");
+			String last = request.getParameter("lastName");
+			
+			boolean isValidated = true;
+			
+			if (bindingResult.hasErrors() ) {
+				isValidated = false;
+			}
+			
+			String validUsername = validateUser(un);
+			if (validUsername != null) {				//invalid
+				isValidated = false;
+				model.addAttribute("username_error", validUsername);
+			}
+			
+			String validPassword = verifyPassword(pw, verify);
+			if (validPassword != null) {
+				isValidated = false;
+				model.addAttribute("password_error", validPassword);
+			}
+			
+			//if they validate and no field errors...
+			if (isValidated) {
+				
+				//hash password and save to DB
+				admin.setPwHash(Admin.hashPassword(pw));
+				userDao.save(admin);
+				
+				//store them in the session
+				HttpSession thisSession = request.getSession();
+				setUserInSession(thisSession, admin);
+				
+				return "redirect:/";
+			}
+			
+			else {
+				//invalid data send back to admin form with error messages
+				return "adminform";
+			}
+		}
+
+	//Save Student		
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String saveStudent(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult,
 							HttpServletRequest request, Model model) {
 		
@@ -43,28 +102,17 @@ public class AuthenticationController extends AbstractController {
 		if (bindingResult.hasErrors() ) {
 			isValidated = false;
 		}
-	
-		//check if username already exists
-		User checkForUser = userDao.findByUsername(un);
-		if (checkForUser != null) {					//user exists
-			model.addAttribute("username_error", "That username already exists");
+		
+		String validUsername = validateUser(un);
+		if (validUsername != null) {				//invalid
 			isValidated = false;
+			model.addAttribute("username_error", validUsername);
 		}
-		else {
-			//validate username and verify passwords are the same and valid
-			if(!User.isValidUsername(un)) {
-				model.addAttribute("username_error", "Username is not valid");
-				isValidated = false;
-			}
-		}
-	
-		if (!User.isValidPassword(pw)) {
-			model.addAttribute("password_error", "Password is not valid");
+		
+		String validPassword = verifyPassword(pw, verify);
+		if (validPassword != null) {
 			isValidated = false;
-		}
-		else if (!pw.equals(verify)) {
-			model.addAttribute("verify_error", "Passwords do not match");
-			isValidated = false;
+			model.addAttribute("password_error", validPassword);
 		}
 		
 		//if they validate and no field errors...
@@ -78,7 +126,7 @@ public class AuthenticationController extends AbstractController {
 			HttpSession thisSession = request.getSession();
 			setUserInSession(thisSession, student);
 			
-			return "redirect:/courses";
+			return "redirect:/courses/all";
 		}
 		
 		else {
@@ -124,7 +172,19 @@ public class AuthenticationController extends AbstractController {
 			return "login";
 		}
 		
-		return "redirect:/student/coursehistory";
+		//redirect to page based on student or admin
+		Admin admin = adminDao.findByUsername(un);
+		Student student = studentDao.findByUsername(un);
+		if (student != null) {
+			return "redirect:/courses/all";
+		}
+		
+		if (admin != null) {
+			return "redirect:/admin/main";
+		}
+		
+		return "error";
+
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -132,4 +192,32 @@ public class AuthenticationController extends AbstractController {
         request.getSession().invalidate();
 		return "redirect:/";
 	}
+	
+	public String validateUser(String un) {
+		//check if username already exists		
+		User checkForUser = userDao.findByUsername(un);
+		if (checkForUser != null) {					//user exists
+			return "That username already exists";
+		}
+		else {
+			//validate username
+			if(!User.isValidUsername(un)) {
+				return "Username is not valid";
+			}
+		}
+		return null;
+	}
+		
+	public String verifyPassword(String pw, String verify) {
+		//verify passwords are the same and valid
+		if (!User.isValidPassword(pw)) {
+			return "Password is not valid";
+		}
+		else if (!pw.equals(verify)) {
+			return "Passwords do not match";
+		}
+		return null;
+	}	
+	
+	
 }

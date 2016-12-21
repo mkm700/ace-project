@@ -11,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -118,6 +119,7 @@ public class Course extends AbstractEntity {
 	}
 
     @Column(name = "desc_long")
+    @Size(max = 1337)
 	public String getDescLong() {
 		return descLong;
 	}
@@ -304,10 +306,16 @@ public class Course extends AbstractEntity {
     {  
         return this.roster;  
     }  
+    
     public void setStudents(List<Student> roster)  
     {  
         this.roster = roster;
     }  
+    
+	public void addStudent(Student student) {
+		roster.add(student);
+		this.spacesRemain = this.spacesRemain - 1;
+	}
 
 	@Override
 	public String toString() {
@@ -319,18 +327,6 @@ public class Course extends AbstractEntity {
 				+ saturday + ", created=" + created + ", updated=" + updated + "]";
 	}
 	
-
-	//@ManyToOne
-//	@Column(name = "semester")
-//	public Semester getSemester() {
-//		return semester;
-//	}
-
-//	public void setSemester() {
-//		this.semester = semester;
-//	}
-
-
 	
 	
 	

@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class CategoryController extends AbstractController {
 	
 		//Create
-		@RequestMapping(value = "/category", method = RequestMethod.GET)
+		@RequestMapping(value = "/admin/category", method = RequestMethod.GET)
 		public String newCategory(Model model) {
 			model.addAttribute("courseCategory", new CourseCategory());
 			return "categoryform";
 		}
 		
 		//Save
-		@RequestMapping(value="/category", method = RequestMethod.POST)
+		@RequestMapping(value="/admin/category", method = RequestMethod.POST)
 		public String saveCourse(@Valid @ModelAttribute("courseCategory") CourseCategory courseCategory, BindingResult bindingResult,
 								HttpServletRequest request, Model model) {
 
@@ -41,28 +41,28 @@ public class CategoryController extends AbstractController {
 			//save the course to the DB
 			courseCategoryDao.save(courseCategory);
 
-			return "redirect:/categories";
+			return "redirect:/admin/categories";
 		}
 		
 	    //Category List
-	    @RequestMapping(value = "/categories", method = RequestMethod.GET)
+	    @RequestMapping(value = "/admin/categories", method = RequestMethod.GET)
 	    public String list(Model model){
 	        model.addAttribute("courseCategories", courseCategoryDao.findAll());
 	        return "categories";
 	    }
 	    
 	    //Update
-	    @RequestMapping("category/edit/{uid}")
+	    @RequestMapping("/admin/category/edit/{uid}")
 	    public String edit(@PathVariable Integer uid, Model model, HttpServletRequest request){
 	        model.addAttribute("courseCategory", courseCategoryDao.findByUid(uid));
 	        return "categoryform";
 	    }
 	    
 	    //Delete
-		@RequestMapping("category/delete/{uid}")
+		@RequestMapping("/admin/category/delete/{uid}")
 		public String delete(@PathVariable Integer uid){
 		    courseCategoryDao.delete(uid);
-		    return "redirect:/categories";
+		    return "redirect:/admin/categories";
 		}
 
 }

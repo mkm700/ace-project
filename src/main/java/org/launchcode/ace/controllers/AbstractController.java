@@ -2,8 +2,10 @@ package org.launchcode.ace.controllers;
 
 import javax.servlet.http.HttpSession;
 
+import org.launchcode.ace.models.Admin;
 import org.launchcode.ace.models.Student;
 import org.launchcode.ace.models.User;
+import org.launchcode.ace.models.dao.AdminDao;
 import org.launchcode.ace.models.dao.CourseCategoryDao;
 import org.launchcode.ace.models.dao.CourseDao;
 import org.launchcode.ace.models.dao.StudentDao;
@@ -24,30 +26,34 @@ public abstract class AbstractController {
 	@Autowired
     protected CourseCategoryDao courseCategoryDao;
 	
+	@Autowired
+	protected AdminDao adminDao;
+	
 
     public static final String userSessionKey = "user_id";
-
-    protected User getUserFromSession(HttpSession session) {
-	
-    	
-        Integer userId = (Integer) session.getAttribute(userSessionKey);
-        return userId == null ? null : userDao.findByUid(userId);
-    }
     
     protected void setUserInSession(HttpSession session, User user) {
     	session.setAttribute(userSessionKey, user.getUid());
     }
+
+    protected User getUserFromSession(HttpSession session) {
+        Integer userId = (Integer) session.getAttribute(userSessionKey);
+        return userId == null ? null : userDao.findByUid(userId);
+    }
     
-protected Student getStudentFromSession(HttpSession session) {
-	
-    	
+    protected Student getStudentFromSession(HttpSession session) {	
         Integer studentId = (Integer) session.getAttribute(userSessionKey);
         return studentId == null ? null : studentDao.findByUid(studentId);
     }
     
-    protected void setStudentInSession(HttpSession session, Student student) {
-    	session.setAttribute(userSessionKey, student.getUid());
+    protected Admin getAdminFromSession(HttpSession session) {	
+        Integer adminId = (Integer) session.getAttribute(userSessionKey);
+        return adminId == null ? null : adminDao.findByUid(adminId);
     }
+    
+//    protected void setStudentInSession(HttpSession session, Student student) {
+//    	session.setAttribute(userSessionKey, student.getUid());
+//    }
     
     
 }

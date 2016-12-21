@@ -15,12 +15,11 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "student_course")
 public class StudentCourse extends AbstractEntity {
 	
+	
 	//no-arg constructor
-		
-		public StudentCourse() {
-			super();
-		}
+	public StudentCourse() {
+		super();
+	}	
 
-		
 	
 }

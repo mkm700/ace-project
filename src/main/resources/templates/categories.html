@@ -7,6 +7,8 @@
 	<div th:replace="template :: navigation"></div>
 
 	<h1>Categories</h1>
+	
+	<p><a href="/admin/category">Add a New Category</a></p>
 
 			<table>
 	            <tr>
@@ -17,8 +19,8 @@
 				<tr th:each="category : ${courseCategories}">
 	                <td th:text="${category.catName}">Name</td>
 	                <td th:text="${category.catDesc}">Category</td>
-	                <td><a th:href="${'/category/edit/' + category.uid}">Edit</a></td>
-	                <td><a th:href="${'/category/delete/' + category.uid}">Delete</a></td>
+	                <td><a th:href="${'/admin/category/edit/' + category.uid}">Edit</a></td>
+<!--                <td><a th:href="${'/admin/category/delete/' + category.uid}">Delete</a></td>  -->
 	            </tr>
 	            
 			</table>

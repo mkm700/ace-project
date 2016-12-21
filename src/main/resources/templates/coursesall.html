@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+
+	<div th:replace="template :: navigation"></div>
+
+	<h1>List of Courses</h1>
+	
+
+			<table class="all-courses">
+	         <span th:each="course : ${courses}">   
+				<tr class="title"><td><a th:href="${'/course/' + course.uid}"><span th:text="${course.courseCode} + ' ' + ${course.name}">Course Code + Name</span></a></td></tr>
+	            <tr><td th:text="${course.descShort}">Short Desc</td></tr>
+	            <tr><td th:text="'Category: ' + ${course.courseCategory.catName}">Category</td></tr>
+	            <tr><td th:text="${ #dates.format(course.startDate, 'M/d/yyyy') } + ' - ' + ${ #dates.format(course.endDate, 'M-d-yyyy') } + ', ' + ${course.startTime} + ' - ' + ${course.endTime}">Dates / Times</td></tr>
+				<tr><td th:text="'$' + ${#numbers.formatDecimal(course.fee,1,2)}">Fee</td></tr>
+				<tr class="last"><td><a th:href="${'/course/' + course.uid}">Learn more...</a></td></tr>
+	         </span>   
+			</table>
+
+
+	<div th:replace="template :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+
+	<div th:replace="template :: navigation"></div>
+
+	<h1>Oops!!! Something went wrong!</h1>
+
+	<p th:if="${status}">
+		<b>Response Status:</b> <span th:text="${status}">status-code</span> <span
+		th:if="${error}" th:text="'('+${error}+')'">error ...</span>
+	</p>
+	
+	<p th:if="${url}">
+		<b>Page:</b> <span th:text="${url}">Page URL</span>
+	</p>
+
+	<p th:if="${timestamp}" id='created'>
+		<b>Occurred:</b> <span th:text="${timestamp}">Timestamp</span>
+	</p>
+	
+	<span th:text="${message}">ERROR MESSAGE</span>
+	
+	
+	<p><a href="javascript:history.go(-1);">Back</a></p>
+
+
+	<div th:replace="template :: footer"></div>
+</body>
+</html>

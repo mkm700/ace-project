@@ -7,7 +7,7 @@ body {
 
 .error {
     color: red;
-    font-size: .8em;
+    font-size: .9em;
 }
 
 .confirm {
@@ -71,6 +71,32 @@ td {
 	border: 1px solid #ddd;
 	padding: 10px;
 	margin: 0;
+}
+
+table.all-courses td {
+	border: none;
+}
+
+tr.title > td {
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+tr.last > td {
+  padding-bottom: 30px;
+  margin-bottom: 40px;
+  border-bottom: 1px #ddd solid;
+}
+
+
+form.course-detail div {
+	font-weight: bold;
+		font-size: 18px;
+}
+
+form.course-detail p {
+	margin-bottom: 0;
+	font-size: 16px;
 }
 
 nav ul {

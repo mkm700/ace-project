@@ -7,8 +7,8 @@
 	<div th:replace="template :: navigation"></div>
 
 	<h1>Course Details</h1>
-
-	<form>
+	<p class="error" th:text="${alreadyEnrolledError}">Already Enrolled Error</p>
+	<form class="course-detail">
 	    <label>
 	        <div>Course Code</div>
 	        <p th:text="${course.courseCode}"></p>
@@ -112,8 +112,12 @@
 	   	</label>
 	</form>
 	
-	<p><a th:if="${course.spacesRemain} > 0" th:href="${'/course/register/' + course.uid}">Register for this Course</a></p>
+	<p><a th:if="${course.spacesRemain} > 0" th:href="${'/student/register/' + course.uid}">Register for this Course</a></p>
 
+<!-- 
+	<p><a th:href="${'/admin/course/roster/' + course.uid}">View Course Roster</a></p>
+ -->
+ 	
 	<div th:replace="template :: footer"></div>
 </body>
 </html>

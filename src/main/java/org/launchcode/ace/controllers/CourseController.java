@@ -31,24 +31,28 @@ public class CourseController extends AbstractController {
 	    return courseCategoryDao.findAll();
 	}
 	
-	//Main Menu
+	//Home Page
 	@RequestMapping(value = "/")
+	public String homePage(Model model) {
+		model.addAttribute("courses", courseDao.findAll());
+		return "coursesall";
+	}
+	
+	//Main Menu
+	@RequestMapping(value = "/admin/main")
 	public String adminMain(HttpServletRequest request, Model model) {
-		String message = request.getParameter("confirmMessage");
-		System.out.println(message);
-		model.addAttribute("confirmMessage",message);
 		return "admin-main";
 	}
 	
 	//Create
-	@RequestMapping(value = "/course", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/course", method = RequestMethod.GET)
 	public String newCourse(Model model) {
 		model.addAttribute("course", new Course());
 		return "courseform";
 	}
 	
 	//Save
-	@RequestMapping(value="/course", method = RequestMethod.POST)
+	@RequestMapping(value="/admin/course", method = RequestMethod.POST)
 	public String saveCourse(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult,
 							HttpServletRequest request, Model model) {
 
@@ -149,7 +153,7 @@ public class CourseController extends AbstractController {
 		courseDao.save(course);
 		
 		
-		return "redirect:/courses";
+		return "redirect:/admin/courses";
 	}
 	
 	//Read
@@ -159,54 +163,44 @@ public class CourseController extends AbstractController {
         return "courseshow";
     }
     
-    //Course List
-    @RequestMapping(value = "/courses", method = RequestMethod.GET)
+    //Course List - Admin
+    @RequestMapping(value = "/admin/courses", method = RequestMethod.GET)
     public String list(Model model){
         model.addAttribute("courses", courseDao.findAll());
         return "courses";
     }
     
+    //Course List - All
+    @RequestMapping(value = "/courses/all", method = RequestMethod.GET)
+    public String listAll(Model model){
+        model.addAttribute("courses", courseDao.findAll());
+        return "coursesall";
+    }
+    
     //Update
-    @RequestMapping("/course/edit/{uid}")
+    @RequestMapping("/admin/course/edit/{uid}")
     public String edit(@PathVariable Integer uid, Model model){
         model.addAttribute("course", courseDao.findByUid(uid));
         return "courseform";
     }
     
     //Delete
-	@RequestMapping("/course/delete/{uid}")
+	@RequestMapping("/admin/course/delete/{uid}")
 	public String delete(@PathVariable Integer uid){
 	    courseDao.delete(uid);
 	    return "redirect:/courses";
 	}
 	
-	//Register a student
-	@RequestMapping(value = "/course/register/{uid}", method = RequestMethod.GET)
-	public String register(@PathVariable Integer uid, Model model, HttpServletRequest request) {
-		HttpSession thisSession = request.getSession();
-		User user = getUserFromSession(thisSession);
-		int suid = user.getUid();
-		model.addAttribute("student", studentDao.findByUid(suid));
-		model.addAttribute("course", courseDao.findByUid(uid));
-		return "registerform";
-	}
 
+	//Course Roster
+	@RequestMapping("/admin/course/roster/{uid}")
+	public String courseRoster(@PathVariable Integer uid, Model model) {
+		Course course = courseDao.findByUid(uid);
+		model.addAttribute("course", course);
+		model.addAttribute("students", course.getStudents());
 		
-	//Save Registration
-	@RequestMapping(value="/course/register/{uid}", method = RequestMethod.POST)
-	public String saveRegistration(HttpServletRequest request, Model model) {
-
-		//get request parameters
-		//validate parameters?
-		//create new Student_Course??
-		//add the student to the course roster
-		//subtract 1 from remaining spaces
-		//add the course to student history
-		//save Student_Course??
-		
-		return "redirect:/coursehistory";
+		return "courseroster";
 	}
-	
 	
 	
 	

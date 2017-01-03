@@ -51,9 +51,20 @@ public class StudentController extends AbstractController {
     
     //Delete
 	@RequestMapping("/admin/student/delete/{uid}")
-	public String delete(@PathVariable Integer uid){
-	    studentDao.delete(uid);
-	    return "redirect:/admin/students";
+	public String delete(@PathVariable Integer uid, Model model){
+
+	  //if no course history exists, delete the student
+	    if (studentDao.findByUid(uid).getCourses().isEmpty()) {
+			studentDao.delete(uid);
+			return "redirect:/admin/students";
+		}
+		//else display message
+		else {
+			model.addAttribute("studentListError", "Cannot delete a student that has course history");
+			model.addAttribute("students", studentDao.findAll());
+			return "students";
+		}	    
+	    
 	}
 	
 	//STUDENT
@@ -93,10 +104,6 @@ public class StudentController extends AbstractController {
 		Student student = getStudentFromSession(thisSession);
 		int sUid = student.getUid();
 		Course course = courseDao.findByUid(uid);
-		
-		//TODO: validate parameters?
-		//TODO: check to see if they have already registered
-		
 
 		//add the student to the course roster, subtract 1 from remaining spaces
 		course.addStudent(student);
@@ -113,7 +120,6 @@ public class StudentController extends AbstractController {
 		return "redirect:/student/history/" + sUid;
 	}
 	
-
 		
 	//Course History (Admin view)
 	@RequestMapping("/admin/student/history/{uid}")

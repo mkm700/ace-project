@@ -6,13 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.launchcode.ace.models.Course;
 import org.launchcode.ace.models.CourseCategory;
-import org.launchcode.ace.models.Student;
-import org.launchcode.ace.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -186,9 +183,18 @@ public class CourseController extends AbstractController {
     
     //Delete
 	@RequestMapping("/admin/course/delete/{uid}")
-	public String delete(@PathVariable Integer uid){
-	    courseDao.delete(uid);
-	    return "redirect:/courses";
+	public String delete(@PathVariable Integer uid, Model model){		
+		//if no students enrolled, delete the course
+		if (courseDao.findByUid(uid).getStudents().isEmpty()) {
+			courseDao.delete(uid);
+			return "redirect:/admin/courses";
+		}
+		//else display message
+		else {
+			model.addAttribute("courseListError", "Cannot delete a course that has students enrolled");
+	        model.addAttribute("courses", courseDao.findAll());
+	        return "courses";
+		}
 	}
 	
 

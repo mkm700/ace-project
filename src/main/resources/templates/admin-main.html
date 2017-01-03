@@ -9,51 +9,38 @@
 	<h1>Admin Main Menu</h1>
 	<div class="confirm" th:text="${confirmMessage}"></div>
 
-	<h2>Courses</h2>
-	<ul>
-		<li><a href="/admin/course">Add a New Course</a></li>
-		<li><a href="/admin/courses">List Courses</a></li>
-	</ul>
+	<p><a href="/admin/courses">Courses</a></p>
 	
-	<h2>Students</h2>
-	<ul>
-		<!-- <li><a href="#">Add a New Student</a></li>	 -->
-		<li><a href="/admin/students">List Students</a></li>
-	</ul>
+	<p><a href="/admin/students">Students</a></p>
 	
-	<h2>Other Admin Stuff</h2>
-	<h3>Categories</h3>
-	<ul>
-		<li><a href="/admin/category">Add a New Category</a></li>
-		<li><a href="/admin/categories">List Categories</a></li>
-	</ul>
+	<p><a href="/admin/categories">Categories</a></p>
+
+	<p><a href="/admin/users">Admin Users</a></p>
 	
-	<h3>Admin Users</h3>
-	<ul>
-		<li><a href="/admin/new">Add a New Admin User</a></li>
-	</ul>
-	
-<!--	
-	<h3>Instructors</h3>
-	<ul>
-		<li><a href="/instructor">Add a New Instructor</a></li>
-		<li><a href="/instructors">List Instructors</a> (Edit, Delete, Teaching History)</li>
-	</ul>
--->
-	
-	<h3>Reports</h3>
+	<p><a href="/admin/reports">Reports</a></p>
 	<ul>
 		<li>Low enrollment courses</li>
 		<li>Revenue by Semester</li>
 	</ul>
 	
+	<hr />
 
 	<h3>Other To-Do's</h3>
 	<ul>
-		<li>Navigation</li>
-		<li>Add semester to Course (default Course list to current semester)</li>
-		<li>Registration</li>
-		<li>Implement security for student and admin</li>
+		<li>Create SQL to load tables&#x2713;</li>
+		<li>Admin: Delete Course&#x2713;</li>
+		<li>Admin: Add Student</li>
+		<li>Admin: Delete Student&#x2713;</li>
+		<li>Student: View / Edit profile, history</li>
+		<li>Navigation: Admin, User, not logged in</li>
+		<li>Test security for student and admin</li>
+		<li>Sort order of courses (admin and not logged)</li>
+		<li>Import Courses</li>
+		<li>Export Students</li>
+		<li>Create Read Me page for GitHub</li>
+		<li>Create main pages: admin, logged in</li>
+		<li>Reorganize controllers</li>
+		<li>Clean up comments in code</li>
 	</ul>
 	
 	<h3>Issues</h3>
@@ -61,19 +48,24 @@
 		<li>Delete</li>
 		<li>How to account for change to spaces remaining if max students changes?</li>
 		<li>Differentiating "Add Student" from "Update Student" (ie how to handle password)</li>
+		<li>When registering and not logged in, how to keep flow going instead of routing back to list page</li>
+		<li>Register link should not show at bottom of detail when admin logged in (or it needs to go to select student page)</li>
 		</ul>
 	
 	<h3>Future Considerations</h3>
 	<ul>
+		<li>Admin: List admin users (include link to delete and add -> /admin/new)</li>
+		<li>Admin: Register student for course</li>
+		<li>Admin: Cancel registration</li>
 		<li>Bootstrap</li>
-		<li>Import Courses</li>
-		<li>Export Students</li>
+		<li>Add semester to Course (default Course list to current semester)</li>
 		<li>Search for courses by name, category</li>
 		<li>Address verification using USPS API</li>
 		<li>Calendar Listing of Courses</li>
 		<li>Waiting List</li>
 		<li>Senior Pricing based on age</li>
 		<li>Age requirements for course</li>
+		
 	</ul>
 
 	

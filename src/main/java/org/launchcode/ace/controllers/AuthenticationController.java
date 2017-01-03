@@ -126,7 +126,7 @@ public class AuthenticationController extends AbstractController {
 			HttpSession thisSession = request.getSession();
 			setUserInSession(thisSession, student);
 			
-			return "redirect:/courses/all";
+			return "redirect:/student/history/" + student.getUid();
 		}
 		
 		else {
@@ -176,7 +176,7 @@ public class AuthenticationController extends AbstractController {
 		Admin admin = adminDao.findByUsername(un);
 		Student student = studentDao.findByUsername(un);
 		if (student != null) {
-			return "redirect:/courses/all";
+			return "redirect:/student/history/" + user.getUid();
 		}
 		
 		if (admin != null) {

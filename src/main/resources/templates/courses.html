@@ -7,7 +7,7 @@
 	<div th:replace="template :: navigation"></div>
 
 	<h1>Course List</h1>
-	
+	<p class="error" th:text="${courseListError}">Course List Error</p>
 	<p><a href="/admin/course">Add a New Course</a></p>
 	
 		<!--  <div th:if="${not #lists.isEmpty(courses)}">	-->
@@ -19,7 +19,7 @@
 	                <th>Start Date</th>
 	                <th>End Date</th>
 	                <th>Edit</th>
-<!--                <th>Delete</th>	 -->
+	                <th>Delete</th>
 					<th>Course Roster</th>
             	</tr>
 				<tr th:each="course : ${courses}">
@@ -29,7 +29,7 @@
 	                <td th:text="${ #dates.format(course.startDate, 'M-d-yyyy') }">Start Date</td>
 	                <td th:text="${ #dates.format(course.endDate, 'M-d-yyyy') }">End Date</td>
 	                <td><a th:href="${'/admin/course/edit/' + course.uid}">Edit</a></td>
-<!-- 	                <td><a th:href="${'/admin/course/delete/' + course.uid}">Delete</a></td>   -->
+ 	                <td><a th:href="${'/admin/course/delete/' + course.uid}">Delete</a></td>
 	                <td><a th:href="${'/admin/course/roster/' + course.uid}">View</a></td>
 	            </tr>
 	            

@@ -48,6 +48,13 @@ public class CourseController extends AbstractController {
 		return "courseform";
 	}
 	
+    //Update
+    @RequestMapping("/admin/course/edit/{uid}")
+    public String editCourse(@PathVariable Integer uid, Model model){
+        model.addAttribute("course", courseDao.findByUid(uid));
+        return "courseform";
+    }
+	
 	//Save
 	@RequestMapping(value="/admin/course", method = RequestMethod.POST)
 	public String saveCourse(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult,
@@ -172,13 +179,6 @@ public class CourseController extends AbstractController {
     public String listAll(Model model){
         model.addAttribute("courses", courseDao.findAll());
         return "coursesall";
-    }
-    
-    //Update
-    @RequestMapping("/admin/course/edit/{uid}")
-    public String edit(@PathVariable Integer uid, Model model){
-        model.addAttribute("course", courseDao.findByUid(uid));
-        return "courseform";
     }
     
     //Delete

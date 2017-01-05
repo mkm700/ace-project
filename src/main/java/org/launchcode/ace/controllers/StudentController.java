@@ -23,25 +23,30 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("student")
 public class StudentController extends AbstractController {
 	
-	//ADMIN
+	//ADMIN FUNCTIONS
 	//Student List
     @RequestMapping(value = "/admin/students", method = RequestMethod.GET)
-    public String list(Model model){
+    public String listStudents(Model model){
         model.addAttribute("students", studentDao.findAll());
         return "students";
     }
     
     //Update Profile
     @RequestMapping("/admin/student/edit/{uid}")
-    public String edit(@PathVariable Integer uid, Model model){
+    public String AdminEditProfile(@PathVariable Integer uid, Model model){
         model.addAttribute("student", studentDao.findByUid(uid));
         return "studentprofile";
     }
     
     //Save Profile		
   	@RequestMapping(value = "/admin/student/edit/{uid}", method = RequestMethod.POST)
-  	public String saveStudent(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult,
+  	public String AdminSaveProfile(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult,
 			HttpServletRequest request, Model model) {
+		
+		if (bindingResult.hasErrors() ) {
+			//invalid data send back to student form with error messages
+			return "studentprofile";
+		}
 		
   		//update the DB
 		studentDao.save(student);
@@ -67,7 +72,75 @@ public class StudentController extends AbstractController {
 	    
 	}
 	
-	//STUDENT
+	//Course History
+	@RequestMapping("/admin/student/history/{uid}")
+	public String courseHistory(@PathVariable Integer uid, Model model) {
+		Student student = studentDao.findByUid(uid);
+		model.addAttribute("student", student);
+		model.addAttribute("courses", student.getCourses());
+		
+		return "coursehistory";
+	}
+	
+	//STUDENT FUNCTIONS
+	
+	//Student Main Page
+    @RequestMapping("/student/main/{uid}")
+    public String studentMain(@PathVariable Integer uid, Model model){
+        model.addAttribute("student", studentDao.findByUid(uid));
+        return "studentmain";
+    }
+    
+	//Update Profile
+    @RequestMapping("/student/edit/{uid}")
+    //Check to see if history belongs to this user by comparing uid with user in session
+    public String editProfile(@PathVariable Integer uid, Model model, HttpServletRequest request){
+		if (uid == request.getSession().getAttribute(AbstractController.userSessionKey)) {
+    	
+			model.addAttribute("student", studentDao.findByUid(uid));
+			return "studentprofile";
+		}
+		else {
+			model.addAttribute("message", "You are not authorized to view this profile");
+			return "error";
+		}
+    }
+    
+    //Save Profile		
+  	@RequestMapping(value = "/student/edit/{uid}", method = RequestMethod.POST)
+  	public String saveProfile(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult,
+			HttpServletRequest request, Model model) {
+		
+		if (bindingResult.hasErrors() ) {
+			//invalid data send back to student form with error messages
+			return "studentprofile";
+		}
+		
+  		//update the DB
+		studentDao.save(student);
+		
+		return "redirect:/student/main/" + student.getUid();
+  	}
+  	
+  	
+	//Course History (Student View)
+	@RequestMapping("/student/history/{uid}")
+	public String courseHistoryAdmin(@PathVariable Integer uid, Model model, HttpServletRequest request) {
+		//Check to see if history belongs to this user by comparing uid with user in session
+		if (uid == request.getSession().getAttribute(AbstractController.userSessionKey)) {
+		
+			Student student = studentDao.findByUid(uid);
+			
+			model.addAttribute("student", student);
+			model.addAttribute("courses", student.getCourses());
+			return "coursehistory";
+		}
+		else {
+			model.addAttribute("message", "You are not authorized to view this history");
+			return "error";
+		}	
+	}
+  	
 	//Register a student
 	@RequestMapping(value = "/student/register/{cuid}", method = RequestMethod.GET)
 	public String register(@PathVariable Integer cuid, Model model, HttpServletRequest request) {
@@ -119,35 +192,7 @@ public class StudentController extends AbstractController {
 		
 		return "redirect:/student/history/" + sUid;
 	}
+
 	
-		
-	//Course History (Admin view)
-	@RequestMapping("/admin/student/history/{uid}")
-	public String courseHistory(@PathVariable Integer uid, Model model) {
-		Student student = studentDao.findByUid(uid);
-		model.addAttribute("student", student);
-		model.addAttribute("courses", student.getCourses());
-		
-		return "coursehistory";
-	}
-	
-	//Course History (Student View)
-	@RequestMapping("/student/history/{uid}")
-	public String courseHistoryAdmin(@PathVariable Integer uid, Model model, HttpServletRequest request) {
-		//Check to see if history belongs to this user by comparing uid with user in session
-		if (uid == request.getSession().getAttribute(AbstractController.userSessionKey)) {
-		
-			Student student = studentDao.findByUid(uid);
-			
-			model.addAttribute("student", student);
-			model.addAttribute("courses", student.getCourses());
-			return "coursehistory";
-		}
-		else {
-			model.addAttribute("message", "You are not authorized to view this history");
-			return "error";
-		}
-		
-	}
 		
 }

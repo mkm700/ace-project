@@ -8,9 +8,14 @@
 
 	<h1>Student Info</h1>
 
-	<form th:action="@{/admin/student/edit/{uid}}" th:object="${student}" method="post" >
+<!--  	<form th:action="@{/admin/student/edit/{uid}}" th:object="${student}" method="post" > -->
+		<form th:object="${student}" method="post">
 		<input type="hidden" th:field="*{uid}"/>
 		
+		<label>
+			<div>Username: <span th:text="*{username}">username</span></div>
+		</label>
+	    
 	    <label>
 	        <div>First Name</div>
 	        <input class="short-text" type="text" th:field="*{firstName}"></input>
@@ -87,7 +92,7 @@
 
 	</form>
 
-	<a href="/admin/students">Cancel</a>
+	<p><a href="javascript:history.go(-1);">Cancel</a></p>
 	
 	<div th:replace="template :: footer"></div>
 	

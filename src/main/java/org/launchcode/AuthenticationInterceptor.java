@@ -29,7 +29,8 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
     StudentDao studentDao;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) 
+							throws IOException {
 
         String authPageAdmin = "/admin";
         String authPageStudent = "/student";

@@ -32,7 +32,7 @@ public class CourseController extends AbstractController {
 	@RequestMapping(value = "/")
 	public String homePage(Model model) {
 		model.addAttribute("courses", courseDao.findAll());
-		return "coursesall";
+		return "course/coursesall";
 	}
 	
 	//Main Menu
@@ -45,14 +45,14 @@ public class CourseController extends AbstractController {
 	@RequestMapping(value = "/admin/course", method = RequestMethod.GET)
 	public String newCourse(Model model) {
 		model.addAttribute("course", new Course());
-		return "courseform";
+		return "course/courseform";
 	}
 	
     //Update
     @RequestMapping("/admin/course/edit/{uid}")
     public String editCourse(@PathVariable Integer uid, Model model){
         model.addAttribute("course", courseDao.findByUid(uid));
-        return "courseform";
+        return "course/courseform";
     }
 	
 	//Save
@@ -164,21 +164,21 @@ public class CourseController extends AbstractController {
     @RequestMapping("/course/{uid}")
     public String showCourse(@PathVariable Integer uid, Model model){
         model.addAttribute("course", courseDao.findByUid(uid));
-        return "courseshow";
+        return "course/courseshow";
     }
     
     //Course List - Admin
     @RequestMapping(value = "/admin/courses", method = RequestMethod.GET)
     public String list(Model model){
         model.addAttribute("courses", courseDao.findAll());
-        return "courses";
+        return "course/courses";
     }
     
     //Course List - All
     @RequestMapping(value = "/courses/all", method = RequestMethod.GET)
     public String listAll(Model model){
         model.addAttribute("courses", courseDao.findAll());
-        return "coursesall";
+        return "course/coursesall";
     }
     
     //Delete
@@ -193,7 +193,7 @@ public class CourseController extends AbstractController {
 		else {
 			model.addAttribute("courseListError", "Cannot delete a course that has students enrolled");
 	        model.addAttribute("courses", courseDao.findAll());
-	        return "courses";
+	        return "course/courses";
 		}
 	}
 	
@@ -205,7 +205,7 @@ public class CourseController extends AbstractController {
 		model.addAttribute("course", course);
 		model.addAttribute("students", course.getRoster());
 		
-		return "courseroster";
+		return "course/courseroster";
 	}
 	
 	

@@ -28,21 +28,21 @@ public class StudentController extends AbstractController {
     @RequestMapping(value = "/admin/students", method = RequestMethod.GET)
     public String listStudents(Model model){
         model.addAttribute("students", studentDao.findAll());
-        return "students";
+        return "student/students";
     }
     
     //Add New student
     @RequestMapping("/admin/student")
     public String AdminNewStudent(Model model){
         model.addAttribute("student", new Student());
-        return "studentprofile";
+        return "student/studentprofile";
     }
     
     //Update Student Profile
     @RequestMapping("/admin/student/edit/{uid}")
     public String AdminEditProfile(@PathVariable Integer uid, Model model){
         model.addAttribute("student", studentDao.findByUid(uid));
-        return "studentprofile";
+        return "student/studentprofile";
     }
     
     //Save Profile		
@@ -52,7 +52,7 @@ public class StudentController extends AbstractController {
 		
 		if (bindingResult.hasErrors() ) {
 			//invalid data send back to student form with error messages
-			return "studentprofile";
+			return "student/studentprofile";
 		}
 		
   		//update the DB
@@ -74,7 +74,7 @@ public class StudentController extends AbstractController {
 		else {
 			model.addAttribute("studentListError", "Cannot delete a student that has course history");
 			model.addAttribute("students", studentDao.findAll());
-			return "students";
+			return "student/students";
 		}	    
 	}
 	
@@ -85,7 +85,7 @@ public class StudentController extends AbstractController {
 		model.addAttribute("student", student);
 		model.addAttribute("courses", student.getCourses());
 		
-		return "coursehistory";
+		return "student/coursehistory";
 	}
 	
 	//STUDENT FUNCTIONS
@@ -95,7 +95,7 @@ public class StudentController extends AbstractController {
     public String studentMain(Model model, HttpServletRequest request){
     	int uid = (int) request.getSession().getAttribute(AbstractController.userSessionKey);
         model.addAttribute("student", studentDao.findByUid(uid));
-        return "studentmain";
+        return "student/studentmain";
     }
     
 	//Update Profile
@@ -121,7 +121,7 @@ public class StudentController extends AbstractController {
 		
 		if (bindingResult.hasErrors() ) {
 			//invalid data send back to student form with error messages
-			return "studentprofile";
+			return "student/studentprofile";
 		}
 		
   		//update the DB
@@ -141,7 +141,7 @@ public class StudentController extends AbstractController {
 			
 			model.addAttribute("student", student);
 			model.addAttribute("courses", student.getCourses());
-			return "coursehistory";
+			return "student/coursehistory";
 		}
 		else {
 			model.addAttribute("message", "You are not authorized to view this history");
@@ -168,7 +168,7 @@ public class StudentController extends AbstractController {
 		if (roster.contains(student)) {
 			model.addAttribute("course", course);
 			model.addAttribute("alreadyEnrolledError", "You are already enrolled in this class.");
-			return "courseshow";
+			return "student/courseshow";
 		}
 
 		//go to confirmation page

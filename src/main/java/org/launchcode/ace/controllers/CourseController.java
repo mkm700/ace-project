@@ -185,7 +185,7 @@ public class CourseController extends AbstractController {
 	@RequestMapping("/admin/course/delete/{uid}")
 	public String delete(@PathVariable Integer uid, Model model){		
 		//if no students enrolled, delete the course
-		if (courseDao.findByUid(uid).getStudents().isEmpty()) {
+		if (courseDao.findByUid(uid).getRoster().isEmpty()) {
 			courseDao.delete(uid);
 			return "redirect:/admin/courses";
 		}
@@ -203,7 +203,7 @@ public class CourseController extends AbstractController {
 	public String courseRoster(@PathVariable Integer uid, Model model) {
 		Course course = courseDao.findByUid(uid);
 		model.addAttribute("course", course);
-		model.addAttribute("students", course.getStudents());
+		model.addAttribute("students", course.getRoster());
 		
 		return "courseroster";
 	}

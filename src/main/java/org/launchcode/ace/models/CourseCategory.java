@@ -52,8 +52,7 @@ public class CourseCategory extends AbstractEntity {
 		this.catDesc = catDesc;
 	}
 	
-    @OneToMany
-    @JoinColumn(name = "course_category_uid")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="courseCategory")
     public List<Course> getCourses() {
         return courses;
     }

@@ -31,7 +31,14 @@ public class StudentController extends AbstractController {
         return "students";
     }
     
-    //Update Profile
+    //Add New student
+    @RequestMapping("/admin/student")
+    public String AdminNewStudent(Model model){
+        model.addAttribute("student", new Student());
+        return "studentprofile";
+    }
+    
+    //Update Student Profile
     @RequestMapping("/admin/student/edit/{uid}")
     public String AdminEditProfile(@PathVariable Integer uid, Model model){
         model.addAttribute("student", studentDao.findByUid(uid));
@@ -39,7 +46,7 @@ public class StudentController extends AbstractController {
     }
     
     //Save Profile		
-  	@RequestMapping(value = "/admin/student/edit/{uid}", method = RequestMethod.POST)
+  	@RequestMapping(value = "/admin/student", method = RequestMethod.POST)
   	public String AdminSaveProfile(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult,
 			HttpServletRequest request, Model model) {
 		
@@ -69,7 +76,6 @@ public class StudentController extends AbstractController {
 			model.addAttribute("students", studentDao.findAll());
 			return "students";
 		}	    
-	    
 	}
 	
 	//Course History
@@ -85,8 +91,9 @@ public class StudentController extends AbstractController {
 	//STUDENT FUNCTIONS
 	
 	//Student Main Page
-    @RequestMapping("/student/main/{uid}")
-    public String studentMain(@PathVariable Integer uid, Model model){
+    @RequestMapping("/student/main")
+    public String studentMain(Model model, HttpServletRequest request){
+    	int uid = (int) request.getSession().getAttribute(AbstractController.userSessionKey);
         model.addAttribute("student", studentDao.findByUid(uid));
         return "studentmain";
     }
@@ -94,8 +101,9 @@ public class StudentController extends AbstractController {
 	//Update Profile
     @RequestMapping("/student/edit/{uid}")
     //Check to see if history belongs to this user by comparing uid with user in session
-    public String editProfile(@PathVariable Integer uid, Model model, HttpServletRequest request){
-		if (uid == request.getSession().getAttribute(AbstractController.userSessionKey)) {
+    public String editProfile(@PathVariable int uid, Model model, HttpServletRequest request){
+
+		if (uid == (int) request.getSession().getAttribute(AbstractController.userSessionKey)) {
     	
 			model.addAttribute("student", studentDao.findByUid(uid));
 			return "studentprofile";
@@ -125,9 +133,9 @@ public class StudentController extends AbstractController {
   	
 	//Course History (Student View)
 	@RequestMapping("/student/history/{uid}")
-	public String courseHistoryAdmin(@PathVariable Integer uid, Model model, HttpServletRequest request) {
+	public String courseHistoryAdmin(@PathVariable int uid, Model model, HttpServletRequest request) {
 		//Check to see if history belongs to this user by comparing uid with user in session
-		if (uid == request.getSession().getAttribute(AbstractController.userSessionKey)) {
+		if (uid == (int) request.getSession().getAttribute(AbstractController.userSessionKey)) {
 		
 			Student student = studentDao.findByUid(uid);
 			
@@ -143,25 +151,29 @@ public class StudentController extends AbstractController {
   	
 	//Register a student
 	@RequestMapping(value = "/student/register/{cuid}", method = RequestMethod.GET)
-	public String register(@PathVariable Integer cuid, Model model, HttpServletRequest request) {
+	public String register(@PathVariable int cuid, Model model, HttpServletRequest request) {
 		HttpSession thisSession = request.getSession();
 		//check if user is logged in
-		User user = getUserFromSession(thisSession);
-		if (user == null) {
+		//User user = getUserFromSession(thisSession);
+		Student student = getStudentFromSession(thisSession);
+		//if (user == null) {
+		if (student == null) {
 			return "redirect:/login";
 		} 
 		
 		//check if user is already enrolled in the course
 		Course course = courseDao.findByUid(cuid);
-		List<Student> students = course.getStudents();
-		if (students.contains(user)) {
+		List<Student> roster = course.getRoster();
+//		if (roster.contains(user)) {
+		if (roster.contains(student)) {
 			model.addAttribute("course", course);
 			model.addAttribute("alreadyEnrolledError", "You are already enrolled in this class.");
 			return "courseshow";
 		}
 
 		//go to confirmation page
-		model.addAttribute("student", studentDao.findByUid(user.getUid()));
+		//model.addAttribute("student", studentDao.findByUid(user.getUid()));
+		model.addAttribute("student", studentDao.findByUid(student.getUid()));
 		model.addAttribute("course", courseDao.findByUid(cuid));
 	
 		return "registerform";
@@ -170,7 +182,7 @@ public class StudentController extends AbstractController {
 	
 	//Save Registration
 	@RequestMapping(value="/student/register/{uid}", method = RequestMethod.POST)
-	public String saveRegistration(@PathVariable Integer uid, Model model, HttpServletRequest request) {
+	public String saveRegistration(@PathVariable int uid, Model model, HttpServletRequest request) {
 
 		//get student and course
 		HttpSession thisSession = request.getSession();
@@ -178,7 +190,7 @@ public class StudentController extends AbstractController {
 		int sUid = student.getUid();
 		Course course = courseDao.findByUid(uid);
 
-		//add the student to the course roster, subtract 1 from remaining spaces
+		//add the student to the course roster, which subtracts 1 from remaining spaces
 		course.addStudent(student);
 		
 		//add the course to student history
@@ -188,7 +200,6 @@ public class StudentController extends AbstractController {
 		studentDao.save(student);
 		courseDao.save(course);
 		
-		//save Student_Course??
 		
 		return "redirect:/student/history/" + sUid;
 	}

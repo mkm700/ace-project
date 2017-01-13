@@ -56,7 +56,7 @@ public class AuthenticationController extends AbstractController {
 		Admin admin = adminDao.findByUsername(un);
 		Student student = studentDao.findByUsername(un);
 		if (student != null) {
-			return "redirect:/student/main/" + user.getUid();
+			return "redirect:/student/main/";
 		}
 		
 		if (admin != null) {
@@ -80,13 +80,6 @@ public class AuthenticationController extends AbstractController {
 		return "studentform";
 	}
 	
-//	//Update Student
-//	@RequestMapping(value = "/student/edit/{uid}", method = RequestMethod.GET)
-//	public String editStudent(@PathVariable Integer uid, Model model) {
-//		model.addAttribute("student", studentDao.findByUid(uid));
-//		return "studentform";
-//	}
-	
 	//Save Student		
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String saveStudent(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult,
@@ -96,11 +89,6 @@ public class AuthenticationController extends AbstractController {
 		String un = request.getParameter("username");
 		String pw = request.getParameter("pwHash");
 		String verify = request.getParameter("verify");
-		
-//		String first = request.getParameter("firstName");
-//		String last = request.getParameter("lastName");
-//		String addr = request.getParameter("address1");
-//		String email = request.getParameter("email");
 		
 		boolean isValidated = true;
 		
@@ -131,7 +119,7 @@ public class AuthenticationController extends AbstractController {
 			HttpSession thisSession = request.getSession();
 			setUserInSession(thisSession, student);
 			
-			return "redirect:/student/history/" + student.getUid();
+			return "redirect:/student/main/" + student.getUid();
 		}
 		
 		else {

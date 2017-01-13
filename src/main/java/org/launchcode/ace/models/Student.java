@@ -165,7 +165,7 @@ public class Student extends User {
 		this.updated = updated;
 	}
 
-	@ManyToMany(cascade=CascadeType.ALL, mappedBy="students")
+	@ManyToMany(cascade=CascadeType.ALL, mappedBy="roster")
     public List<Course> getCourses() {
         return this.courses;
     }

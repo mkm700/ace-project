@@ -1,5 +1,6 @@
 package org.launchcode.ace.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +84,7 @@ public class Course extends AbstractEntity {
 	this.thursday = thursday;
 	this.friday = friday;
 	this.saturday = saturday;
+	this.roster = new ArrayList<Student>();
 }
 
 	//no-arg constructor for Hibernate
@@ -137,7 +139,7 @@ public class Course extends AbstractEntity {
 		this.fee = fee;
 	}
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	public CourseCategory getCourseCategory() {
 		return courseCategory;
 	}
@@ -302,12 +304,12 @@ public class Course extends AbstractEntity {
 	
     @ManyToMany(cascade=CascadeType.ALL)  
     @JoinTable(name="student_course", joinColumns=@JoinColumn(name="course.uid"), inverseJoinColumns=@JoinColumn(name="student.uid"))  
-    public List<Student> getStudents()  
+    public List<Student> getRoster()  
     {  
         return this.roster;  
     }  
     
-    public void setStudents(List<Student> roster)  
+    public void setRoster(List<Student> roster)  
     {  
         this.roster = roster;
     }  

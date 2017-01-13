@@ -41,7 +41,6 @@ public abstract class User extends AbstractEntity {
 		
 	}
 		
-	@NotNull
     @Column(name = "pw_hash")
 	public String getPwHash() {
 		return pwHash;
@@ -52,7 +51,6 @@ public abstract class User extends AbstractEntity {
 		this.pwHash = password;
 	}
 	
-	@NotNull
     @Column(name = "username", unique = true)
 	public String getUsername() {
 		return this.username;
@@ -89,8 +87,6 @@ public abstract class User extends AbstractEntity {
 	//checks that the given pw is correct for the user
 	//user.isMatchingPassword(...)
 	public boolean isMatchingPassword(String password) {
-		System.out.println(pwHash);
-		System.out.println(password);
 		return encoder.matches(password, pwHash);
 	}
 	

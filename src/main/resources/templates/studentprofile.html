@@ -9,7 +9,7 @@
 	<h1>Student Info</h1>
 
 <!--  	<form th:action="@{/admin/student/edit/{uid}}" th:object="${student}" method="post" > -->
-		<form th:object="${student}" method="post">
+		<form th:action="@{/admin/student}" th:object="${student}" method="post">
 		<input type="hidden" th:field="*{uid}"/>
 		
 		<label>

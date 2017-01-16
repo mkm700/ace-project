@@ -57,6 +57,13 @@
 			<artifactId>spring-security-crypto</artifactId>
 		</dependency>
 		
+		<!-- Open CSV -->
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>3.8</version>
+		</dependency>
+
 		<!-- Dev Tools -->
 		<dependency>
 	        <groupId>org.springframework.boot</groupId>

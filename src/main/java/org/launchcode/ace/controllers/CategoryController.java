@@ -29,11 +29,7 @@ public class CategoryController extends AbstractController {
 		@RequestMapping(value="/admin/category", method = RequestMethod.POST)
 		public String saveCourse(@Valid @ModelAttribute("courseCategory") CourseCategory courseCategory, BindingResult bindingResult,
 								HttpServletRequest request, Model model) {
-
-	    	String tempname = request.getParameter("catName");
-	    	String tempuid = request.getParameter("uid");
-			
-			
+	
 			if (bindingResult.hasErrors()) {
 				return "categoryform";
 			}

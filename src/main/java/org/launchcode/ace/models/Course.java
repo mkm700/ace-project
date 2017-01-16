@@ -12,11 +12,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Class containing info about a course
@@ -31,14 +34,14 @@ public class Course extends AbstractEntity {
 	private String descLong;
 	private CourseCategory courseCategory;
 	private float fee;
-	private Date startDate = new Date();
-	private Date endDate = new Date();
+	private Date startDate;
+	private Date endDate;
 	private String startTime;
 	private String endTime;
-	private int numClasses = 1;
-	private int minStudents = 1;
-	private int maxStudents = 1;
-	private int spacesRemain = -1;
+	private int numClasses;
+	private int minStudents;
+	private int maxStudents;
+	private int spacesRemain;
 	private boolean sunday;
 	private boolean monday;
 	private boolean tuesday;
@@ -48,15 +51,7 @@ public class Course extends AbstractEntity {
 	private boolean saturday;
 	private Date created;
 	private Date updated;
-	private List<Student> roster;
-//	private Semester semester;
-	
-	//category
-	//instructor
-	//semester
-	//enrolled
-	//spaces remaining
-	
+	private List<Student> roster;	
 	
 	public Course(String courseCode, String name, String descShort, String descLong, CourseCategory courseCategory, 
 			float fee, Date startDate, Date endDate, String startTime, String endTime, int numClasses, 
@@ -112,6 +107,7 @@ public class Course extends AbstractEntity {
 
 	@NotEmpty
     @Column(name = "desc_short")
+    @Size(max = 1200)
 	public String getDescShort() {
 		return descShort;
 	}
@@ -121,7 +117,7 @@ public class Course extends AbstractEntity {
 	}
 
     @Column(name = "desc_long")
-    @Size(max = 1337)
+    @Size(max = 1200)
 	public String getDescLong() {
 		return descLong;
 	}
@@ -131,6 +127,7 @@ public class Course extends AbstractEntity {
 	}
 
     @Column(name = "fee")
+    @Min(value=0)
 	public float getFee() {
 		return fee;
 	}
@@ -149,6 +146,8 @@ public class Course extends AbstractEntity {
 	}
 
     @Column(name = "start_date")
+    @DateTimeFormat(pattern="M/d/yyyy")
+    @NotNull
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -158,6 +157,8 @@ public class Course extends AbstractEntity {
 	}
 
     @Column(name = "end_date")
+    @DateTimeFormat(pattern="M/d/yyyy")
+    @NotNull
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -185,6 +186,7 @@ public class Course extends AbstractEntity {
 	}
 
     @Column(name = "num_classes")
+    @Min(value=1)
 	public int getNumClasses() {
 		return numClasses;
 	}
@@ -194,6 +196,7 @@ public class Course extends AbstractEntity {
 	}
 	
     @Column(name = "min_students")
+    @Min(value=1)
 	public int getMinStudents() {
 		return minStudents;
 	}
@@ -203,6 +206,7 @@ public class Course extends AbstractEntity {
 	}
 
     @Column(name = "max_students")
+    @Min(value=1)
 	public int getMaxStudents() {
 		return maxStudents;
 	}

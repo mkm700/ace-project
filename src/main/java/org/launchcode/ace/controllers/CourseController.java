@@ -2,7 +2,6 @@ package org.launchcode.ace.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,104 +57,23 @@ public class CourseController extends AbstractController {
 	//Save
 	@RequestMapping(value="/admin/course", method = RequestMethod.POST)
 	public String saveCourse(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult,
-							HttpServletRequest request, Model model) {
+							HttpServletRequest request) {
+		
+		//Validate course form fields with custom business rules
+		courseValidator.validate(course, bindingResult);
+		
+		//Check for binding result errors
+		if (bindingResult.hasErrors()) {
+			return "course/courseform";
+		}
 
-		boolean formErrors = false;
-		
-		//validate form input
-		String feeStr = request.getParameter("fee");
-		try {
-			if (Float.parseFloat(feeStr) < 0) {
-				model.addAttribute("feeError", "Fee must be greater than or equal to 0. ");
-				formErrors = true;
-			}
-		}
-		catch(NumberFormatException e) {
-	    	e.printStackTrace();
-	        model.addAttribute("feeError", "Invalid value for Fee. " );
-	        formErrors = true;
-		}
-		
-		String numClassesStr = request.getParameter("numClasses");
-		try {
-			if (Integer.parseInt(numClassesStr) <= 0) {
-				model.addAttribute("numClassesError", "Number of Classes must be greater than 0. ");
-				formErrors = true;
-			}
-		}
-		catch(NumberFormatException e) {
-	    	e.printStackTrace();
-	        model.addAttribute("numClassesError", "Invalid value for Number of Classes. " );
-	        formErrors = true;
-		}
-		
-		String minStr = request.getParameter("minStudents");
-		String maxStr = request.getParameter("maxStudents");
-
-		try {
-			if (Integer.parseInt(minStr) <= 0) {
-				model.addAttribute("minError", "Min Students must be greater than 0. ");
-				formErrors = true;
-			}
-		}
-		catch(NumberFormatException e) {
-	    	e.printStackTrace();
-	        model.addAttribute("minError", "Invalid value for Min Students. " );
-	        formErrors = true;
-		}
-		
-		try {
-			if (Integer.parseInt(maxStr) <= 0) {
-				model.addAttribute("maxError", "Max Students must be greater than 0. ");
-				formErrors = true;
-			}
-		}
-		catch(NumberFormatException e) {
-		    	e.printStackTrace();
-		        model.addAttribute("maxError", "Invalid value for Max Students. " );
-		        formErrors = true;
-			}
-		
-		if (!formErrors) {
-			if ( Integer.parseInt(minStr) > Integer.parseInt(maxStr) ) {
-				model.addAttribute("maxError", "Max Students must be greater than or equal to Min. ");
-				formErrors = true;
-			}
-		}
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("M/d/yyyy");
-		Date startDate = new Date();
-		Date endDate = new Date();
-		try {
-			startDate = formatter.parse(request.getParameter("startDate"));
-        } catch (ParseException e) {
-        	e.printStackTrace();
-            model.addAttribute("startError", "Enter a valid date (m/d/yyy)." );
-        }
-		try {
-			endDate = formatter.parse(request.getParameter("endDate"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-            model.addAttribute("endError",  "Enter a valid date (m/d/yyy)." );
-        }
-
-		if (endDate.before(startDate)) {
-			model.addAttribute("endError",  "End Date must not be before Start Date" );
-		}
-		
-		if (bindingResult.hasErrors() || formErrors) {
-			return "courseform";
-		}
-		
 		//if new course, set the Remaining Spaces equal to max students allowed
-		//TODO: find a better way to do this
-		if (course.getSpacesRemain() == -1) {
-			course.setSpacesRemain(Integer.parseInt(maxStr));
+		if (request.getParameter("uid").equals("0")) {
+			course.setSpacesRemain(Integer.parseInt(request.getParameter("maxStudents")));
 		}
 		
 		//save the course to the DB
 		courseDao.save(course);
-		
 		
 		return "redirect:/admin/courses";
 	}
@@ -196,7 +114,6 @@ public class CourseController extends AbstractController {
 	        return "course/courses";
 		}
 	}
-	
 
 	//Course Roster
 	@RequestMapping("/admin/course/roster/{uid}")
@@ -207,10 +124,6 @@ public class CourseController extends AbstractController {
 		
 		return "course/courseroster";
 	}
-	
-	
-	
 
-	
 
 }

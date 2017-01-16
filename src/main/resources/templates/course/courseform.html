@@ -45,20 +45,21 @@
 	    
 	    <label>
 	        <div>Fee</div>
-	        <input class="short-text" type="text" name = "fee" id="fee" th:value="*{#numbers.formatDecimal(fee,1,2)}"></input>
+			<input class="short-text" type="text" th:field="*{fee}" ></input>
 			<span class="error" th:text="${feeError}">Fee error</span>
+			<span class="error" th:if="${#fields.hasErrors('fee')}"  th:errors="*{fee}">Fee Error</span>
 	    </label>   
 	    
 		<label>
 	        <div>Start Date</div>
-	        <input class="short-text" type="text" id="startDate" name="startDate" placeholder="m/d/yyyy" th:value="*{#dates.format(startDate,'M/d/yyyy')}"></input>
-			<span class="error" th:text="${startError}">Start Date parsing error</span>
+			<input class="short-text" type="text" placeholder="m/d/yyyy" th:field="*{startDate}"></input>
+			<span class="error" th:if="${#fields.hasErrors('startDate')}"  th:errors="*{startDate}">Start Date Error</span>
 	    </label>  
 	    
 	    <label>
 	        <div>End Date</div>
-	        <input class="short-text" type="text" id="endDate" name="endDate" placeholder="m/d/yyyy" th:value="*{#dates.format(endDate,'M/d/yyyy')}"></input>
-			<span class="error" th:text="${endError}">End Date parsing error</span>
+			<input class="short-text" type="text" placeholder="m/d/yyyy" th:field="*{endDate}"></input>
+			<span class="error" th:if="${#fields.hasErrors('endDate')}"  th:errors="*{endDate}">End Date Error</span>
 	    </label>  
 	    
 	    <label>
@@ -76,19 +77,19 @@
 	    <label>
 	        <div>Number of Classes</div>
 	        <input class="short-text" type="text" th:field="*{numClasses}"></input>
-			<span class="error" th:text="${numClassesError}">Number of Classes error</span>
+			<span class="error" th:if="${#fields.hasErrors('numClasses')}"  th:errors="*{numClasses}">Number of Classes Error</span>
 		</label> 
 	       
 	   <label>
 	        <div>Minimum Students</div>
 	        <input class="short-text" type="text" th:field="*{minStudents}"></input>
-			<span class="error" th:text="${minError}">Min validation error</span>
+			<span class="error" th:if="${#fields.hasErrors('minStudents')}"  th:errors="*{minStudents}">Min Students Error</span>
 	    </label> 
 	    
 	    <label>
 	        <div>Maximum Students</div>
 	        <input class="short-text" type="text" th:field="*{maxStudents}"></input>
-			<span class="error" th:text="${maxError}">Max validation error</span>
+			<span class="error" th:if="${#fields.hasErrors('maxStudents')}"  th:errors="*{maxStudents}">Max Students Error</span>
 	    </label> 	    
 
 	    <label>

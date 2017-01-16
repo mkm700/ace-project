@@ -108,7 +108,7 @@ public class Student extends User {
 	}
 
 	@Email(message="Please provide valid email address")
-	@Pattern(regexp=".+@.+\\..+", message="That email is not valid")
+	//@Pattern(regexp=".+@.+\\..+", message="That email is not valid")
 	@Column(name = "email")
 	public String getEmail() {
 		return email;

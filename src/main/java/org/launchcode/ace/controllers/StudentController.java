@@ -106,7 +106,7 @@ public class StudentController extends AbstractController {
 		if (uid == (int) request.getSession().getAttribute(AbstractController.userSessionKey)) {
     	
 			model.addAttribute("student", studentDao.findByUid(uid));
-			return "studentprofile";
+			return "student/studentprofile";
 		}
 		else {
 			model.addAttribute("message", "You are not authorized to view this profile");
@@ -127,7 +127,7 @@ public class StudentController extends AbstractController {
   		//update the DB
 		studentDao.save(student);
 		
-		return "redirect:/student/main/" + student.getUid();
+		return "redirect:/student/main";
   	}
   	
   	
@@ -168,7 +168,7 @@ public class StudentController extends AbstractController {
 		if (roster.contains(student)) {
 			model.addAttribute("course", course);
 			model.addAttribute("alreadyEnrolledError", "You are already enrolled in this class.");
-			return "student/courseshow";
+			return "course/courseshow";
 		}
 
 		//go to confirmation page

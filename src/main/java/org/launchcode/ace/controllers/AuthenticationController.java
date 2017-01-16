@@ -30,8 +30,7 @@ public class AuthenticationController extends AbstractController {
 		String un = request.getParameter("username");
 		String pw = request.getParameter("password");
 		
-		//get user by their username
-		//get data out of database
+		//find user
 		User user = userDao.findByUsername(un);
 		if (user == null) {
 			model.addAttribute("username", un);
@@ -56,7 +55,7 @@ public class AuthenticationController extends AbstractController {
 		Admin admin = adminDao.findByUsername(un);
 		Student student = studentDao.findByUsername(un);
 		if (student != null) {
-			return "redirect:/student/main/";
+			return "redirect:/student/main";
 		}
 		
 		if (admin != null) {
@@ -77,7 +76,7 @@ public class AuthenticationController extends AbstractController {
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newStudent(Model model) {
 		model.addAttribute("student", new Student());
-		return "studentform";
+		return "student/studentform";
 	}
 	
 	//Save Student		
@@ -119,12 +118,12 @@ public class AuthenticationController extends AbstractController {
 			HttpSession thisSession = request.getSession();
 			setUserInSession(thisSession, student);
 			
-			return "redirect:/student/main/" + student.getUid();
+			return "redirect:/student/main";
 		}
 		
 		else {
 			//invalid data send back to student form with error messages
-			return "studentform";
+			return "student/studentform";
 		}
 		
 	}
@@ -134,7 +133,6 @@ public class AuthenticationController extends AbstractController {
     //Check to see if history belongs to this user by comparing uid with user in session
     public String editPassword(@PathVariable Integer uid, Model model, HttpServletRequest request){
 		if (uid == request.getSession().getAttribute(AbstractController.userSessionKey)) {
-			Student test = studentDao.findByUid(uid);
 			model.addAttribute("student", studentDao.findByUid(uid));
 			return "changepassword";
 		}
@@ -165,7 +163,7 @@ public class AuthenticationController extends AbstractController {
 		//hash password and save to DB
 		student.setPwHash(Student.hashPassword(pw));
 		studentDao.save(student);
-  		return "redirect:/student/main/" + student.getUid();
+  		return "redirect:/student/main";
   	}
 	
 	//Create New Admin
@@ -184,9 +182,6 @@ public class AuthenticationController extends AbstractController {
 			String un = request.getParameter("username");
 			String pw = request.getParameter("pwHash");
 			String verify = request.getParameter("verify");
-			
-			String first = request.getParameter("firstName");
-			String last = request.getParameter("lastName");
 			
 			boolean isValidated = true;
 			

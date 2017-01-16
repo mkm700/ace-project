@@ -30,7 +30,7 @@ public class CourseValidator implements Validator {
 			errors.rejectValue("maxStudents", "course.maxStudents.tooSmall");
 		}
 		
-//		//Check for valid start and end dates
+		//Check for valid start and end dates
 		Date start = course.getStartDate();
 		Date end = course.getEndDate();
 		if (start != null && end != null) {
@@ -38,18 +38,6 @@ public class CourseValidator implements Validator {
 				errors.rejectValue("endDate", "course.endDate.after");
 			}
 		}
-		
-		
-//		try {
-//			if (course.getEndDate().before(course.getStartDate())) {
-//				errors.rejectValue("endDate", "course.endDate.after");
-//			}
-//		}
-//		catch(Exception e) {
-//	    	e.printStackTrace();
-//	        model.addAttribute("numClassesError", "Invalid value for Number of Classes. " );
-//	        formErrors = true;
-//		}
 		
 	}
 	

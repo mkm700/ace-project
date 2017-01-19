@@ -43,7 +43,7 @@ public class CategoryController extends AbstractController {
 	    //Category List
 	    @RequestMapping(value = "/admin/categories", method = RequestMethod.GET)
 	    public String list(Model model){
-	        model.addAttribute("courseCategories", courseCategoryDao.findAll());
+	    	model.addAttribute("courseCategories", courseCategoryDao.findAllByOrderByCatName());
 	        return "categories";
 	    }
 	    

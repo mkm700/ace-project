@@ -27,7 +27,7 @@ public class StudentController extends AbstractController {
 	//Student List
     @RequestMapping(value = "/admin/students", method = RequestMethod.GET)
     public String listStudents(Model model){
-        model.addAttribute("students", studentDao.findAll());
+        model.addAttribute("students", studentDao.findAllByOrderByLastName());
         return "student/students";
     }
     
@@ -73,7 +73,7 @@ public class StudentController extends AbstractController {
 		//else display message
 		else {
 			model.addAttribute("studentListError", "Cannot delete a student that has course history");
-			model.addAttribute("students", studentDao.findAll());
+			model.addAttribute("students", studentDao.findAllByOrderByLastName());
 			return "student/students";
 		}	    
 	}

@@ -10,6 +10,8 @@ import org.launchcode.ace.models.dao.CourseCategoryDao;
 import org.launchcode.ace.models.dao.CourseDao;
 import org.launchcode.ace.models.dao.StudentDao;
 import org.launchcode.ace.models.dao.UserDao;
+import org.launchcode.ace.services.MailingList;
+import org.launchcode.ace.services.MailingListAlt;
 import org.launchcode.ace.validators.CourseValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,6 +34,13 @@ public abstract class AbstractController {
 	
 	@Autowired
 	CourseValidator courseValidator;
+	
+	@Autowired
+	MailingList mailingList;
+	
+	@Autowired
+	MailingListAlt mailingListAlt;
+
 
     public static final String userSessionKey = "user_id";
     

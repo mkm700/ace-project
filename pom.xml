@@ -57,11 +57,11 @@
 			<artifactId>spring-security-crypto</artifactId>
 		</dependency>
 		
-		<!-- Open CSV -->
+		<!-- Super CSV -->
 		<dependency>
-			<groupId>com.opencsv</groupId>
-			<artifactId>opencsv</artifactId>
-			<version>3.8</version>
+		    <groupId>net.sf.supercsv</groupId>
+		    <artifactId>super-csv</artifactId>
+		    <version>2.4.0</version>
 		</dependency>
 
 		<!-- Dev Tools -->

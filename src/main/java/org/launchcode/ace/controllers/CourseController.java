@@ -28,7 +28,7 @@ public class CourseController extends AbstractController {
 	//Home Page
 	@RequestMapping(value = "/")
 	public String homePage(Model model) {
-		model.addAttribute("courses", courseDao.findAll());
+		model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
 		return "course/coursesall";
 	}
 	
@@ -86,14 +86,14 @@ public class CourseController extends AbstractController {
     //Course List - Admin
     @RequestMapping(value = "/admin/courses", method = RequestMethod.GET)
     public String list(Model model){
-        model.addAttribute("courses", courseDao.findAll());
+        model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
         return "course/courses";
     }
     
     //Course List - All
     @RequestMapping(value = "/courses/all", method = RequestMethod.GET)
     public String listAll(Model model){
-        model.addAttribute("courses", courseDao.findAll());
+        model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
         return "course/coursesall";
     }
     
@@ -108,7 +108,7 @@ public class CourseController extends AbstractController {
 		//else display message
 		else {
 			model.addAttribute("courseListError", "Cannot delete a course that has students enrolled");
-	        model.addAttribute("courses", courseDao.findAll());
+	        model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
 	        return "course/courses";
 		}
 	}

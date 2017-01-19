@@ -8,7 +8,7 @@
 
 	<h1>Student Info</h1>
 
-		<form th:object="${student}" method="post">
+		<form th:object="${student}" th:action="@{/admin/student}" method="post">
 		<input type="hidden" th:field="*{uid}"/>
 		
 		<label>

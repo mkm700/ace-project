@@ -17,6 +17,8 @@ public interface StudentDao extends CrudRepository<Student, Integer> {
 	
 	Student findByUid(int uid);
 	List<Student> findAll();
+	List<Student> findAllByOrderByLastName();
+	List<Student> findByMailListTrueOrderByLastName();
 	
 	Student findByLastName(String lastName);
 }

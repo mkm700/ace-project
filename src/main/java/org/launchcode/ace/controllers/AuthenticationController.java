@@ -231,7 +231,7 @@ public class AuthenticationController extends AbstractController {
 		else {
 			//validate username
 			if(!User.isValidUsername(un)) {
-				return "Username is not valid";
+				return "Username must be between 5 and 11 characters and contain 1 alpha";
 			}
 		}
 		return null;
@@ -240,7 +240,7 @@ public class AuthenticationController extends AbstractController {
 	public String verifyPassword(String pw, String verify) {
 		//verify passwords are the same and valid
 		if (!User.isValidPassword(pw)) {
-			return "Password is not valid";
+			return "Password must be between 6 and 20 characters";
 		}
 		else if (!pw.equals(verify)) {
 			return "Passwords do not match";

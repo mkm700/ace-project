@@ -29,15 +29,10 @@ public abstract class User extends AbstractEntity {
 		
 		super();
 		
-//		if (!isValidUsername(username)) {
-//			throw new IllegalArgumentException("Invalid username");
-//		}
-		
 		this.username = username;
 		this.pwHash = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		
 		
 	}
 		

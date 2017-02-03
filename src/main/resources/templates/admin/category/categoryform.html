@@ -3,31 +3,38 @@
 <head th:replace="template :: dochead">
 </head>
 <body>
+	<div class="container">
+		<div th:replace="template :: navigation"></div>
 
-	<div th:replace="template :: navigation"></div>
+		<div class="row">
+			<div class="col-md-12">
+				<h1>Course Category</h1>
 
-	<h1>Course Category</h1>
+				<form th:action="@{/admin/category}" th:object="${courseCategory}" method="post">
+					<input type="hidden" th:field="*{uid}" />
 
-	<form th:action="@{/admin/category}" th:object="${courseCategory}" method="post" >
-		<input type="hidden" th:field="*{uid}"/>
+					<div class="form-group">
+						<label>Name</label> <input class="form-control" type="text"
+							th:field="*{catName}"></input> <span class="error"
+							th:if="${#fields.hasErrors('catName')}" th:errors="*{catName}">Name
+							Error</span>
+					</div>
 
-	   	<label>
-	        <div>Name</div>
-	        <input type="text" th:field="*{catName}"></input>
-			<span class="error" th:if="${#fields.hasErrors('catName')}"  th:errors="*{catName}">Name Error</span>
-	    </label>
-	
-	    <label>
-	        <div>Short Description</div>
-	        <textarea class="short" th:field="*{catDesc}"></textarea>
-        	<span class="error" th:if="${#fields.hasErrors('catDesc')}"  th:errors="*{catDesc}">Description Error</span>
-	    </label>
-	    
-	    <button type="submit">Save</button>
+					<div class="form-group">
+						<label>Short Description</label>
+						<textarea class="form-control" th:field="*{catDesc}"></textarea>
+						<span class="error" th:if="${#fields.hasErrors('catDesc')}"
+							th:errors="*{catDesc}">Description Error</span>
+					</div>
 
-	</form>
-	
-	<div th:replace="template :: footer"></div>
-	
+					<button class="btn btn-primary" type="submit">Save</button>
+
+				</form>
+			</div>
+		</div>
+
+		<div th:replace="template :: footer"></div>
+	</div>
+	<div th:replace="template :: footer-js"></div>
 </body>
 </html>

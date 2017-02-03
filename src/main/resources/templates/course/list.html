@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+	<div class="container">
+
+		<div th:replace="template :: navigation"></div>
+		
+		<div class="row">
+	        <div class="col-md-12">
+	            <h1>Courses Offered</h1>
+	        </div>
+	    </div>
+	    
+	    <div class="row">
+	        <div class="col-md-12 course-listing" th:each="course : ${courses}">   
+    			<div class="col-md-3">
+    				<a th:href="${'/course/detail/' + course.uid}">
+	        			<img th:src="'/images/' + ${course.imageFileName}" 
+	               		class="img-responsive center-block"/>
+               		</a>
+	        	</div>
+	        	<div class="col-md-7">
+					<h3 class="first"><a th:href="${'/course/detail/' + course.uid}"><span th:text="${course.courseCode} + ' ' + ${course.name}">Course Code + Name</span></a></h3>
+		            <p th:text="${course.descShort}">Short Desc</p>
+		            <p th:text="${ #dates.format(course.startDate, 'M/d/yyyy') } + ' - ' + ${ #dates.format(course.endDate, 'M/d/yyyy') } + ', ' + ${course.startTime} + ' - ' + ${course.endTime}">Dates / Times</p>
+					<p th:text="'$' + ${#numbers.formatDecimal(course.fee,1,2)}">Fee</p>
+						         		  
+         		</div>	
+         		<div class="col-md-2">
+	        		<p><a class="btn btn-primary" th:href="${'/course/detail/' + course.uid}">Learn More</a></p>
+	        	</div>
+	         </div>
+		</div>
+		
+
+
+		<div th:replace="template :: footer"></div>
+	</div>
+		
+	<div th:replace="template :: footer-js"></div>
+
+
+</body>
+</html>

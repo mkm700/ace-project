@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+	<div class="container">
+
+		<div th:replace="template :: navigation"></div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<h1>Student Main Menu</h1>
+				<div>
+					<h2>
+						Welcome, <span th:text="${student.firstName}">First Name</span>!
+					</h2>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="row">
+			<div class="col-sm-offset-1 col-md-4">
+				<p>
+					<a class="btn btn-primary" href="/course/list">Register for a
+						Course</a>
+				</p>
+			</div>
+
+			<div class="col-sm-offset-1 col-md-4">
+				<p>
+					<a class="btn btn-primary"
+						th:href="${'/student/history/' + student.uid}">View Course
+						History</a>
+				</p>
+			</div>
+
+			<div class="col-sm-offset-1 col-md-4">
+				<p>
+					<a class="btn btn-primary"
+						th:href="${'/student/edit/' + student.uid}">Update Profile</a>
+				</p>
+			</div>
+
+			<div class="col-sm-offset-1 col-md-4">
+				<p>
+					<a class="btn btn-primary"
+						th:href="${'/student/pw/' + student.uid}">Change Password</a>
+				</p>
+			</div>
+
+		</div>
+
+		<div th:replace="template :: footer"></div>
+
+	</div>
+
+	<div th:replace="template :: footer-js"></div>
+
+</body>
+</html>

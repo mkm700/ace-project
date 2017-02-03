@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+	<div class="container">
+
+		<div th:replace="template :: navigation"></div>
+		
+		<div class="row">
+       		<div class="col-md-12">
+				<h1>Admin Main Menu</h1>
+			</div>
+		</div>
+		
+		<!-- <div class="confirm" th:text="${confirmMessage}"></div>  -->
+		<div class="menu-options">
+			<div class="row">
+	       		<div class="col-sm-offset-1 col-md-3">
+					<p><a class="btn btn-primary" href="/admin/course/list">Courses</a></p>
+				</div>
+	
+	     		<div class="col-md-4">		
+					<p><a class="btn btn-primary" href="/admin/student/list">Students</a></p>
+				</div>
+	
+	       		<div class="col-md-3">
+	       			<p><a class="btn btn-primary" href="/admin/category/list">Categories</a></p>
+	      		</div>
+	   		</div>
+	   		
+			<div class="row">
+	       		<div class="col-sm-offset-2 col-md-4">
+					<p><a class="btn btn-primary" href="/admin/maillist">Export Mailing List</a></p>
+				</div>
+	
+	       		<div class="col-md-4">
+	       			<p><a class="btn btn-primary" href="#">Reports</a></p>
+	      		</div>
+	   		</div>
+		</div>
+		
+		<hr />
+	
+		<h3>Other To-Do's</h3>
+		<ul>
+			<li>Create SQL to load tables&#x2713;</li>
+			<li>Admin: Delete Course&#x2713;</li>
+			<li>Admin: Add Student &#x2713;</li>
+			<li>Admin: Delete Student&#x2713;</li>
+			<li>Student: View / Edit profile, history&#x2713;</li>
+			<li>Student: update password&#x2713;</li>
+			<li>Test security for student and admin&#x2713;</li>
+			<li>Import Courses</li>
+			<li>Export Students</li>
+			<li>Create Read Me page for GitHub</li>
+			<li>Create main pages: admin, logged in&#x2713;</li>
+			<li>Reorganize controllers</li>
+			<li>Clean up comments in code</li>
+		</ul>
+		
+		<h3>Issues</h3>
+			<ul>
+			<li>Delete</li>
+			<li>Sort order of courses (admin and not logged)</li>
+			<li>Verifying user only viewing their own user info -> history, edit -> better way to do this???</li>
+			<li>How to account for change to spaces remaining if max students changes?</li>
+			<li>Differentiating "Add Student" from "Update Student" (ie how to handle password)</li>
+			<li>When registering and not logged in, how to keep flow going instead of routing back to list page</li>
+			<li>Register link should not show at bottom of detail when admin logged in (or it needs to go to select student page)</li>
+			</ul>
+		
+		<h3>Future Considerations</h3>
+		<ul>
+			<li>Change Navigation based on user: Admin, User, not logged in</li>
+			<li>Reports (ie Low enrollment courses, Revenue by Semester</li>
+			<li>Replace "my security" with Spring Security</li>
+			<li>Admin: List admin users (include link to delete and add -> /admin/new)</li>
+			<li>Admin: Register student for course</li>
+			<li>Admin: Cancel registration</li>
+			<li>Bootstrap</li>
+			<li>Ability to register for more than 1 class at a time</li>
+			<li>Add semester to Course (default Course list to current semester)</li>
+			<li>Search for courses by name, category</li>
+			<li>Address verification using USPS API</li>
+			<li>Calendar Listing of Courses</li>
+			<li>Waiting List</li>
+			<li>Senior Pricing based on age</li>
+			<li>Age requirements for course</li>
+			<li>Show 3 sections on Course History page: In process, Upcoming, Completed</li>
+			
+		</ul>
+	
+		<div th:replace="template :: footer"></div>
+	
+	</div>	
+	
+	<div th:replace="template :: footer-js"></div>
+	
+</body>
+</html>

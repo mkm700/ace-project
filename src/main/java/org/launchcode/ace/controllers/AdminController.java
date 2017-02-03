@@ -1,12 +1,19 @@
 package org.launchcode.ace.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
+import org.launchcode.ace.models.Course;
+import org.launchcode.ace.models.CourseCategory;
 import org.launchcode.ace.models.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,15 +21,22 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 
 @Controller
-@SessionAttributes("admin")
+@SessionAttributes("course")
 public class AdminController extends AbstractController {
 	
-	//Admin List
-    @RequestMapping(value = "/admins", method = RequestMethod.GET)
-    public String list(Model model){
-        model.addAttribute("admins", adminDao.findAll());
-        return "admins";
-    }
+	//Main Menu
+	@RequestMapping(value = "/admin/menu")
+	public String adminMain(HttpServletRequest request, Model model) {
+		return "admin/menu";
+	}
+	
+	
+//	//Admin List
+//    @RequestMapping(value = "/admins", method = RequestMethod.GET)
+//    public String list(Model model){
+//        model.addAttribute("admins", adminDao.findAll());
+//        return "admins";
+//    }
     
     //Delete
 	@RequestMapping("/admin/delete/{uid}")
@@ -35,28 +49,43 @@ public class AdminController extends AbstractController {
 	@RequestMapping(value="/admin/maillist", method = RequestMethod.GET)
 	public String exportMailListForm() {
 
-		return "test";
+		return "admin/exportmailing";
 	}
 	
-	@RequestMapping(value="/admin/maillist", method = RequestMethod.POST)
-	public String exportMailList(HttpServletResponse response, Model model) {
+//	@RequestMapping(value="/admin/maillist", method = RequestMethod.POST)
+//	public void exportMailList(HttpServletResponse response, Model model) throws IOException {
+//		List<Student> names = studentDao.findByMailListTrueOrderByLastName();
+//		
+//		//call the export method 
+//		mailingList.exportMailList(names, response);
+//		//mailingListAlt.exportMailListAlt(names, response);
+//			
+//	}
+	
+	@RequestMapping(value="/admin/maillist", params="clean", method = RequestMethod.POST)
+	public void cleanMailList(HttpServletResponse response, Model model) throws IOException {
 		List<Student> names = studentDao.findByMailListTrueOrderByLastName();
 		
-		try {
-			mailingList.exportMailList(names, response);
-			//mailingListAlt.exportMailListAlt(names, response);
+		//call the clean method 
+		mailingList.cleanMailList(response);
 			
-		}
-		catch(Exception e) {
-			model.addAttribute("confirmMessage", "There was a problem with the export");
-			System.out.println(e.getMessage());
-			return "admin-main";
-		}
+	}
+	
+	@RequestMapping(value="/admin/maillist", params="export", method = RequestMethod.POST)
+	public void exportMailList(HttpServletResponse response, Model model) throws IOException {
+		List<Student> names = studentDao.findByMailListTrueOrderByLastName();
 		
-		//TODO: This message is not displaying.  What is the problem???
-		model.addAttribute("confirmMessage","Mailing list exported successfully");
-		return "redirect:/admin/main";
+		//call the export method 
+		mailingList.exportMailList(response);
+		//mailingListAlt.exportMailListAlt(names, response);
+			
 	}
 
+	//Temp for new template -- REMOVE LATER
+    @RequestMapping(value = "/temptest", method = RequestMethod.GET)
+    public String tempTest(Model model){
+    	model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
+        return "index-new";
+    }
 		
 }

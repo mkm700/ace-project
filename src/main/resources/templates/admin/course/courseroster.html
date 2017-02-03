@@ -3,36 +3,43 @@
 <head th:replace="template :: dochead">
 </head>
 <body>
+	<div class="container">
+		<div th:replace="template :: navigation"></div>
 
-	<div th:replace="template :: navigation"></div>
-
-	<h1>Course Roster</h1>
-	<div class="course">
-		<p th:text="${course.courseCode} + ' ' + ${course.name}">Course Code and Name</p>
-		<p th:text="'Min. Students: ' + ${course.minStudents}">Min. Students</p>
-		<p th:text="'Max. Students: ' + ${course.maxStudents}">Max. Students</p>
-		<p th:text="'Spaces Remaining: ' +${course.spacesRemain}">Spaces Remaining</p>
-	</div>
+		<div class="col-md-12">
+	    	
+			<h1>Course Roster</h1>
+			
+			<div>
+				<h3 th:text="${course.courseCode} + ' ' + ${course.name}">Course Code and Name</h3>
+				<p th:text="'Min. Students: ' + ${course.minStudents}">Min. Students</p>
+				<p th:text="'Max. Students: ' + ${course.maxStudents}">Max. Students</p>
+				<p th:text="'Spaces Remaining: ' +${course.spacesRemain}">Spaces Remaining</p>
+			</div>
 	
-	<span th:if="${#lists.isEmpty(students)}" th:text="'No students are registered'">No roster</span>
-	<div th:if="${not #lists.isEmpty(students)}">
-		<table>
-	    	<tr>
-	              <th>Name</th>
-	              <th>Username</th>
-	              <th>Email</th>
-	              <th>Phone</th>
-	         </tr>
-	         <tr th:each="student : ${students}">
-				<td th:text="${student.firstName} + ' ' + ${student.lastName}">Last Name, First Name</td>
-				<td th:text="${student.username}">Username</td>
-				<td th:text="${student.email}">email</td>
-				<td th:text="${student.phone}">phone</td>
-			</tr>
-	          
-		</table>	
-	</div>
+			<span th:if="${#lists.isEmpty(students)}" th:text="'No students are registered'">No roster</span>
+			<div th:if="${not #lists.isEmpty(students)}">
+				<table class="table">
+			    	<tr>
+			              <th>Name</th>
+			              <th>Username</th>
+			              <th>Email</th>
+			              <th>Phone</th>
+			         </tr>
+			         <tr th:each="student : ${students}">
+						<td th:text="${student.firstName} + ' ' + ${student.lastName}">Last Name, First Name</td>
+						<td th:text="${student.username}">Username</td>
+						<td th:text="${student.email}">email</td>
+						<td th:text="${student.phone}">phone</td>
+					</tr>
+			          
+				</table>	
+			</div>
 
-	<div th:replace="template :: footer"></div>
+			<div th:replace="template :: footer"></div>
+		</div>
+	</div>	
+	
+	<div th:replace="template :: footer-js"></div>
 </body>
 </html>

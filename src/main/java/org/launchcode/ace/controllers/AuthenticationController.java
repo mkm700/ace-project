@@ -55,11 +55,11 @@ public class AuthenticationController extends AbstractController {
 		Admin admin = adminDao.findByUsername(un);
 		Student student = studentDao.findByUsername(un);
 		if (student != null) {
-			return "redirect:/student/main";
+			return "redirect:/student/menu";
 		}
 		
 		if (admin != null) {
-			return "redirect:/admin/main";
+			return "redirect:/admin/menu";
 		}
 		
 		return "error";
@@ -118,7 +118,7 @@ public class AuthenticationController extends AbstractController {
 			HttpSession thisSession = request.getSession();
 			setUserInSession(thisSession, student);
 			
-			return "redirect:/student/main";
+			return "redirect:/student/menu";
 		}
 		
 		else {
@@ -134,7 +134,7 @@ public class AuthenticationController extends AbstractController {
     public String editPassword(@PathVariable Integer uid, Model model, HttpServletRequest request){
 		if (uid == request.getSession().getAttribute(AbstractController.userSessionKey)) {
 			model.addAttribute("student", studentDao.findByUid(uid));
-			return "changepassword";
+			return "student/changepassword";
 		}
 		else {
 			model.addAttribute("message", "You are not authorized to update this password");
@@ -155,7 +155,7 @@ public class AuthenticationController extends AbstractController {
   		if (validPassword != null) {
   		//invalid data send back to student form with error messages
   			model.addAttribute("password_error", validPassword);
-  			return "changepassword";
+  			return "student/changepassword";
   		}
   		
   		//Get student
@@ -163,7 +163,7 @@ public class AuthenticationController extends AbstractController {
 		//hash password and save to DB
 		student.setPwHash(Student.hashPassword(pw));
 		studentDao.save(student);
-  		return "redirect:/student/main";
+  		return "redirect:/student/menu";
   	}
 	
 	//Create New Admin

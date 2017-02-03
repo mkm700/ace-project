@@ -3,29 +3,37 @@
 <head th:replace="template :: dochead">
 </head>
 <body>
+	<div class="container">
+		<div th:replace="template :: navigation"></div>
 
-	<div th:replace="template :: navigation"></div>
+		<div class="row">
+			<div class="col-md-12">
+				<h1>Categories</h1>
 
-	<h1>Categories</h1>
-	
-	<p><a href="/admin/category">Add a New Category</a></p>
+				<p><a class="btn btn-primary" href="/admin/category/new">Add a New Category</a></p>
 
-			<table>
-	            <tr>
-	                <th>Name</th>
-	                <th>Description</th>
-            	</tr>
-            	
-				<tr th:each="category : ${courseCategories}">
-	                <td th:text="${category.catName}">Name</td>
-	                <td th:text="${category.catDesc}">Category</td>
-	                <td><a th:href="${'/admin/category/edit/' + category.uid}">Edit</a></td>
-<!--                <td><a th:href="${'/admin/category/delete/' + category.uid}">Delete</a></td>  -->
-	            </tr>
-	            
-			</table>
-		<!-- </div>	-->
+				<table class="table">
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Edit</th>
+					</tr>
 
-	<div th:replace="template :: footer"></div>
+					<tr th:each="category : ${courseCategories}">
+						<td th:text="${category.catName}">Name</td>
+						<td th:text="${category.catDesc}">Category</td>
+						<td><a th:href="${'/admin/category/edit/' + category.uid}">Edit</a></td>
+						<!--<td><a th:href="${'/admin/category/delete/' + category.uid}">Delete</a></td>  -->
+					</tr>
+
+				</table>
+			</div>
+		</div>
+
+		<div th:replace="template :: footer"></div>
+
+	</div>
+
+	<div th:replace="template :: footer-js"></div>
 </body>
 </html>

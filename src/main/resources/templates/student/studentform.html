@@ -4,110 +4,129 @@
 </head>
 <body>
 
-	<div th:replace="template :: navigation"></div>
+	<div class="container">
 
-	<h1>Student Info</h1>
+		<div th:replace="template :: navigation"></div>
 
-	<form th:object="${student}" method="post" >
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>Student Info</h1>
+			</div>
 
-		
-	    <label>
-	    	<div>Username</div>
-               <input class="short-text" type="text" th:field="*{username}"></input>
-               <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</span>
-           	   <span class="error" th:text="${username_error}"></span>
-           </label>
-	    <label>
-	    	<div>Password</div>
-            	<input type="password" th:field="*{pwHash}"></input>
-            	<span class="error" th:if="${#fields.hasErrors('pwHash')}" th:errors="*{pwHash}">PW error</span>
-        		<span class="error" th:text="${password_error}"></span>
-        </label>
-	    <label>
-	    	<div>Verify Password</div>
-               <input type="password" name = "verify" th:value="${verify}"></input>
-               <span class="error" th:text="${verify_error}"></span>
-        </label>
+			<div class="col-sm-offset-2 col-sm-8">
 
-	    <label>
-	        <div>First Name</div>
-	        <input class="short-text" type="text" th:field="*{firstName}"></input>
-	       	<span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
-	    </label>
-	    
-	    <label>
-	        <div>Last Name</div>
-	        <input class="short-text" type="text" th:field="*{lastName}"></input>
-	       	<span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span>
-	    </label>
+				<form th:object="${student}" method="post">
+					<input type="hidden" th:field="*{uid}" />
+					<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+						<p th:text="#{form.hasErrors}">Error Message</p>
+					</div>
 
-	   	<label>
-	        <div>Address - Street</div>
-	        <input type="text" th:field="*{addressStreet}"></input>
-			<span class="error" th:if="${#fields.hasErrors('addressStreet')}"  th:errors="*{addressStreet}">Address Street Error</span>
-	    </label>
+					<div class="form-group">
+						<label>Username</label> <input class="form-control" type="text"
+							th:field="*{username}"></input> <span class="error"
+							th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username
+							error</span> <span class="error" th:text="${username_error}"></span>
+					</div>
 
-	   	<label>
-	        <div>Address - Apt / Suite</div>
-	        <input type="text" th:field="*{addressApt}"></input>
-			<span class="error" th:if="${#fields.hasErrors('addressApt')}"  th:errors="*{addressApt}">Address Apt Error</span>
-	    </label>
-	    	    
-	    <label>
-	        <div>City</div>
-	        <input class="short-text" type="text" th:field="*{city}"></input>
-	       	<span class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">City Error</span>
-	    </label>
-	    
-	    <label>
-	        <div>State</div>
-	        <input class="short-text" type="text" th:field="*{state}"></input>
-	       	<span class="error" th:if="${#fields.hasErrors('state')}" th:errors="*{state}">State Error</span>
-	    </label>
-	    
-	   	<label>
-	        <div>Zip</div>
-	        <input class="short-text" type="text" th:field="*{zip}"></input>
-	       	<span class="error" th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}">Zip Error</span>
-	    </label>
-	    
-	   	<label>
-	        <div>Phone</div>
-	        <input class="short-text" type="text" th:field="*{phone}"></input>
-	       	<span class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone Error</span>
-	    </label>
-	    
-	    <label>
-	        <div>Email</div>
-	        <input class="short-text" type="text" th:field="*{email}"></input>
-	       	<span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
-	    </label>
 
-	    <label>
-	        <div>Notes</div>
-	        <input class="short-text" type="text" th:field="*{notes}"></input>
-	       	<span class="error" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}">Notes Error</span>
-	    </label>
-	    
-	    <label>
-			<input type="checkbox" th:field="*{mailList}"></input>
-			<span>Would you like us to mail you a copy of our print brochure two times per year?</span>
-			<span class="error" th:if="${#fields.hasErrors('mailList')}"  th:errors="*{mailList}">Mail List Error</span>
-	    </label> 
-	    
-	    <label>
-			<input type="checkbox" th:field="*{emailList}"></input>
-			<span>Would you like to subscribe to our email list?</span>
-			<span class="error" th:if="${#fields.hasErrors('emailList')}"  th:errors="*{emailList}">Email List Error</span>
-	    </label> 	    	    	    
-	    
-	    <button type="submit">Save</button>
 
-	</form>
+					<div class="form-group">
+						<label>Password</label> <input class="form-control"
+							type="password" th:field="*{pwHash}"></input> <span class="error"
+							th:if="${#fields.hasErrors('pwHash')}" th:errors="*{pwHash}">PW
+							error</span> <span class="error" th:text="${password_error}"></span>
+					</div>
+					<div class="form-group">
+						<label>Verify Password</label> <input class="form-control"
+							type="password" name="verify" th:value="${verify}"></input> <span
+							class="error" th:text="${verify_error}"></span>
+					</div>
+					<div class="form-group">
+						<label>First Name</label> <input class="form-control" type="text"
+							th:field="*{firstName}"></input> <span class="error"
+							th:if="${#fields.hasErrors('firstName')}"
+							th:errors="*{firstName}">First Name Error</span>
+					</div>
+					<div class="form-group">
+						<label>Last Name</label> <input class="form-control" type="text"
+							th:field="*{lastName}"></input> <span class="error"
+							th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last
+							Name Error</span>
+					</div>
+					<div class="form-group">
+						<label>Address - Street</label> <input class="form-control"
+							type="text" th:field="*{addressStreet}"></input> <span
+							class="error" th:if="${#fields.hasErrors('addressStreet')}"
+							th:errors="*{addressStreet}">Address Street Error</span>
+					</div>
+					<div class="form-group">
+						<label>Address - Apt / Suite</label> <input class="form-control"
+							type="text" th:field="*{addressApt}"></input> <span class="error"
+							th:if="${#fields.hasErrors('addressApt')}"
+							th:errors="*{addressApt}">Address Apt Error</span>
+					</div>
+					<div class="form-group">
+						<label>City</label> <input class="form-control" type="text"
+							th:field="*{city}"></input> <span class="error"
+							th:if="${#fields.hasErrors('city')}" th:errors="*{city}">City
+							Error</span>
+					</div>
+					<div class="form-group">
+						<label>State</label> <input class="form-control" type="text"
+							th:field="*{state}"></input> <span class="error"
+							th:if="${#fields.hasErrors('state')}" th:errors="*{state}">State
+							Error</span>
+					</div>
+					<div class="form-group">
+						<label>Zip</label> <input class="form-control" type="text"
+							th:field="*{zip}"></input> <span class="error"
+							th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}">Zip
+							Error</span>
+					</div>
+					<div class="form-group">
+						<label>Phone</label> <input class="form-control" type="text"
+							th:field="*{phone}"></input> <span class="error"
+							th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone
+							Error</span>
+					</div>
+					<div class="form-group">
+						<label>Email</label> <input class="form-control" type="text"
+							th:field="*{email}"></input> <span class="error"
+							th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email
+							Error</span>
+					</div>
+					<div class="form-group">
+						<label>Notes</label> <input class="form-control" type="text"
+							th:field="*{notes}"></input> <span class="error"
+							th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}">Notes
+							Error</span>
+					</div>
 
-	<p><a href="javascript:history.go(-1);">Cancel</a></p>
-	
-	<div th:replace="template :: footer"></div>
-	
+					<div class="checkbox">
+						<label> <input type="checkbox" th:field="*{mailList}"></input>
+							<span>Would you like us to mail you a copy of our print
+								brochure two times per year?</span> <span class="error"
+							th:if="${#fields.hasErrors('mailList')}" th:errors="*{mailList}">Mail
+								List Error</span>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label> <input type="checkbox" th:field="*{emailList}"></input>
+							<span>Would you like to subscribe to our email list?</span> <span
+							class="error" th:if="${#fields.hasErrors('emailList')}"
+							th:errors="*{emailList}">Email List Error</span>
+						</label>
+					</div>
+					<button class="btn btn-primary" type="submit">Save</button>
+
+				</form>
+
+			</div>
+		</div>
+
+		<div th:replace="template :: footer"></div>
+	</div>
+	<div th:replace="template :: footer-js"></div>
+
 </body>
 </html>

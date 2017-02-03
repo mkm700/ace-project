@@ -49,6 +49,7 @@ public class Course extends AbstractEntity {
 	private boolean thursday;
 	private boolean friday;
 	private boolean saturday;
+	private String imageFileName;
 	private Date created;
 	private Date updated;
 	private List<Student> roster;	
@@ -56,7 +57,7 @@ public class Course extends AbstractEntity {
 	public Course(String courseCode, String name, String descShort, String descLong, CourseCategory courseCategory, 
 			float fee, Date startDate, Date endDate, String startTime, String endTime, int numClasses, 
 			int minStudents, int maxStudents, boolean sunday, boolean monday, boolean tuesday, 
-			boolean wednesday, boolean thursday, boolean friday, boolean saturday) {
+			boolean wednesday, boolean thursday, boolean friday, boolean saturday, String imageFileName) {
 	super();
 	this.courseCode = courseCode;
 	this.name = name;
@@ -79,6 +80,7 @@ public class Course extends AbstractEntity {
 	this.thursday = thursday;
 	this.friday = friday;
 	this.saturday = saturday;
+	this.imageFileName = imageFileName;
 	this.roster = new ArrayList<Student>();
 }
 
@@ -284,6 +286,15 @@ public class Course extends AbstractEntity {
 
 	public void setSaturday(boolean saturday) {
 		this.saturday = saturday;
+	}
+	
+    @Column(name = "image_file_name")
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 
 	@CreationTimestamp

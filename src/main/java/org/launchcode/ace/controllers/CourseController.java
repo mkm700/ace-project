@@ -20,39 +20,58 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("course")
 public class CourseController extends AbstractController {
 	
+	//Home Page
+	@RequestMapping(value = "/")
+	public String homePage(Model model) {
+		model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
+		return "course/list";
+	}
+	
+    //List
+    @RequestMapping(value = "/course/list", method = RequestMethod.GET)
+    public String listCourses(Model model){
+        model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
+        return "course/list";
+    }
+    
+	//Detail
+    @RequestMapping("/course/detail/{uid}")
+    public String courseDetail(@PathVariable Integer uid, Model model){
+        model.addAttribute("course", courseDao.findByUid(uid));
+        return "course/detail";
+    }
+    
+//************ADMIN SECTION************
+    //Admin: Course List / Menu
+    @RequestMapping(value = "/admin/course/list", method = RequestMethod.GET)
+    public String courseList(Model model){
+        model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
+        return "admin/course/list";
+    }
+	
+	//Admin: New Course
+	@RequestMapping("/admin/course/new")
+	public String newCourseC(Model model) {
+		model.addAttribute("course", new Course());
+		model.addAttribute("pageTitle", "New Course");
+		return "admin/course/courseform";
+	}
+	
+    //Admin: Update
+    @RequestMapping("/admin/course/edit/{uid}")
+    public String editCourse(@PathVariable Integer uid, Model model){
+        model.addAttribute("course", courseDao.findByUid(uid));
+        model.addAttribute("pageTitle", "Edit Course");
+        return "admin/course/courseform";
+    }
+    
+	//Admin: Course Categories drop down list
 	@ModelAttribute("allCourseCategories")
 	public List<CourseCategory> populateCourseCategories() {
 	    return courseCategoryDao.findAll();
 	}
 	
-	//Home Page
-	@RequestMapping(value = "/")
-	public String homePage(Model model) {
-		model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
-		return "course/coursesall";
-	}
-	
-	//Main Menu
-	@RequestMapping(value = "/admin/main")
-	public String adminMain(HttpServletRequest request, Model model) {
-		return "admin-main";
-	}
-	
-	//Create
-	@RequestMapping(value = "/admin/course", method = RequestMethod.GET)
-	public String newCourse(Model model) {
-		model.addAttribute("course", new Course());
-		return "course/courseform";
-	}
-	
-    //Update
-    @RequestMapping("/admin/course/edit/{uid}")
-    public String editCourse(@PathVariable Integer uid, Model model){
-        model.addAttribute("course", courseDao.findByUid(uid));
-        return "course/courseform";
-    }
-	
-	//Save
+	//Admin: Save
 	@RequestMapping(value="/admin/course", method = RequestMethod.POST)
 	public String saveCourse(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult,
 							HttpServletRequest request) {
@@ -62,7 +81,7 @@ public class CourseController extends AbstractController {
 		
 		//Check for binding result errors
 		if (bindingResult.hasErrors()) {
-			return "course/courseform";
+			return "admin/course/courseform";
 		}
 
 		//if new course, set the Remaining Spaces equal to max students allowed
@@ -73,55 +92,41 @@ public class CourseController extends AbstractController {
 		//save the course to the DB
 		courseDao.save(course);
 		
-		return "redirect:/admin/courses";
+		return "redirect:/admin/course/list";
 	}
-	
-	//Read
-    @RequestMapping("/course/{uid}")
-    public String showCourse(@PathVariable Integer uid, Model model){
-        model.addAttribute("course", courseDao.findByUid(uid));
-        return "course/courseshow";
-    }
     
-    //Course List - Admin
-    @RequestMapping(value = "/admin/courses", method = RequestMethod.GET)
-    public String list(Model model){
-        model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
-        return "course/courses";
-    }
-    
-    //Course List - All
-    @RequestMapping(value = "/courses/all", method = RequestMethod.GET)
-    public String listAll(Model model){
-        model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
-        return "course/coursesall";
-    }
-    
-    //Delete
+    //Admin: Delete
 	@RequestMapping("/admin/course/delete/{uid}")
 	public String delete(@PathVariable Integer uid, Model model){		
 		//if no students enrolled, delete the course
 		if (courseDao.findByUid(uid).getRoster().isEmpty()) {
 			courseDao.delete(uid);
-			return "redirect:/admin/courses";
+			return "redirect:/admin/course/list";
 		}
 		//else display message
 		else {
 			model.addAttribute("courseListError", "Cannot delete a course that has students enrolled");
 	        model.addAttribute("courses", courseDao.findAllByOrderByCourseCode());
-	        return "course/courses";
+	        return "admin/course/list";
 		}
 	}
 
-	//Course Roster
+	//Admin: Course Roster
 	@RequestMapping("/admin/course/roster/{uid}")
 	public String courseRoster(@PathVariable Integer uid, Model model) {
 		Course course = courseDao.findByUid(uid);
 		model.addAttribute("course", course);
 		model.addAttribute("students", course.getRoster());
 		
-		return "course/courseroster";
+		return "admin/course/courseroster";
 	}
-
-
+	
+    //Admin: Report - Filled Courses
+    @RequestMapping(value = "/admin/reports/course/filled", method = RequestMethod.GET)
+    public String courseFilled(Model model){
+        //model.addAttribute("courses", courseDao.findByCourseCodeStartingWith("CO"));
+        model.addAttribute("reportTitle","Course Enrollment - Filled");
+        return "admin/course/reportenroll";
+    }
+	
 }

@@ -22,80 +22,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @Controller
 @SessionAttributes("student")
 public class StudentController extends AbstractController {
-	
-	//ADMIN FUNCTIONS
-	//Student List
-    @RequestMapping(value = "/admin/students", method = RequestMethod.GET)
-    public String listStudents(Model model){
-        model.addAttribute("students", studentDao.findAllByOrderByLastName());
-        return "student/students";
-    }
-    
-    //Add New student
-    @RequestMapping("/admin/student")
-    public String AdminNewStudent(Model model){
-        model.addAttribute("student", new Student());
-        return "student/studentprofile";
-    }
-    
-    //Update Student Profile
-    @RequestMapping("/admin/student/edit/{uid}")
-    public String AdminEditProfile(@PathVariable Integer uid, Model model){
-        model.addAttribute("student", studentDao.findByUid(uid));
-        return "student/studentprofile";
-    }
-    
-    //Save Profile		
-  	@RequestMapping(value = "/admin/student", method = RequestMethod.POST)
-  	public String AdminSaveProfile(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult,
-			HttpServletRequest request, Model model) {
 		
-		if (bindingResult.hasErrors() ) {
-			//invalid data send back to student form with error messages
-			return "student/studentprofile";
-		}
-		
-  		//update the DB
-		studentDao.save(student);
-		
-		return "redirect:/admin/students";
-  	}
-    
-    //Delete
-	@RequestMapping("/admin/student/delete/{uid}")
-	public String delete(@PathVariable Integer uid, Model model){
-
-	  //if no course history exists, delete the student
-	    if (studentDao.findByUid(uid).getCourses().isEmpty()) {
-			studentDao.delete(uid);
-			return "redirect:/admin/students";
-		}
-		//else display message
-		else {
-			model.addAttribute("studentListError", "Cannot delete a student that has course history");
-			model.addAttribute("students", studentDao.findAllByOrderByLastName());
-			return "student/students";
-		}	    
-	}
-	
-	//Course History
-	@RequestMapping("/admin/student/history/{uid}")
-	public String courseHistory(@PathVariable Integer uid, Model model) {
-		Student student = studentDao.findByUid(uid);
-		model.addAttribute("student", student);
-		model.addAttribute("courses", student.getCourses());
-		
-		return "student/coursehistory";
-	}
-	
-	//STUDENT FUNCTIONS
-	
 	//Student Main Page
-    @RequestMapping("/student/main")
+    @RequestMapping("/student/menu")
     public String studentMain(Model model, HttpServletRequest request){
     	int uid = (int) request.getSession().getAttribute(AbstractController.userSessionKey);
         model.addAttribute("student", studentDao.findByUid(uid));
-        return "student/studentmain";
+        return "student/menu";
     }
     
 	//Update Profile
@@ -127,7 +60,7 @@ public class StudentController extends AbstractController {
   		//update the DB
 		studentDao.save(student);
 		
-		return "redirect:/student/main";
+		return "redirect:/student/menu";
   	}
   	
   	
@@ -168,7 +101,7 @@ public class StudentController extends AbstractController {
 		if (roster.contains(student)) {
 			model.addAttribute("course", course);
 			model.addAttribute("alreadyEnrolledError", "You are already enrolled in this class.");
-			return "course/courseshow";
+			return "course/detail";
 		}
 
 		//go to confirmation page
@@ -176,7 +109,7 @@ public class StudentController extends AbstractController {
 		model.addAttribute("student", studentDao.findByUid(student.getUid()));
 		model.addAttribute("course", courseDao.findByUid(cuid));
 	
-		return "registerform";
+		return "student/registerform";
 
 	}
 	
@@ -202,6 +135,72 @@ public class StudentController extends AbstractController {
 		
 		
 		return "redirect:/student/history/" + sUid;
+	}
+
+	
+//************ADMIN SECTION************
+	//Admin: Student List
+    @RequestMapping(value = "/admin/student/list", method = RequestMethod.GET)
+    public String listStudents(Model model){
+        model.addAttribute("students", studentDao.findAllByOrderByLastName());
+        return "admin/student/list";
+    }
+    
+    //Admin: Add New student
+    @RequestMapping("/admin/student/new")
+    public String AdminNewStudent(Model model){
+        model.addAttribute("student", new Student());
+        return "/student/studentprofile";
+    }
+    
+    //Update Student Profile
+    @RequestMapping("/admin/student/edit/{uid}")
+    public String AdminEditProfile(@PathVariable Integer uid, Model model){
+        model.addAttribute("student", studentDao.findByUid(uid));
+        return "student/studentprofile";
+    }
+    
+    //Save Profile		
+  	@RequestMapping(value = "/admin/student", method = RequestMethod.POST)
+  	public String AdminSaveProfile(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult,
+			HttpServletRequest request, Model model) {
+		
+		if (bindingResult.hasErrors() ) {
+			//invalid data send back to student form with error messages
+			return "student/studentprofile";
+		}
+		
+  		//update the DB
+		studentDao.save(student);
+		
+		return "redirect:/admin/student/list";
+  	}
+    
+    //Admin: Delete
+	@RequestMapping("/admin/student/delete/{uid}")
+	public String delete(@PathVariable Integer uid, Model model){
+
+	  //if no course history exists, delete the student
+	    if (studentDao.findByUid(uid).getCourses().isEmpty()) {
+			studentDao.delete(uid);
+			return "redirect:/admin/student/list";
+		}
+		//else display message
+		else {
+			model.addAttribute("studentListError", "Cannot delete a student that has course history");
+			model.addAttribute("students", studentDao.findAllByOrderByLastName());
+			return "admin/student/list";
+		}	    
+	}
+	
+	//Admin: Course History
+	@RequestMapping("/admin/student/history/{uid}")
+	public String courseHistory(@PathVariable Integer uid, Model model) {
+		Student student = studentDao.findByUid(uid);
+		model.addAttribute("student", student);
+		model.addAttribute("courses", student.getCourses());
+		
+		return "/student/coursehistory";
 	}
 
 	

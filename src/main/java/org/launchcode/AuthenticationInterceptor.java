@@ -81,29 +81,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         }
         	
         return true;
-        
-        
-//        if ( authPages.contains(request.getRequestURI()) ) {
-//
-//        	boolean isLoggedIn = false;
-//        	User user;
-//            Integer userId = (Integer) request.getSession().getAttribute(AbstractController.userSessionKey);
-//
-//            if (userId != null) {
-//            	user = userDao.findByUid(userId);
-//            	
-//            	if (user != null) {
-//            		isLoggedIn = true;
-//            	}
-//            }
-//
-//            // If user not logged in, redirect to login page
-//            if (!isLoggedIn) {
-//                response.sendRedirect("/login");
-//                return false;
-//            }
-//        }
-
+       
 
     }
 

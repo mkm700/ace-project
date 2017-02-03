@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+	<div class="container">
+
+		<div th:replace="template :: navigation"></div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<h1 th:text="${pageTitle}">Add / Edit Course</h1>
+			</div>
+
+			<div class="col-sm-offset-2 col-sm-8">
+				<form th:action="@{/admin/course}" th:object="${course}"
+					method="post">
+					<input type="hidden" th:field="*{uid}" />
+
+					<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+						<p th:text="#{form.hasErrors}">Error Message</p>
+					</div>
+
+					<div class="form-group">
+						<label>Course Code</label> 
+						<input class="form-control" type="text"
+							th:field="*{courseCode}"></input> <span class="error"
+							th:if="${#fields.hasErrors('courseCode')}"
+							th:errors="*{courseCode}">Course Code Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>Name</label> <input class="form-control" type="text"
+							th:field="*{name}"></input> <span class="error"
+							th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+							Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>Short Description</label>
+						<textarea class="form-control" th:field="*{descShort}"></textarea>
+						<span class="error" th:if="${#fields.hasErrors('descShort')}"
+							th:errors="*{descShort}">Short Description Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>Long Description</label>
+						<textarea class="form-control" th:field="*{descLong}"></textarea>
+						<span class="error" th:if="${#fields.hasErrors('descLong')}"
+							th:errors="*{descLong}">Long Description Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>Category</label> <select th:field="*{courseCategory}">
+							<option th:each="courseCategory : ${allCourseCategories}"
+								th:value="${courseCategory.uid}"
+								th:text="${courseCategory.catName}">Course Category
+								Dropdown</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label>Fee</label> <input class="form-control" type="text"
+							th:field="*{fee}"></input> <span class="error"
+							th:text="${feeError}">Fee error</span> <span class="error"
+							th:if="${#fields.hasErrors('fee')}" th:errors="*{fee}">Fee
+							Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>Start Date</label> <input class="form-control" type="text"
+							placeholder="m/d/yyyy" th:field="*{startDate}"></input> <span
+							class="error" th:if="${#fields.hasErrors('startDate')}"
+							th:errors="*{startDate}">Start Date Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>End Date</label> <input class="form-control" type="text"
+							placeholder="m/d/yyyy" th:field="*{endDate}"></input> <span
+							class="error" th:if="${#fields.hasErrors('endDate')}"
+							th:errors="*{endDate}">End Date Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>Start Time</label> <input class="form-control" type="text"
+							th:field="*{startTime}"></input> <span class="error"
+							th:if="${#fields.hasErrors('startTime')}"
+							th:errors="*{startTime}">Start Time Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>End Time</label> <input class="form-control" type="text"
+							th:field="*{endTime}"></input> <span class="error"
+							th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">End
+							Time Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>Number of Classes</label> <input class="form-control"
+							type="text" th:field="*{numClasses}"></input> <span class="error"
+							th:if="${#fields.hasErrors('numClasses')}"
+							th:errors="*{numClasses}">Number of Classes Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>Minimum Students</label> <input class="form-control"
+							type="text" th:field="*{minStudents}"></input> <span
+							class="error" th:if="${#fields.hasErrors('minStudents')}"
+							th:errors="*{minStudents}">Min Students Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>Maximum Students</label> <input class="form-control"
+							type="text" th:field="*{maxStudents}"></input> <span
+							class="error" th:if="${#fields.hasErrors('maxStudents')}"
+							th:errors="*{maxStudents}">Max Students Error</span>
+					</div>
+
+					<div class="form-group">
+						<label>Class Day(s)</label>
+					</div>
+
+					<div class="checkbox">
+						<label> <input type="checkbox" th:field="*{monday}">Monday</input>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label> <input type="checkbox" th:field="*{tuesday}">Tuesday</input>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label> <input type="checkbox" th:field="*{wednesday}">Wednesday</input>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label> <input type="checkbox" th:field="*{Thursday}">Thursday</input>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label> <input type="checkbox" th:field="*{friday}">Friday</input>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label> <input type="checkbox" th:field="*{saturday}">Saturday</input>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label> <input type="checkbox" th:field="*{sunday}">Sunday</input>
+						</label>
+					</div>
+
+					<button class="btn btn-primary" type="submit">Save</button>
+
+				</form>
+
+			</div>
+		</div>
+
+		<div th:replace="template :: footer"></div>
+	</div>
+	<div th:replace="template :: footer-js"></div>
+</body>
+</html>

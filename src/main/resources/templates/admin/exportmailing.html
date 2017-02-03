@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+	<div class="container">
+		<div th:replace="template :: navigation"></div>
+
+		<h1>Export Mailing List</h1>
+
+		<form method="post">
+			<h3>PreProcess Mailing List</h3>
+			<span class="error" th:text="${io_error}"></span>
+			<div class="form-group">
+				<button class="btn btn-primary" type="submit" name="clean" value="clean">Clean</button>
+			</div>
+			
+			<h3>Export Mailing List</h3>
+			<span class="error" th:text="${io_error}"></span>
+			<div class="form-group">
+				<button class="btn btn-primary" type="submit" name="export" value="export">Export</button>
+			</div>
+		</form>
+
+		<p>
+			<a href="javascript:history.go(-1);">Cancel</a>
+		</p>
+
+
+		<div th:replace="template :: footer"></div>
+	</div>
+
+	<div th:replace="template :: footer-js"></div>
+
+
+</body>
+</html>

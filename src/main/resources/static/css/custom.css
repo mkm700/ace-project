@@ -1,0 +1,76 @@
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.jumbotron {
+  text-align: center;        
+  background: url('/images/ace-home.jpg') no-repeat center bottom;
+  height: 350px;
+    
+}
+
+.jumbotron h1 {
+	font-size: 40px;
+	color: #333399;
+	text-shadow: #444 0 1px 1px; 
+}
+
+.menu-options {
+	text-align: center;
+}
+
+.menu-options .btn {
+	margin: 20px 10px;
+}
+
+.course-listing {
+	margin-bottom: 40px;
+}
+
+.course-listing h3 {
+	margin-top: 0;
+}
+
+.last {
+  padding-bottom: 30px;
+  margin-bottom: 40px;
+  border-bottom: 1px #ddd solid;
+}
+
+.error {
+    color: red;
+    font-size: .9em;
+}
+
+.full {
+    color: red;
+	font-weight: bold;
+}
+
+.description, .created-updated {
+	margin-top: 20px;
+}
+
+.created-updated {
+	font-size:.8em;
+	text-align: right;
+}
+
+
+.confirm {
+    color: red;
+}
+
+.footer {
+	margin-top: 30px;
+	border-top: 1px solid #ccc;
+	padding-top: 10px;
+	font-size: .8em;
+	color: #ccc;
+	text-align: center;
+}

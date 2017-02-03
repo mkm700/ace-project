@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="template :: dochead">
+</head>
+<body>
+	<div class="container">
+		<div th:replace="template :: navigation"></div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<h1 th:text="${reportTitle}">TITLE</h1>
+				<p th:text="'(as of ' + ${#dates.createNow()} + ')'">Date</p>
+
+				<p class="error" th:text="${courseListError}">Course List Error</p>
+
+				<div th:if="${not #lists.isEmpty(courses)}">
+					<table class="table">
+						<tr>
+							<th>Course Code</th>
+							<th>Name</th>
+							<th>Category</th>
+							<th>Start Date</th>
+							<th>End Date</th>
+							<th>Min</th>
+							<th>Max</th>
+							<th>Enrolled</th>
+							<th>Remain</th>
+						</tr>
+						<tr th:each="course : ${courses}">
+							<td th:text="${course.courseCode}">Course Code</td>
+							<td th:text="${course.name}">Name</td>
+							<td th:text="${course.courseCategory.catName}">Category</td>
+							<td th:text="${ #dates.format(course.startDate, 'M-d-yyyy') }">Start
+								Date</td>
+							<td th:text="${ #dates.format(course.endDate, 'M-d-yyyy') }">End
+								Date</td>
+							<td th:text="${course.minStudents}">Min</td>
+							<td th:text="${course.maxStudents}">Max</td>
+							<td th:text="${course.maxStudents} - ${course.spacesRemain}">Enrolled</td>
+							<td th:text="${course.spacesRemain}">Remain</td>
+						</tr>
+
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="template :: footer"></div>
+
+	</div>
+
+	<div th:replace="template :: footer-js"></div>
+</body>
+</html>
